@@ -54,10 +54,10 @@ class FeelingsThemeData {
 
   static const ColorScheme lightColorScheme = ColorScheme(
     primary: Color(0xFF448AFF),
-    primaryVariant: Color(0xFF00B8D4),
-    secondary: Color(0xFF448AFF),
-    secondaryVariant: Color(0xFF00B8D4),
-    background: Color(0xFFE6EBEB),
+    primaryVariant: Color(0xFF346ADF),
+    secondary: Color(0xFF00B8D4),
+    secondaryVariant: Color(0xFF0098A4),
+    background: Color(0xFFF0EFEF),
     surface: Color(0xFFFAFBFB),
     onBackground: Colors.white,
     error: _lightFillColor,
@@ -70,9 +70,9 @@ class FeelingsThemeData {
 
   static const ColorScheme darkColorScheme = ColorScheme(
     primary: Color(0xFF00B8D4),
-    primaryVariant: Color(0xFF448AFF),
-    secondary: Color(0xFF00B8D4),
-    secondaryVariant: Color(0xFF448AFF),
+    primaryVariant: Color(0xFF10E8F4),
+    secondary: Color(0xFF448AFF),
+    secondaryVariant: Color(0xFF64AAFF),
     background: Color(0xFF241E20),
     surface: Color(0xFF1F1922),
     onBackground: Color(0x0DFFFFFF),

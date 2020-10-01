@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:event_bus/event_bus.dart';
 
 import 'package:feelings/global/colors.dart';
-import 'package:feelings/components/thePlayPanel.dart';
+import 'package:feelings/pages/mainPage.dart';
 
 EventBus eventBus = EventBus();
 
@@ -59,38 +59,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => eventBus.fire(
-              ThemeEvent(FeelingsThemeData.darkThemeData)),
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ),
-        bottomNavigationBar: ThePlayPanel(
-            authorName: "author",
-            musicName: "Feelings",
-            musicCover: Image.network(
-                "http://static.xiong35.cn/image/icons/open-doodles/15.png",
-                fit: BoxFit.cover,
-                height: 50.0,
-                width: 50.0)));
+    return MainPage();
   }
 }
 
