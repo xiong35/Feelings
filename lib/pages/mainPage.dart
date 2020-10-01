@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:feelings/components/thePlayPanel.dart';
 
+import 'package:feelings/pages/tabs/home.dart';
+
 const int tabCount = 4;
 
 class MainPage extends StatefulWidget {
@@ -113,7 +115,7 @@ class _MainPageState extends State<MainPage>
   List<Widget> _buildTabViews() {
     return [
       Text("test"),
-      Text("test"),
+      HomeView(),
       Text("test"),
       Text("test"),
     ];
