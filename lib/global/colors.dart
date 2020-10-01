@@ -27,19 +27,16 @@ class FeelingsThemeData {
       // Matches manifest.json colors and background color.
       primaryColor: const Color(0xFF030303),
       appBarTheme: AppBarTheme(
-        textTheme: _textTheme.apply(
-            bodyColor: colorScheme.onPrimary),
+        textTheme:
+            _textTheme.apply(bodyColor: colorScheme.onPrimary),
         color: colorScheme.background,
         elevation: 0,
-        iconTheme: IconThemeData(
-            color: colorScheme.primary),
+        iconTheme: IconThemeData(color: colorScheme.primary),
         brightness: colorScheme.brightness,
       ),
-      iconTheme: IconThemeData(
-          color: colorScheme.onPrimary),
+      iconTheme: IconThemeData(color: colorScheme.onPrimary),
       canvasColor: colorScheme.background,
-      scaffoldBackgroundColor:
-          colorScheme.background,
+      scaffoldBackgroundColor: colorScheme.background,
       highlightColor: Colors.transparent,
       accentColor: colorScheme.primary,
       focusColor: focusColor,
@@ -49,39 +46,36 @@ class FeelingsThemeData {
           _lightFillColor.withOpacity(0.80),
           _darkFillColor,
         ),
-        contentTextStyle: _textTheme.subtitle1
-            .apply(color: _darkFillColor),
+        contentTextStyle:
+            _textTheme.subtitle1.apply(color: _darkFillColor),
       ),
     );
   }
 
-  static const ColorScheme lightColorScheme =
-      ColorScheme(
-    primary: Color(0xFF1E88E5),
-    primaryVariant: Color(0xFF448AFF),
-    secondary: Color(0xFF00B8D4),
-    secondaryVariant: Color(0xFF00ACC1),
+  static const ColorScheme lightColorScheme = ColorScheme(
+    primary: Color(0xFF448AFF),
+    primaryVariant: Color(0xFF00B8D4),
+    secondary: Color(0xFF448AFF),
+    secondaryVariant: Color(0xFF00B8D4),
     background: Color(0xFFE6EBEB),
     surface: Color(0xFFFAFBFB),
     onBackground: Colors.white,
     error: _lightFillColor,
     onError: _lightFillColor,
-    onPrimary: _lightFillColor,
-    onSecondary: Color(0xFF80DEEA),
-    onSurface: Color(0xFF241E30),
+    onPrimary: _darkFillColor,
+    onSecondary: _darkFillColor,
+    onSurface: _darkFillColor,
     brightness: Brightness.light,
   );
 
-  static const ColorScheme darkColorScheme =
-      ColorScheme(
-    primary: Color(0xFF1E88E5),
+  static const ColorScheme darkColorScheme = ColorScheme(
+    primary: Color(0xFF00B8D4),
     primaryVariant: Color(0xFF448AFF),
-    secondary: Color(0xFF1E88E5),
+    secondary: Color(0xFF00B8D4),
     secondaryVariant: Color(0xFF448AFF),
     background: Color(0xFF241E20),
     surface: Color(0xFF1F1922),
-    onBackground: Color(
-        0x0DFFFFFF), // White with 0.05 opacity
+    onBackground: Color(0x0DFFFFFF),
     error: _darkFillColor,
     onError: _darkFillColor,
     onPrimary: _darkFillColor,
@@ -96,26 +90,16 @@ class FeelingsThemeData {
   static const _bold = FontWeight.w700;
 
   static final TextTheme _textTheme = TextTheme(
-    headline4: TextStyle(
-        fontWeight: _bold, fontSize: 20.0),
-    caption: TextStyle(
-        fontWeight: _semiBold, fontSize: 16.0),
-    headline5: TextStyle(
-        fontWeight: _medium, fontSize: 16.0),
-    subtitle1: TextStyle(
-        fontWeight: _medium, fontSize: 16.0),
-    overline: TextStyle(
-        fontWeight: _medium, fontSize: 12.0),
-    bodyText1: TextStyle(
-        fontWeight: _regular, fontSize: 14.0),
-    subtitle2: TextStyle(
-        fontWeight: _medium, fontSize: 14.0),
-    bodyText2: TextStyle(
-        fontWeight: _regular, fontSize: 16.0),
-    headline6: TextStyle(
-        fontWeight: _bold, fontSize: 16.0),
-    button: TextStyle(
-        fontWeight: _semiBold, fontSize: 14.0),
+    headline4: TextStyle(fontWeight: _bold, fontSize: 20.0),
+    caption: TextStyle(fontWeight: _semiBold, fontSize: 16.0),
+    headline5: TextStyle(fontWeight: _medium, fontSize: 16.0),
+    subtitle1: TextStyle(fontWeight: _medium, fontSize: 16.0),
+    overline: TextStyle(fontWeight: _medium, fontSize: 12.0),
+    bodyText1: TextStyle(fontWeight: _regular, fontSize: 14.0),
+    subtitle2: TextStyle(fontWeight: _medium, fontSize: 14.0),
+    bodyText2: TextStyle(fontWeight: _regular, fontSize: 16.0),
+    headline6: TextStyle(fontWeight: _bold, fontSize: 16.0),
+    button: TextStyle(fontWeight: _semiBold, fontSize: 14.0),
   );
 
   static ThemeData getTheme(String type) {

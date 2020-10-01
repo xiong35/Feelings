@@ -13,17 +13,22 @@ class ThePlayPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO bgc is not correspond to the theme
     return BottomAppBar(
       child: ListTile(
         leading: ExcludeSemantics(
-          child: CircleAvatar(child: musicCover),
+          child: ClipOval(
+            child: musicCover,
+          ),
         ),
         title: Text(musicName),
         subtitle: Text(authorName),
         trailing: IconButton(
-          icon: const Icon(Icons.play_circle_outline),
+          icon: Icon(
+            Icons.play_circle_outline,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           onPressed: () => {},
+          iconSize: 32.0,
         ),
       ),
     );
