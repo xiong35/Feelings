@@ -1,9 +1,9 @@
-import 'package:feelings/pages/tabs/settings.dart';
 import 'package:flutter/material.dart';
 
+import 'package:feelings/pages/tabs/settings.dart';
 import 'package:feelings/components/thePlayPanel.dart';
-
 import 'package:feelings/pages/tabs/home.dart';
+import 'package:feelings/global/localization.dart';
 
 const int tabCount = 4;
 
@@ -90,7 +90,7 @@ class _MainPageState extends State<MainPage>
       _PageTab(
         theme: theme,
         iconData: Icons.headset,
-        title: "我的",
+        title: FeelingsLocalization.of(context).tabNameMine,
         tabIndex: 0,
         tabController: _tabController,
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:feelings/global/colors.dart';
 import 'package:feelings/pages/mainPage.dart';
 import 'package:feelings/utils/eventBus.dart';
+import 'package:feelings/global/localization.dart';
 
 void main() {
   runApp(Feelings());
@@ -32,6 +33,13 @@ class _FeelingsState extends State<Feelings> {
       title: 'Feelings',
       theme: FeelingsThemeData.getTheme(themeType),
       home: MainPage(themeType: themeType),
+      localizationsDelegates: [
+        FeelingsLocalizationsDelegate(),
+      ],
+      // supportedLocales: [
+      //   const Locale('en', 'US'),
+      //   const Locale('zh', 'CN'),
+      // ],
     );
   }
 

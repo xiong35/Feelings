@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:feelings/utils/eventBus.dart';
+import 'package:feelings/global/localization.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({
@@ -21,18 +22,39 @@ class SettingsView extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  '主题选择',
+                  FeelingsLocalization.of(context).title,
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
                   contents: ['light', 'dark'],
                   initial: themeType,
+                  onChange: (_) => eventBus.emit("toggleTheme"),
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
             ),
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.all(28),
+            child: Row(
+              children: [
+                Text(
+                  FeelingsLocalization.of(context).title,
+                  style: TextStyle(fontSize: 18),
+                ),
+                Selector(
+                  contents: ['zh', 'en'],
+                  initial: FeelingsLocalization.of(context).isZh
+                      ? 'zh'
+                      : 'en',
+                  onChange: (_) => {},
+                )
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+          ),
         ],
       ),
     );
@@ -42,10 +64,15 @@ class SettingsView extends StatelessWidget {
 // BEGIN cupertinoSegmentedControlDemo
 
 class Selector extends StatefulWidget {
-  const Selector({this.contents, this.initial});
+  const Selector({
+    this.contents,
+    this.initial,
+    this.onChange,
+  });
 
   final List<String> contents;
   final String initial;
+  final Function onChange;
 
   @override
   _SelectorState createState() => _SelectorState();
@@ -58,7 +85,8 @@ class _SelectorState extends State<Selector> {
     setState(() {
       currentSegment = newValue;
     });
-    eventBus.emit("toggleTheme");
+
+    widget.onChange(newValue);
   }
 
   @override
