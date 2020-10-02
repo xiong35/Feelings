@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:event_bus/event_bus.dart';
 
 import 'package:feelings/global/colors.dart';
 import 'package:feelings/pages/mainPage.dart';
-
-EventBus eventBus = EventBus();
+import 'package:feelings/utils/eventBus.dart';
 
 void main() {
   runApp(Feelings());
@@ -22,9 +20,8 @@ class _FeelingsState extends State<Feelings> {
 
   @override
   void initState() {
-    //注册eventBus事件，监听到变化的时候调用changeColor(color)
-    eventBus.on<ThemeEvent>().listen((ThemeEvent data) {
-      changeTheme(data.theme);
+    eventBus.on("toggleTheme", (_) {
+      toggleTheme();
     });
     super.initState();
   }
@@ -38,7 +35,7 @@ class _FeelingsState extends State<Feelings> {
     );
   }
 
-  changeTheme(ThemeData theme) {
+  toggleTheme() {
     if (mounted) {
       setState(() {
         themeType = themeType == "dark" ? "light" : "dark";

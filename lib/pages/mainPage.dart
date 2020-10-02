@@ -1,3 +1,4 @@
+import 'package:feelings/pages/tabs/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/components/thePlayPanel.dart';
@@ -120,7 +121,7 @@ class _MainPageState extends State<MainPage>
       Text("test"),
       HomeView(),
       Text("test"),
-      Text("test"),
+      SettingsView(),
     ];
   }
 }
