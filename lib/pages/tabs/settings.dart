@@ -25,7 +25,8 @@ class SettingsView extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  FeelingsLocalization.of(context).title,
+                  FeelingsLocalization.of(context)
+                      .settingsSetTheme,
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
@@ -47,7 +48,8 @@ class SettingsView extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  FeelingsLocalization.of(context).title,
+                  FeelingsLocalization.of(context)
+                      .settingsSetLanguage,
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
@@ -69,8 +71,6 @@ class SettingsView extends StatelessWidget {
     );
   }
 }
-
-// BEGIN cupertinoSegmentedControlDemo
 
 class Selector extends StatefulWidget {
   const Selector({

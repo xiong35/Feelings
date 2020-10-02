@@ -4,6 +4,7 @@ import 'package:feelings/components/carousel.dart';
 import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/components/utils.dart';
 import 'package:feelings/components/albumList.dart';
+import 'package:feelings/global/localization.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -75,18 +76,21 @@ class HomeView extends StatelessWidget {
           ),
           PartDevider(height: 8),
           HeadingWithIcon(
-            heading: "猜你喜欢",
+            heading: FeelingsLocalization.of(context)
+                .homeRecommendedSongs,
             iconData: Icons.refresh,
             onPressed: () {},
           ),
           ...songs,
           PartDevider(height: 8),
           HeadingWithIcon(
-            heading: "歌单推荐",
+            heading: FeelingsLocalization.of(context)
+                .homeRecommendedPlaylists,
             iconData: Icons.refresh,
             onPressed: () {},
           ),
-          AlbumList(albums: albums)
+          AlbumList(albums: albums),
+          PartDevider(height: 8),
         ],
       ),
     );

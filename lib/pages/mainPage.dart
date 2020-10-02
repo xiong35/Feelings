@@ -95,21 +95,22 @@ class _MainPageState extends State<MainPage>
       _PageTab(
         theme: theme,
         iconData: Icons.music_note,
-        title: "发现",
+        title:
+            FeelingsLocalization.of(context).tabNameDiscovery,
         tabIndex: 1,
         tabController: _tabController,
       ),
       _PageTab(
         theme: theme,
         iconData: Icons.search,
-        title: "搜索",
+        title: FeelingsLocalization.of(context).tabNameSearch,
         tabIndex: 2,
         tabController: _tabController,
       ),
       _PageTab(
         theme: theme,
         iconData: Icons.settings,
-        title: "设置",
+        title: FeelingsLocalization.of(context).tabNameSettings,
         tabIndex: 3,
         tabController: _tabController,
       ),
