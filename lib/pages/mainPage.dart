@@ -8,9 +8,7 @@ import 'package:feelings/global/localization.dart';
 const int tabCount = 4;
 
 class MainPage extends StatefulWidget {
-  const MainPage({this.themeType});
-
-  final String themeType;
+  const MainPage();
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -123,9 +121,7 @@ class _MainPageState extends State<MainPage>
       Text("test"),
       HomeView(),
       Text("test"),
-      SettingsView(
-        themeType: widget.themeType,
-      ),
+      SettingsView(),
     ];
   }
 }

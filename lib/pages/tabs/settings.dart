@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
-import 'package:feelings/utils/eventBus.dart';
 import 'package:feelings/global/localization.dart';
+import 'package:feelings/global/global.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({
     Key key,
-    this.themeType,
   }) : super(key: key);
-
-  final String themeType;
 
   @override
   Widget build(BuildContext context) {
+    var theme =
+        Provider.of<ThemeModel>(context, listen: false).theme;
+    var locale =
+        Provider.of<LocaleModel>(context, listen: false).locale;
+
     return Scaffold(
       body: ListView(
         children: [
@@ -27,8 +30,12 @@ class SettingsView extends StatelessWidget {
                 ),
                 Selector(
                   contents: ['light', 'dark'],
-                  initial: themeType,
-                  onChange: (_) => eventBus.emit("toggleTheme"),
+                  initial: theme,
+                  onChange: (_) => Provider.of<ThemeModel>(
+                              context,
+                              listen: false)
+                          .theme =
+                      theme == "light" ? "dark" : "light",
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,11 +51,13 @@ class SettingsView extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
-                  contents: ['zh', 'en'],
-                  initial: FeelingsLocalization.of(context).isZh
-                      ? 'zh'
-                      : 'en',
-                  onChange: (_) => {},
+                  contents: ['zh_CN', 'en_US'],
+                  initial: locale,
+                  onChange: (_) => Provider.of<LocaleModel>(
+                              context,
+                              listen: false)
+                          .locale =
+                      locale == 'en_US' ? 'zh_CN' : 'en_US',
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

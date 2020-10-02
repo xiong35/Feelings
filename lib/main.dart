@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:feelings/global/colors.dart';
 import 'package:feelings/pages/mainPage.dart';
-import 'package:feelings/utils/eventBus.dart';
 import 'package:feelings/global/localization.dart';
+import 'package:feelings/global/global.dart';
 
 void main() {
-  runApp(Feelings());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleModel()),
+        ChangeNotifierProvider(create: (_) => ThemeModel()),
+      ],
+      child: Feelings(),
+    ),
+  );
 }
 
 class Feelings extends StatefulWidget {
@@ -17,13 +27,8 @@ class Feelings extends StatefulWidget {
 }
 
 class _FeelingsState extends State<Feelings> {
-  String themeType = "light";
-
   @override
   void initState() {
-    eventBus.on("toggleTheme", (_) {
-      toggleTheme();
-    });
     super.initState();
   }
 
@@ -31,23 +36,20 @@ class _FeelingsState extends State<Feelings> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Feelings',
-      theme: FeelingsThemeData.getTheme(themeType),
-      home: MainPage(themeType: themeType),
+      theme: FeelingsThemeData.getTheme(
+        Provider.of<ThemeModel>(context, listen: true).theme,
+      ),
+      home: MainPage(),
       localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
         FeelingsLocalizationsDelegate(),
       ],
-      // supportedLocales: [
-      //   const Locale('en', 'US'),
-      //   const Locale('zh', 'CN'),
-      // ],
+      supportedLocales: [
+        const Locale('en', 'US'), // English, no country code
+        const Locale('zh', 'CN'), // Hebrew, no country code
+      ],
+      locale: context.watch<LocaleModel>().getLocale(),
     );
-  }
-
-  toggleTheme() {
-    if (mounted) {
-      setState(() {
-        themeType = themeType == "dark" ? "light" : "dark";
-      });
-    }
   }
 }
