@@ -56,24 +56,27 @@ class _MainPageState extends State<MainPage>
     );
 
     return Scaffold(
-        body: SafeArea(
-          child: Theme(
-            data: theme.copyWith(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            ),
-            child: tabBarView,
+      body: SafeArea(
+        child: Theme(
+          data: theme.copyWith(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
-          top: true,
+          child: tabBarView,
         ),
-        bottomNavigationBar: ThePlayPanel(
-            authorName: "author",
-            musicName: "Feelings",
-            musicCover: Image.network(
-                "http://static.xiong35.cn/image/icons/open-doodles/15.png",
-                fit: BoxFit.cover,
-                height: 50.0,
-                width: 50.0)));
+        top: true,
+      ),
+      bottomNavigationBar: ThePlayPanel(
+        authorName: "author",
+        musicName: "Feelings",
+        musicCover: Image.network(
+          "http://static.xiong35.cn/image/icons/open-doodles/15.png",
+          fit: BoxFit.cover,
+          height: 50.0,
+          width: 50.0,
+        ),
+      ),
+    );
   }
 
   List<Widget> _buildTabs({

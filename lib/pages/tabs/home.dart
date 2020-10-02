@@ -1,7 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/components/carousel.dart';
+import 'package:feelings/components/musicItem.dart';
+import 'package:feelings/components/utils.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key key}) : super(key: key);
@@ -35,13 +36,44 @@ class HomePage extends StatelessWidget {
       ),
     ];
 
+    final List<MusicItem> songs = <MusicItem>[
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+    ];
+
     return Scaffold(
       body: ListView(
         children: [
-          const SizedBox(height: 8),
           Carousel(
             children: carouselCards,
           ),
+          PartDevider(height: 8),
+          HeadingWithIcon(
+            heading: "猜你喜欢",
+            iconData: Icons.refresh,
+            onPressed: () {},
+          ),
+          ...songs,
+          PartDevider(height: 8),
+          HeadingWithIcon(
+            heading: "歌单推荐",
+            iconData: Icons.refresh,
+            onPressed: () {},
+          ),
+          ...songs,
         ],
       ),
     );
