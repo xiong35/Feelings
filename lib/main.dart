@@ -31,7 +31,7 @@ class _FeelingsState extends State<Feelings> {
     return MaterialApp(
       title: 'Feelings',
       theme: FeelingsThemeData.getTheme(themeType),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MainPage(themeType: themeType),
     );
   }
 
@@ -42,25 +42,4 @@ class _FeelingsState extends State<Feelings> {
       });
     }
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return MainPage();
-  }
-}
-
-class ThemeEvent {
-  ThemeData theme;
-  ThemeEvent(this.theme);
 }
