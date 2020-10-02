@@ -70,13 +70,7 @@ class _CarouselState extends State<Carousel>
 
   @override
   void initState() {
-    bannerTimer = Timer.periodic(Duration(seconds: 3), (timer) {
-      _controller.animateToPage(
-        (_currentPage + 1) % widget.children.length,
-        duration: _duration,
-        curve: Curves.ease,
-      );
-    });
+    createTimmer();
     _animationController = AnimationController(
       vsync: this,
       duration: _duration,
@@ -131,10 +125,28 @@ class _CarouselState extends State<Carousel>
           ),
         );
       },
-      child: widget.children[index],
+      child: Listener(
+        child: widget.children[index],
+        onPointerDown: (_) {
+          bannerTimer?.cancel();
+        },
+        onPointerUp: (_) {
+          createTimmer();
+        },
+      ),
     );
 
     return carouselCard;
+  }
+
+  void createTimmer() {
+    bannerTimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      _controller.animateToPage(
+        (_currentPage + 1) % widget.children.length,
+        duration: _duration,
+        curve: Curves.ease,
+      );
+    });
   }
 
   @override
