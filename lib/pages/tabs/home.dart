@@ -16,8 +16,6 @@ const _horizontalPadding = 32.0;
 const _carouselItemMargin = 8.0;
 const _carouselHeightMin = 150.0 + 2 * _carouselItemMargin;
 
-class ToggleSplashNotification extends Notification {}
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -109,35 +107,12 @@ class _AnimatedHomePageState extends State<_AnimatedHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return ListView(
       children: [
-        ListView(
-          // Makes integration tests possible.
-          key: const ValueKey('HomeListView'),
-          children: [
-            const SizedBox(height: 8),
-            _Carousel(
-              children: widget.carouselCards,
-              animationController: _animationController,
-            ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: GestureDetector(
-            onVerticalDragEnd: (details) {
-              if (details.velocity.pixelsPerSecond.dy > 200) {
-                ToggleSplashNotification().dispatch(context);
-              }
-            },
-            child: SafeArea(
-              child: Container(
-                height: 40,
-                // If we don't set the color, gestures are not detected.
-                color: Colors.transparent,
-              ),
-            ),
-          ),
+        const SizedBox(height: 8),
+        _Carousel(
+          children: widget.carouselCards,
+          animationController: _animationController,
         ),
       ],
     );
@@ -172,69 +147,12 @@ class _AnimatedCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Stack(
-        children: [
-          const SizedBox(height: _carouselHeightMin),
-          AnimatedBuilder(
-            animation: controller,
-            builder: (context, child) {
-              return PositionedDirectional(
-                start: constraints.maxWidth *
-                    startPositionAnimation.value,
-                child: child,
-              );
-            },
-            child: Container(
-              height: _carouselHeightMin,
-              width: constraints.maxWidth,
-              child: child,
-            ),
-          ),
-        ],
+      return Container(
+        height: _carouselHeightMin,
+        width: constraints.maxWidth,
+        child: child,
       );
     });
-  }
-}
-
-/// Animates a carousel card to come in from the right.
-class _AnimatedCarouselCard extends StatelessWidget {
-  _AnimatedCarouselCard({
-    Key key,
-    @required this.child,
-    @required this.controller,
-  })  : startPaddingAnimation = Tween(
-          begin: _horizontalPadding,
-          end: 0.0,
-        ).animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: const Interval(
-              0.900,
-              1.000,
-              curve: Curves.ease,
-            ),
-          ),
-        ),
-        super(key: key);
-
-  final Widget child;
-  final AnimationController controller;
-  final Animation<double> startPaddingAnimation;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        return Padding(
-          padding: EdgeInsetsDirectional.only(
-            start: startPaddingAnimation.value,
-          ),
-          child: child,
-        );
-      },
-      child: child,
-    );
   }
 }
 
@@ -253,9 +171,32 @@ class _Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<_Carousel>
-    with SingleTickerProviderStateMixin {
+    with
+        SingleTickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin {
   PageController _controller;
   int _currentPage = 0;
+  Timer bannerTimer;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    bannerTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _currentPage =
+            (_currentPage + 1) % widget.children.length;
+        print(_currentPage);
+      });
+    });
+
+    Timer(Duration(seconds: 9), () {
+      bannerTimer.cancel();
+    });
+
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -269,6 +210,7 @@ class _CarouselState extends State<_Carousel>
       _controller = PageController(
         initialPage: _currentPage,
         viewportFraction: (width - padding) / width,
+        keepPage: true,
       );
     }
   }
@@ -307,19 +249,12 @@ class _CarouselState extends State<_Carousel>
       child: widget.children[index],
     );
 
-    // We only want the second card to be animated.
-    if (index == 1) {
-      return _AnimatedCarouselCard(
-        child: carouselCard,
-        controller: widget.animationController,
-      );
-    } else {
-      return carouselCard;
-    }
+    return carouselCard;
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return _AnimatedCarousel(
       child: PageView.builder(
         onPageChanged: (value) {

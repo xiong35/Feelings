@@ -154,6 +154,7 @@ class _PageTab extends StatefulWidget {
           title,
           style: TextStyle(
             color: theme.colorScheme.primary,
+            fontWeight: FontWeight.bold,
           ),
         ),
         isExpanded = tabController.index == tabIndex,
