@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:feelings/components/carousel.dart';
 import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/components/utils.dart';
+import 'package:feelings/components/albumList.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key key}) : super(key: key);
@@ -54,6 +55,29 @@ class HomePage extends StatelessWidget {
               'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
     ];
 
+    final List<Widget> albums = [
+      AlbumItem(
+        coverUrl:
+            'http://static.xiong35.cn/image/icons/open-doodles/29.png',
+        name: "an album",
+      ),
+      AlbumItem(
+        coverUrl:
+            'http://static.xiong35.cn/image/icons/open-doodles/29.png',
+        name: "an album",
+      ),
+      AlbumItem(
+        coverUrl:
+            'http://static.xiong35.cn/image/icons/open-doodles/29.png',
+        name: "an album",
+      ),
+      AlbumItem(
+        coverUrl:
+            'http://static.xiong35.cn/image/icons/open-doodles/29.png',
+        name: "an album",
+      ),
+    ];
+
     return Scaffold(
       body: ListView(
         children: [
@@ -73,7 +97,7 @@ class HomePage extends StatelessWidget {
             iconData: Icons.refresh,
             onPressed: () {},
           ),
-          ...songs,
+          AlbumList(albums: albums)
         ],
       ),
     );
