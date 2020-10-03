@@ -103,23 +103,47 @@ class _MusicPlayViewState extends State<MusicPlayView> {
 class _PlayPanel extends StatelessWidget {
   const _PlayPanel({
     Key key,
-    this.value = 0.5,
+    // this.value = 0.5,
   }) : super(key: key);
 
-  final double value;
+  // final double value;
 
   @override
   Widget build(BuildContext context) {
+    var musicPlayModel =
+        Provider.of<MusicPlayModel>(context, listen: false);
+
     return IconTheme(
       child: SizedBox(
           height: 125,
           child: Column(
             children: [
-              Slider(
-                value: value,
-                onChanged: (_) {},
-                activeColor:
-                    Theme.of(context).colorScheme.secondary,
+              Row(
+                children: [
+                  SizedBox(width: 10),
+                  Text(
+                      musicPlayModel.curPosition
+                          .toString()
+                          .substring(2, 7),
+                      style: TextStyle(fontSize: 14)),
+                  Expanded(
+                    child: Slider(
+                      value: musicPlayModel.percent,
+                      onChanged: (value) {
+                        musicPlayModel.percent = value;
+                      },
+                      activeColor: Theme.of(context)
+                          .colorScheme
+                          .secondary,
+                    ),
+                  ),
+                  Text(
+                      musicPlayModel.curDuration
+                          .toString()
+                          .substring(2, 7),
+                      style: TextStyle(fontSize: 14)),
+                  SizedBox(width: 10),
+                ],
               ),
               Row(
                 mainAxisAlignment:

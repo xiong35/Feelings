@@ -57,4 +57,34 @@ class MusicPlayModel extends ChangeNotifier {
     theMusicController.togglePlay(url: url);
     notifyListeners();
   }
+
+  MusicPlayModel() {
+    theMusicController.audioPlayer.onDurationChanged
+        .listen((Duration d) {
+      print('Max duration: ${d.inSeconds}');
+      _curDuration = d;
+      notifyListeners();
+    });
+    theMusicController.audioPlayer.onAudioPositionChanged
+        .listen((Duration p) {
+      print(
+          'Current position: ${p.toString().substring(2, 7)}');
+      _curPosition = p;
+      notifyListeners();
+    });
+  }
+
+  get curPosition => _curPosition;
+  get curDuration => _curDuration;
+  get percent =>
+      _curPosition.inMilliseconds /
+      (_curDuration.inMilliseconds + 0.0001);
+
+  set percent(double percent) {
+    theMusicController.audioPlayer.seek(_curDuration * percent);
+    notifyListeners();
+  }
+
+  Duration _curDuration = Duration.zero;
+  Duration _curPosition = Duration.zero;
 }
