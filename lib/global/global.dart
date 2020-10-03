@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Profile {
-  String locale;
+  String locale = 'auto';
   String theme = "light";
 }
 
@@ -27,7 +27,7 @@ class ProfileChangeNotifier extends ChangeNotifier {
 
 class LocaleModel extends ProfileChangeNotifier {
   Locale getLocale() {
-    if (_profile.locale == null) return null;
+    if (_profile.locale == 'auto') return null;
     var t = _profile.locale.split("_");
     return Locale(t[0], t[1]);
   }

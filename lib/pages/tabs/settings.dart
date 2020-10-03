@@ -17,6 +17,17 @@ class SettingsView extends StatelessWidget {
     var locale =
         Provider.of<LocaleModel>(context, listen: false).locale;
 
+    var LIGHT =
+        FeelingsLocalization.of(context).settingsThemeOpsLight;
+    var DARK =
+        FeelingsLocalization.of(context).settingsThemeOpsDark;
+    var ZH =
+        FeelingsLocalization.of(context).settingsLanguageOpsZH;
+    var EN =
+        FeelingsLocalization.of(context).settingsLanguageOpsEN;
+    var AUTO = FeelingsLocalization.of(context)
+        .settingsLanguageOpsAuto;
+
     return Scaffold(
       body: ListView(
         children: [
@@ -30,7 +41,8 @@ class SettingsView extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
-                  contents: ['light', 'dark'],
+                  contents: [LIGHT, DARK],
+                  names: ['light', 'dark'],
                   initial: theme,
                   onChange: (_) => Provider.of<ThemeModel>(
                               context,
@@ -53,13 +65,13 @@ class SettingsView extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Selector(
-                  contents: ['zh_CN', 'en_US'],
+                  contents: [AUTO, ZH, EN],
+                  names: ['auto', 'zh_CN', 'en_US'],
                   initial: locale,
-                  onChange: (_) => Provider.of<LocaleModel>(
-                              context,
+                  onChange: (newVal) =>
+                      Provider.of<LocaleModel>(context,
                               listen: false)
-                          .locale =
-                      locale == 'en_US' ? 'zh_CN' : 'en_US',
+                          .locale = newVal,
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,11 +89,13 @@ class Selector extends StatefulWidget {
     this.contents,
     this.initial,
     this.onChange,
+    this.names,
   });
 
   final List<String> contents;
   final String initial;
   final Function onChange;
+  final List<String> names;
 
   @override
   _SelectorState createState() => _SelectorState();
@@ -107,13 +121,12 @@ class _SelectorState extends State<Selector> {
   @override
   Widget build(BuildContext context) {
     var children = Map<String, Widget>();
-    widget.contents.forEach((content) {
-      children[content] = Padding(
-        child: Text(content),
-        padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+    for (var i = 0; i < widget.contents.length; i++) {
+      children[widget.names[i]] = Padding(
+        child: Text(widget.contents[i]),
+        padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
       );
-    });
-
+    }
     return CupertinoSlidingSegmentedControl<String>(
       children: children,
       onValueChanged: onValueChanged,

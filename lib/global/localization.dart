@@ -49,11 +49,15 @@ class FeelingsLocalization {
   }
 
   String get settingsLanguageOpsZH {
-    return isZh ? "中文" : "Chinese";
+    return isZh ? "中文" : "Zh";
   }
 
   String get settingsLanguageOpsEN {
-    return isZh ? "英文" : "English";
+    return isZh ? "英文" : "En";
+  }
+
+  String get settingsLanguageOpsAuto {
+    return isZh ? "自动" : "Auto";
   }
 
   String get settingsThemeOpsDark {
