@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
+import 'package:feelings/global/theMusicController.dart';
 
 class MusicPlayView extends StatefulWidget {
   MusicPlayView({Key key}) : super(key: key);
@@ -14,23 +14,12 @@ class MusicPlayView extends StatefulWidget {
 }
 
 class _MusicPlayViewState extends State<MusicPlayView> {
-  AudioPlayer audioPlayer = AudioPlayer();
-
-  play() async {
-    int result = await audioPlayer.play(
-        "https://luan.xyz/files/audio/nasa_on_a_mission.mp3");
-    if (result == 1) {
-      // success
-      print('play success');
-    } else {
-      print('play failed');
-    }
-  }
+  bool isPlaying = theMusicController.isPlaying;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _PlayPanel(playBtnClicked: play),
+      bottomNavigationBar: _PlayPanel(),
       appBar: AppBar(
         backgroundColor:
             Theme.of(context).colorScheme.background,
@@ -115,11 +104,9 @@ class _PlayPanel extends StatelessWidget {
   const _PlayPanel({
     Key key,
     this.value = 0.5,
-    this.playBtnClicked,
   }) : super(key: key);
 
   final double value;
-  final Function playBtnClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -166,10 +153,17 @@ class _PlayPanel extends StatelessWidget {
                     height: 75,
                     child: IconButton(
                       icon: Icon(
-                        Icons.play_arrow_outlined,
+                        Provider.of<MusicPlayModel>(context,
+                                    listen: true)
+                                .isPlaying
+                            ? Icons.pause_circle_outline
+                            : Icons.play_circle_outline,
                         size: 50,
                       ),
-                      onPressed: playBtnClicked,
+                      onPressed: () =>
+                          Provider.of<MusicPlayModel>(context,
+                                  listen: false)
+                              .togglePlay(),
                     ),
                   ),
                   SizedBox(

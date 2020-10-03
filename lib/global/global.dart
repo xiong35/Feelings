@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:feelings/global/theMusicController.dart';
 
 class Profile {
   String locale = 'auto';
@@ -45,6 +46,15 @@ class ThemeModel extends ProfileChangeNotifier {
 
   set theme(String newTheme) {
     _profile.theme = newTheme;
+    notifyListeners();
+  }
+}
+
+class MusicPlayModel extends ChangeNotifier {
+  bool get isPlaying => theMusicController.isPlaying;
+
+  togglePlay({String url = ""}) {
+    theMusicController.togglePlay(url: url);
     notifyListeners();
   }
 }

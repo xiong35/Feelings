@@ -22,6 +22,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleModel()),
         ChangeNotifierProvider(create: (_) => ThemeModel()),
+        ChangeNotifierProvider(create: (_) => MusicPlayModel()),
       ],
       child: Feelings(),
     ),
