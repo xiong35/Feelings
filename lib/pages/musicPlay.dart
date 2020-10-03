@@ -34,14 +34,17 @@ class MusicPlayView extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            child: ClipRRect(
-              child: Image.network(
-                "http://static.xiong35.cn/image/icons/open-doodles/5.png",
-                fit: BoxFit.cover,
-                height: 240.0,
-                width: 240.0,
+            child: Hero(
+              tag: "musicCover",
+              child: ClipRRect(
+                child: Image.network(
+                  "http://static.xiong35.cn/image/icons/open-doodles/15.png",
+                  fit: BoxFit.cover,
+                  height: 240.0,
+                  width: 240.0,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-              borderRadius: BorderRadius.circular(8),
             ),
             padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
           ),

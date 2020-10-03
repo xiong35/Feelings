@@ -49,12 +49,15 @@ class AlbumItem extends StatelessWidget {
         ),
       ),
       child: GestureDetector(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            coverUrl,
-            fit: BoxFit.cover,
+        child: Hero(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              coverUrl,
+              fit: BoxFit.cover,
+            ),
           ),
+          tag: "albumCover$id",
         ),
         onTap: () => Navigator.pushNamed(
           context,

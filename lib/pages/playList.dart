@@ -93,14 +93,17 @@ class PlaylistProfile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              "http://static.xiong35.cn/image/icons/open-doodles/3.png",
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+          Hero(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                "http://static.xiong35.cn/image/icons/open-doodles/3.png",
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
             ),
+            tag: "albumCover$id",
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

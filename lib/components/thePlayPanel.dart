@@ -15,10 +15,11 @@ class ThePlayPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       child: ListTile(
-        leading: ExcludeSemantics(
+        leading: Hero(
           child: ClipOval(
             child: musicCover,
           ),
+          tag: "musicCover",
         ),
         title: Text(musicName),
         subtitle: Text(authorName),
