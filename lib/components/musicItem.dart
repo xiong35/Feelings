@@ -21,6 +21,8 @@ class MusicItem extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
+      onTap: () => Navigator.pushNamed(context, "musicPlay",
+          arguments: {'id': id}),
       tileColor: colorScheme.background,
       title: Text(name),
       subtitle: Text(artist),

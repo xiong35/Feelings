@@ -142,32 +142,3 @@ class PlaylistProfile extends StatelessWidget {
     );
   }
 }
-
-class PlayistPopupBtn extends StatelessWidget {
-  const PlayistPopupBtn({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      itemBuilder: (context) => <PopupMenuItem>[
-        PopupMenuItem(
-          value: "new",
-          child: ListTile(
-            leading: Icon(Icons.add_box_outlined),
-            title: Text(FeelingsLocalization.of(context)
-                .userPopupMenuNew),
-          ),
-        ),
-        PopupMenuItem(
-          value: "manage",
-          child: ListTile(
-            leading: Icon(Icons.format_list_bulleted),
-            title: Text(FeelingsLocalization.of(context)
-                .userPopupMenuManage),
-          ),
-        ),
-      ],
-      onSelected: (value) => print(value),
-    );
-  }
-}

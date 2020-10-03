@@ -8,10 +8,12 @@ import 'package:feelings/global/global.dart';
 
 import 'package:feelings/pages/mainPage.dart';
 import 'package:feelings/pages/playList.dart';
+import 'package:feelings/pages/musicPlay.dart';
 
 var routes = <String, WidgetBuilder>{
   "mainPage": (context) => MainPage(),
   "playlist": (context) => PlaylistView(),
+  "musicPlay": (context) => MusicPlayView(),
 };
 
 void main() {
@@ -46,6 +48,7 @@ class _FeelingsState extends State<Feelings> {
       theme: FeelingsThemeData.getTheme(
         Provider.of<ThemeModel>(context, listen: true).theme,
       ),
+      // initialRoute: "mainPage",
       initialRoute: "mainPage",
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
