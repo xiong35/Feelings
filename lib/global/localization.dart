@@ -67,6 +67,26 @@ class FeelingsLocalization {
   String get settingsThemeOpsLight {
     return isZh ? "浅色" : "Light";
   }
+
+  String get userProfileFollowing {
+    return isZh ? "关注" : "Following";
+  }
+
+  String get userProfileFans {
+    return isZh ? "粉丝" : "Fans";
+  }
+
+  String get userPlaylists {
+    return isZh ? "创建的歌单" : "Playlists";
+  }
+
+  String get userPopupMenuNew {
+    return isZh ? "创建新歌单" : " Create Playlists";
+  }
+
+  String get userPopupMenuManage {
+    return isZh ? "管理歌单" : "Manage Playlists";
+  }
 }
 
 class FeelingsLocalizationsDelegate

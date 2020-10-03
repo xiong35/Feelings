@@ -75,19 +75,41 @@ class HomeView extends StatelessWidget {
             children: carouselCards,
           ),
           PartDevider(height: 8),
-          HeadingWithIcon(
-            heading: FeelingsLocalization.of(context)
-                .homeRecommendedSongs,
-            iconData: Icons.refresh,
-            onPressed: () {},
+          ListTile(
+            trailing: IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 28,
+              ),
+              onPressed: () {},
+            ),
+            title: Text(
+              FeelingsLocalization.of(context)
+                  .homeRecommendedSongs,
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
           ),
           ...songs,
           PartDevider(height: 8),
-          HeadingWithIcon(
-            heading: FeelingsLocalization.of(context)
-                .homeRecommendedPlaylists,
-            iconData: Icons.refresh,
-            onPressed: () {},
+          ListTile(
+            trailing: IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 28,
+              ),
+              onPressed: () {},
+            ),
+            title: Text(
+              FeelingsLocalization.of(context)
+                  .homeRecommendedPlaylists,
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
           ),
           AlbumList(albums: albums),
           PartDevider(height: 8),

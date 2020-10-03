@@ -8,10 +8,10 @@ class AlbumList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 18,
-      crossAxisSpacing: 18,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      crossAxisCount: 3,
+      mainAxisSpacing: 14,
+      crossAxisSpacing: 14,
+      padding: const EdgeInsets.symmetric(horizontal: 22),
       childAspectRatio: 1,
       children: albums,
       shrinkWrap: true,
@@ -38,17 +38,13 @@ class AlbumItem extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: GridTileBar(
-            backgroundColor: Colors.black45,
-            subtitle: Text(
-              name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.playlist_add),
-              onPressed: () {},
-              color: Theme.of(context).colorScheme.onPrimary,
-            )),
+          backgroundColor: Colors.black45,
+          subtitle: Text(
+            name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),

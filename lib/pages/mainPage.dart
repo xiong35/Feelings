@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:feelings/pages/tabs/settings.dart';
-import 'package:feelings/components/thePlayPanel.dart';
 import 'package:feelings/pages/tabs/home.dart';
+import 'package:feelings/pages/tabs/myMusic.dart';
+import 'package:feelings/components/thePlayPanel.dart';
 import 'package:feelings/global/localization.dart';
 
 const int tabCount = 4;
@@ -119,7 +120,7 @@ class _MainPageState extends State<MainPage>
 
   List<Widget> _buildTabViews() {
     return [
-      Text("test"),
+      MineView(),
       HomeView(),
       Text("test"),
       SettingsView(),
