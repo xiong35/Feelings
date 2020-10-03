@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
-import 'package:feelings/components/thePlayPanel.dart';
-import 'package:feelings/components/utils.dart';
-import 'package:feelings/components/musicItem.dart';
 
-class MusicPlayView extends StatelessWidget {
-  const MusicPlayView({
-    Key key,
-  }) : super(key: key);
+class MusicPlayView extends StatefulWidget {
+  MusicPlayView({Key key}) : super(key: key);
+
+  @override
+  _MusicPlayViewState createState() => _MusicPlayViewState();
+}
+
+class _MusicPlayViewState extends State<MusicPlayView> {
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  play() async {
+    int result = await audioPlayer.play(
+        "https://luan.xyz/files/audio/nasa_on_a_mission.mp3");
+    if (result == 1) {
+      // success
+      print('play success');
+    } else {
+      print('play failed');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> args =
-        ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
-      bottomNavigationBar: _PlayPanel(),
+      bottomNavigationBar: _PlayPanel(playBtnClicked: play),
       appBar: AppBar(
         backgroundColor:
             Theme.of(context).colorScheme.background,
@@ -104,9 +115,11 @@ class _PlayPanel extends StatelessWidget {
   const _PlayPanel({
     Key key,
     this.value = 0.5,
+    this.playBtnClicked,
   }) : super(key: key);
 
   final double value;
+  final Function playBtnClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +169,7 @@ class _PlayPanel extends StatelessWidget {
                         Icons.play_arrow_outlined,
                         size: 50,
                       ),
-                      onPressed: () {},
+                      onPressed: playBtnClicked,
                     ),
                   ),
                   SizedBox(
