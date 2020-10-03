@@ -87,6 +87,14 @@ class FeelingsLocalization {
   String get userPopupMenuManage {
     return isZh ? "管理歌单" : "Manage Playlists";
   }
+
+  String get playlistTitle {
+    return isZh ? "歌单" : "Playlist";
+  }
+
+  String get playlistPlayAll {
+    return isZh ? "播放全部" : "Play All";
+  }
 }
 
 class FeelingsLocalizationsDelegate

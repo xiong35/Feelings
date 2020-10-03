@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
+import 'package:feelings/components/thePlayPanel.dart';
 import 'package:feelings/components/utils.dart';
+import 'package:feelings/components/musicItem.dart';
 
 class PlaylistView extends StatelessWidget {
   const PlaylistView({
@@ -16,20 +18,63 @@ class PlaylistView extends StatelessWidget {
     Map<String, dynamic> args =
         ModalRoute.of(context).settings.arguments;
 
+    final List<MusicItem> songs = <MusicItem>[
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+      MusicItem(
+          name: 'song name',
+          artist: 'artist',
+          coverUrl:
+              'http://static.xiong35.cn/image/icons/open-doodles/28.png'),
+    ];
+
     return Scaffold(
+      bottomNavigationBar: ThePlayPanel(
+        authorName: "author",
+        musicName: "Feelings",
+        musicCover: Image.network(
+          "http://static.xiong35.cn/image/icons/open-doodles/15.png",
+          fit: BoxFit.cover,
+          height: 50.0,
+          width: 50.0,
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        title: Text(
+          FeelingsLocalization.of(context).playlistTitle,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
+        elevation: 1,
+      ),
       body: ListView(
         children: [
-          PlaylistProfile(id: args['id']),
+          PlaylistProfile(id: args["id"]),
           PartDevider(),
           ListTile(
+            leading: IconButton(
+              icon: Icon(Icons.play_arrow_outlined),
+              onPressed: () {},
+            ),
             title: Text(
-              FeelingsLocalization.of(context).userPlaylists,
+              FeelingsLocalization.of(context).playlistPlayAll,
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
-            trailing: PlayistPopupBtn(),
+            onTap: () {},
           ),
+          ...songs,
         ],
       ),
     );
@@ -43,16 +88,15 @@ class PlaylistProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 30, 16, 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ClipOval(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              "http://static.xiong35.cn/image/icons/open-doodles/2.png",
+              "http://static.xiong35.cn/image/icons/open-doodles/3.png",
               height: 100,
               width: 100,
               fit: BoxFit.cover,
@@ -75,11 +119,13 @@ class PlaylistProfile extends StatelessWidget {
                     child: Image.network(
                       "http://static.xiong35.cn/image/icons/open-doodles/2.png",
                       fit: BoxFit.cover,
-                      width: 50,
-                      height: 50,
+                      width: 32,
+                      height: 32,
                     ),
                   ),
-                  Text("User Name"),
+                  SizedBox(width: 12),
+                  Text("User Name",
+                      style: TextStyle(fontSize: 16)),
                 ],
               ),
               SizedBox(height: 14),

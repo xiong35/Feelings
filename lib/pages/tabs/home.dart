@@ -47,21 +47,25 @@ class HomeView extends StatelessWidget {
 
     final List<Widget> albums = [
       AlbumItem(
+        id: 33,
         coverUrl:
             'http://static.xiong35.cn/image/icons/open-doodles/29.png',
         name: "an album",
       ),
       AlbumItem(
+        id: 33,
         coverUrl:
             'http://static.xiong35.cn/image/icons/open-doodles/29.png',
         name: "an album",
       ),
       AlbumItem(
+        id: 33,
         coverUrl:
             'http://static.xiong35.cn/image/icons/open-doodles/29.png',
         name: "an album",
       ),
       AlbumItem(
+        id: 33,
         coverUrl:
             'http://static.xiong35.cn/image/icons/open-doodles/29.png',
         name: "an album",

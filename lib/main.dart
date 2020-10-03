@@ -46,7 +46,7 @@ class _FeelingsState extends State<Feelings> {
       theme: FeelingsThemeData.getTheme(
         Provider.of<ThemeModel>(context, listen: true).theme,
       ),
-      initialRoute: "playlist",
+      initialRoute: "mainPage",
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
