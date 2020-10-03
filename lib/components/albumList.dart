@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:feelings/pages/playList.dart';
+
 class AlbumList extends StatelessWidget {
   const AlbumList({Key key, this.albums}) : super(key: key);
 
@@ -41,16 +43,23 @@ class AlbumItem extends StatelessWidget {
           backgroundColor: Colors.black45,
           subtitle: Text(
             name,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
-        child: Image.network(
-          coverUrl,
-          fit: BoxFit.cover,
+      child: GestureDetector(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(
+            coverUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
+        onTap: () => Navigator.pushNamed(
+          context,
+          "playlist",
+          arguments: {'id': id},
         ),
       ),
     );

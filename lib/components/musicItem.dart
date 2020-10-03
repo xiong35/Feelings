@@ -25,7 +25,7 @@ class MusicItem extends StatelessWidget {
       title: Text(name),
       subtitle: Text(artist),
       leading: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         child: Image.network(
           coverUrl,
           fit: BoxFit.cover,

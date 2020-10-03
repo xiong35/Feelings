@@ -3,9 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:feelings/global/colors.dart';
-import 'package:feelings/pages/mainPage.dart';
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
+
+import 'package:feelings/pages/mainPage.dart';
+import 'package:feelings/pages/playList.dart';
+
+var routes = <String, WidgetBuilder>{
+  "mainPage": (context) => MainPage(),
+  "playlist": (context) => PlaylistView(),
+};
 
 void main() {
   runApp(
@@ -39,7 +46,7 @@ class _FeelingsState extends State<Feelings> {
       theme: FeelingsThemeData.getTheme(
         Provider.of<ThemeModel>(context, listen: true).theme,
       ),
-      home: MainPage(),
+      initialRoute: "playlist",
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -50,6 +57,7 @@ class _FeelingsState extends State<Feelings> {
         const Locale('zh', 'CN'), // Hebrew, no country code
       ],
       locale: context.watch<LocaleModel>().getLocale(),
+      routes: routes,
     );
   }
 }
