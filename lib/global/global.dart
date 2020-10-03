@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:feelings/global/theMusicController.dart';
 
@@ -84,6 +85,25 @@ class MusicPlayModel extends ChangeNotifier {
     theMusicController.audioPlayer.seek(_curDuration * percent);
     notifyListeners();
   }
+
+  int togglePlayMode() {
+    int newMode = (theMusicController.curPlayMode + 1) % 3;
+    theMusicController.curPlayMode = newMode;
+
+    if (newMode == 1) {
+      theMusicController.audioPlayer
+          .setReleaseMode(ReleaseMode.LOOP);
+    } else {
+      theMusicController.audioPlayer
+          .setReleaseMode(ReleaseMode.STOP);
+    }
+
+    notifyListeners();
+
+    return newMode;
+  }
+
+  get playMode => theMusicController.curPlayMode;
 
   Duration _curDuration = Duration.zero;
   Duration _curPosition = Duration.zero;

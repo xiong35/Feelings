@@ -95,6 +95,18 @@ class FeelingsLocalization {
   String get playlistPlayAll {
     return isZh ? "播放全部" : "Play All";
   }
+
+  String get playModeLoopAll {
+    return isZh ? "全部循环" : "Loop All";
+  }
+
+  String get playModeLoopSingle {
+    return isZh ? "单曲循环" : "Play Single";
+  }
+
+  String get playModeShuffle {
+    return isZh ? "随机播放" : "Shuffle";
+  }
 }
 
 class FeelingsLocalizationsDelegate

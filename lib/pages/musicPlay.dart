@@ -6,16 +6,22 @@ import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
 import 'package:feelings/global/theMusicController.dart';
 
+const iconDataList = [
+  Icons.repeat,
+  Icons.repeat_one,
+  Icons.shuffle
+];
+
 class MusicPlayView extends StatefulWidget {
   MusicPlayView({Key key}) : super(key: key);
 
   @override
   _MusicPlayViewState createState() => _MusicPlayViewState();
+
+  int togglePlayMode() {}
 }
 
 class _MusicPlayViewState extends State<MusicPlayView> {
-  bool isPlaying = theMusicController.isPlaying;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +112,19 @@ class _PlayPanel extends StatelessWidget {
     // this.value = 0.5,
   }) : super(key: key);
 
-  // final double value;
+  String togglePlayMode(BuildContext context) {
+    var tipList = [
+      FeelingsLocalization.of(context).playModeLoopAll,
+      FeelingsLocalization.of(context).playModeLoopSingle,
+      FeelingsLocalization.of(context).playModeShuffle,
+    ];
+
+    int newMode =
+        Provider.of<MusicPlayView>(context, listen: false)
+            .togglePlayMode();
+
+    return tipList[newMode];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,10 +173,38 @@ class _PlayPanel extends StatelessWidget {
                     height: 75,
                     child: IconButton(
                       icon: Icon(
-                        Icons.shuffle,
+                        iconDataList[musicPlayModel.playMode],
                         size: 30,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        int newMode =
+                            musicPlayModel.togglePlayMode();
+                        var tipList = [
+                          FeelingsLocalization.of(context)
+                              .playModeLoopAll,
+                          FeelingsLocalization.of(context)
+                              .playModeLoopSingle,
+                          FeelingsLocalization.of(context)
+                              .playModeShuffle,
+                        ];
+                        Scaffold.of(context)
+                            .hideCurrentSnackBar();
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              tipList[newMode],
+                              textAlign: TextAlign.center,
+                            ),
+                            width: 120,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .secondary,
+                            elevation: 3,
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(

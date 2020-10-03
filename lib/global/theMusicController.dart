@@ -8,7 +8,8 @@ class TheMusicController {
 
   factory TheMusicController() => _singleton;
 
-  final AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer()
+    ..setReleaseMode(ReleaseMode.STOP);
 
   bool get isPlaying {
     return audioPlayer.state == AudioPlayerState.PLAYING;
@@ -34,6 +35,9 @@ class TheMusicController {
         break;
     }
   }
+
+  final playMode = ["loopAll", "loopSingle", "shuffle"];
+  int curPlayMode = 0;
 }
 
 var theMusicController = TheMusicController();
