@@ -87,19 +87,14 @@ class TheMusicController {
       }
     }
 
+    addWithoutDuplicates(
+      randList,
+      musicList.length,
+      type,
+    );
     if (type == SongChangeType.forward) {
-      addWithoutDuplicates(
-        randList,
-        musicList.length,
-        type,
-      );
       randList.removeAt(0);
     } else {
-      addWithoutDuplicates(
-        randList,
-        musicList.length,
-        type,
-      );
       randList.removeAt(randList.length - 1);
     }
 
