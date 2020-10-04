@@ -21,8 +21,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   Banners _banners;
   List<Widget> get carouselCards {
-    print(_banners);
-
     if (_banners == null) {
       return [
         CarouselCard(

@@ -2,13 +2,13 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:feelings/global/theMusicController.dart';
 
-class Profile {
+class GlobalProfile {
   String locale = 'auto';
   String theme = "light";
 }
 
 class Global {
-  static Profile profile = Profile();
+  static GlobalProfile profile = GlobalProfile();
 
   static saveProfile() => {
         print(
@@ -18,7 +18,7 @@ class Global {
 }
 
 class ProfileChangeNotifier extends ChangeNotifier {
-  Profile get _profile => Global.profile;
+  GlobalProfile get _profile => Global.profile;
 
   @override
   void notifyListeners() {

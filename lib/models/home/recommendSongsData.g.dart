@@ -7,7 +7,11 @@ part of 'recommendSongsData.dart';
 // **************************************************************************
 
 RecommendSongsData _$RecommendSongsDataFromJson(Map<String, dynamic> json) {
-  return RecommendSongsData()..dailySongs = json['dailySongs'] as List;
+  return RecommendSongsData()
+    ..dailySongs = (json['dailySongs'] as List)
+        ?.map(
+            (e) => e == null ? null : Song.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$RecommendSongsDataToJson(RecommendSongsData instance) =>

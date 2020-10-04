@@ -16,5 +16,7 @@ export 'music/song.dart';
 export 'user/login.dart';
 export 'user/profile.dart';
 export 'user/user.dart';
+export 'user/userLv.dart';
+export 'user/userLvData.dart';
 export 'user/userPlaylists.dart';
 export 'user/userPoint.dart';
