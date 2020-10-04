@@ -1,6 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:math';
 
+import 'package:feelings/global/http.dart';
+import 'package:feelings/models/index.dart';
+
 enum SongChangeType {
   forward,
   backward,
@@ -57,7 +60,7 @@ class TheMusicController {
       2 shuffle   */
 
   List<int> musicList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  int curMusicInd = 0;
+  int curSongId = 0;
   List randList = [];
   int randSeed = Random().nextInt(RAND_RANGE);
   Random r = Random();
@@ -66,14 +69,15 @@ class TheMusicController {
     Function method =
         curPlayMode == 2 ? getRandSong : getOrderedSong;
 
-    curMusicInd = method(type);
+    curSongId = method(type);
 
-    print(curMusicInd);
+    print(curSongId);
   }
 
   int getOrderedSong(SongChangeType type) {
     int step = type == SongChangeType.forward ? 1 : -1;
-    return (curMusicInd + step) % musicList.length;
+    int ind = musicList.indexOf(curSongId);
+    return (ind + step) % musicList.length;
   }
 
   int getRandSong(SongChangeType type) {
@@ -99,6 +103,14 @@ class TheMusicController {
     }
 
     return randList[RAND_POINTER];
+  }
+
+  Song curSong;
+  String curLyric;
+  String curUrl;
+
+  void refreshBySong(Song song, [int playlistId]) {
+    // GET(path);
   }
 }
 

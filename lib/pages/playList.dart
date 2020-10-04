@@ -11,7 +11,7 @@ import 'package:feelings/components/thePlayPanel.dart';
 import 'package:feelings/components/utils.dart';
 import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/models/index.dart';
-import 'package:feelings/global/http.dart';
+import 'package:feelings/global/requests.dart';
 
 class PlaylistView extends StatefulWidget {
   PlaylistView({Key key, int limit}) : super(key: key);
@@ -60,16 +60,10 @@ class _PlaylistViewState extends State<PlaylistView> {
 
     Map<String, dynamic> args =
         ModalRoute.of(context).settings.arguments;
-    print(args["id"]);
 
-    GET("/playlist/detail", query: {"id": "${args['id']}"})
-        .then(
-      (value) => setState(
-        () => _playlistContentData = PlaylistContent.fromJson(
-          json.decode(value),
-        ).playlist,
-      ),
-    );
+    Requests.getPlaylistContentData("${args['id']}").then(
+        (value) =>
+            setState(() => _playlistContentData = value));
   }
 
   @override

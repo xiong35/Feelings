@@ -28,3 +28,4 @@
 ## playView
 
 - 获取歌词: `/lyric?id=33894312`
+- 歌曲 url: `/song/url?id=33894312`

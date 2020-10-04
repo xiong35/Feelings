@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 
 import 'package:feelings/components/carousel.dart';
 import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/components/utils.dart';
 import 'package:feelings/components/albumList.dart';
 import 'package:feelings/global/localization.dart';
-import 'package:feelings/global/http.dart';
+import 'package:feelings/global/requests.dart';
 import 'package:feelings/models/index.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,7 +19,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Banners _banners;
+  List<Banner> _banners;
   List<Widget> get carouselCards {
     if (_banners == null) {
       return [
@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
         )
       ];
     }
-    return _banners.banners
+    return _banners
         .map(
           (e) => CarouselCard(
             asset: NetworkImage(e.imageUrl),
@@ -103,21 +103,12 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
-    GET("/banner").then(
-      (v) => setState(() => _banners = Banners.fromJson(
-            json.decode(v),
-          )),
-    );
-    GET("/artist/top/song", query: {"id": "6452"}).then(
-      (v) => setState(() => _songs = HotSongs.fromJson(
-            json.decode(v),
-          ).songs),
-    );
-    GET("/top/playlist/highquality").then(
-      (v) => setState(() => _playlists = HotPlaylist.fromJson(
-            json.decode(v),
-          ).playlists),
-    );
+    Requests.getBanners()
+        .then((value) => setState(() => _banners = value));
+    Requests.getRecommendedSongs()
+        .then((value) => setState(() => _songs = value));
+    Requests.getRecommendedPlaylists()
+        .then((value) => setState(() => _playlists = value));
 
     super.initState();
   }

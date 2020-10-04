@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:feelings/global/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import 'package:feelings/global/requests.dart';
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
 import 'package:feelings/components/utils.dart';
@@ -72,30 +72,14 @@ class _MineViewState extends State<MineView> {
 
   @override
   void initState() {
-    GET("/user/playlist", query: {"uid": "32953014"}).then(
-      (value) => setState(
-        () => _playlists = UserPlaylists.fromJson(
-          json.decode(value),
-        ).playlist,
-      ),
-    );
-    GET("/user/detail", query: {"uid": "32953014"}).then(
-      (value) => setState(
-        () => _userProfile = User.fromJson(
-          json.decode(value),
-        ).profile,
-      ),
-    );
-    GET("/user/level", query: {
-      "cookie":
-          "MUSIC_U=dfb63537bb362fdf9ba6d8198d50f82ea47502cfcd8f45744cc401092d75f8e833a649814e309366; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__remember_me=true; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__csrf=253e92d60137c270a17f14b346ad257a; Expires=Mon, 19-Oct-2020 11:14:45 GMT; Path=/"
-    }).then(
-      (value) => setState(
-        () => _userLv = UserLv.fromJson(
-          json.decode(value),
-        ).data,
-      ),
-    );
+    Requests.getUserPlaylists("32953014")
+        .then((value) => setState(() => _playlists = value));
+    Requests.getUserProfile("32953014")
+        .then((value) => setState(() => _userProfile = value));
+    Requests.getUserLv(
+            "MUSIC_U=dfb63537bb362fdf9ba6d8198d50f82ea47502cfcd8f45744cc401092d75f8e833a649814e309366; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__remember_me=true; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__csrf=253e92d60137c270a17f14b346ad257a; Expires=Mon, 19-Oct-2020 11:14:45 GMT; Path=/")
+        .then((value) => setState(() => _userLv = value));
+
     super.initState();
   }
 
