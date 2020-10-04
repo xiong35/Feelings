@@ -14,7 +14,9 @@ import 'package:feelings/models/index.dart';
 import 'package:feelings/global/http.dart';
 
 class PlaylistView extends StatefulWidget {
-  PlaylistView({Key key}) : super(key: key);
+  PlaylistView({Key key, int limit}) : super(key: key);
+
+  int limit = 999;
 
   @override
   _PlaylistViewState createState() => _PlaylistViewState();
@@ -43,22 +45,30 @@ class _PlaylistViewState extends State<PlaylistView> {
           ),
         )
         .toList()
-        .sublist(0, min(_playlistContentData.tracks.length, 5));
+        .sublist(
+            0,
+            min(_playlistContentData.tracks.length,
+                widget.limit));
   }
 
   bool get haveData => _playlistContentData != null;
 
   @override
-  void initState() {
-    GET("/playlist/detail", query: {"id": "24381616"}).then(
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    Map<String, dynamic> args =
+        ModalRoute.of(context).settings.arguments;
+    print(args["id"]);
+
+    GET("/playlist/detail", query: {"id": "${args['id']}"})
+        .then(
       (value) => setState(
         () => _playlistContentData = PlaylistContent.fromJson(
           json.decode(value),
         ).playlist,
       ),
     );
-
-    super.initState();
   }
 
   @override
@@ -136,8 +146,8 @@ class PlaylistProfile extends StatelessWidget {
                 data == null
                     ? "http://static.xiong35.cn/image/icons/open-doodles/3.png"
                     : data.coverImgUrl,
-                height: 100,
-                width: 100,
+                height: 110,
+                width: 110,
                 fit: BoxFit.cover,
               ),
             ),
@@ -146,11 +156,15 @@ class PlaylistProfile extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                data == null ? "---" : data.name,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 200),
+                child: Text(
+                  data == null ? "---" : data.name,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               SizedBox(height: 12),
@@ -175,19 +189,27 @@ class PlaylistProfile extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 12),
-                  Text(
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 150),
+                    child: Text(
                       data == null
                           ? "---"
                           : data.creator.nickname,
-                      style: TextStyle(fontSize: 16)),
+                      style: TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 14),
-              Text(
-                data == null ? "---" : data.description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 200),
+                child: Text(
+                  data == null ? "---" : data.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                ),
               )
             ],
           ),
