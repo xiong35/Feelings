@@ -13,6 +13,8 @@ export 'music/playlistContent.dart';
 export 'music/playlistContentData.dart';
 export 'music/playlistInfo.dart';
 export 'music/song.dart';
+export 'music/songUrlData.dart';
+export 'music/songUrls.dart';
 export 'user/login.dart';
 export 'user/profile.dart';
 export 'user/user.dart';
