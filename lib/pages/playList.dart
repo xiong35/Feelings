@@ -156,6 +156,14 @@ class PlaylistProfile extends StatelessWidget {
               SizedBox(height: 12),
               Row(
                 children: [
+                  Text("By:",
+                      style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface,
+                        fontSize: 14,
+                      )),
+                  SizedBox(width: 14),
                   ClipOval(
                     child: Image.network(
                       data == null

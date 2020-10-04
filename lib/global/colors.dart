@@ -64,7 +64,7 @@ class FeelingsThemeData {
     onError: _lightFillColor,
     onPrimary: _darkFillColor,
     onSecondary: _darkFillColor,
-    onSurface: _darkFillColor,
+    onSurface: Color(0xFF342E30),
     brightness: Brightness.light,
   );
 
@@ -80,7 +80,7 @@ class FeelingsThemeData {
     onError: _darkFillColor,
     onPrimary: _darkFillColor,
     onSecondary: _darkFillColor,
-    onSurface: _darkFillColor,
+    onSurface: Color(0xFFCBCCCC),
     brightness: Brightness.dark,
   );
 

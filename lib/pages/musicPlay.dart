@@ -17,8 +17,6 @@ class MusicPlayView extends StatefulWidget {
 
   @override
   _MusicPlayViewState createState() => _MusicPlayViewState();
-
-  int togglePlayMode() {}
 }
 
 class _MusicPlayViewState extends State<MusicPlayView> {
@@ -65,38 +63,7 @@ class _MusicPlayViewState extends State<MusicPlayView> {
           Expanded(
             child: ListView(
               children: [
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
-                Text("test"),
+                for (int i = 0; i < 100; i++) Text("test"),
               ],
             ),
           ),
@@ -109,7 +76,6 @@ class _MusicPlayViewState extends State<MusicPlayView> {
 class _PlayPanel extends StatelessWidget {
   const _PlayPanel({
     Key key,
-    // this.value = 0.5,
   }) : super(key: key);
 
   String togglePlayMode(BuildContext context) {
@@ -120,7 +86,7 @@ class _PlayPanel extends StatelessWidget {
     ];
 
     int newMode =
-        Provider.of<MusicPlayView>(context, listen: false)
+        Provider.of<MusicPlayModel>(context, listen: false)
             .togglePlayMode();
 
     return tipList[newMode];
