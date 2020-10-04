@@ -27,10 +27,11 @@ class _PlaylistViewState extends State<PlaylistView> {
   List<Widget> get songs {
     if (!haveData) {
       return [
-        for (var i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
           MusicItem(
               name: 'song name',
               artist: 'artist',
+              id: i,
               coverUrl:
                   'http://static.xiong35.cn/image/icons/open-doodles/$i.png'),
       ];
@@ -205,7 +206,11 @@ class PlaylistProfile extends StatelessWidget {
               ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 200),
                 child: Text(
-                  data == null ? "---" : data.description,
+                  data == null
+                      ? "---"
+                      : (data.description == null
+                          ? ""
+                          : data.description),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
