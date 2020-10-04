@@ -215,7 +215,10 @@ class _PlayPanel extends StatelessWidget {
                         Icons.skip_previous_outlined,
                         size: 40,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        theMusicController
+                            .cutSong(SongChangeType.backward);
+                      },
                     ),
                   ),
                   SizedBox(
@@ -244,7 +247,10 @@ class _PlayPanel extends StatelessWidget {
                         Icons.skip_next_outlined,
                         size: 40,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        theMusicController
+                            .cutSong(SongChangeType.forward);
+                      },
                     ),
                   ),
                   SizedBox(

@@ -96,10 +96,12 @@ class MusicPlayModel extends ChangeNotifier {
     } else {
       theMusicController.audioPlayer
           .setReleaseMode(ReleaseMode.STOP);
+      if (newMode == 2) {
+        theMusicController.randList.clear();
+      }
     }
 
     notifyListeners();
-
     return newMode;
   }
 
