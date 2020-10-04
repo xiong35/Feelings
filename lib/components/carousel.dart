@@ -173,14 +173,14 @@ class CarouselCard extends StatelessWidget {
   const CarouselCard({
     Key key,
     this.asset,
+    this.text,
   }) : super(key: key);
 
   final ImageProvider asset;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Container(
       margin: const EdgeInsets.all(_carouselItemMargin),
       child: Material(
@@ -202,10 +202,15 @@ class CarouselCard extends StatelessWidget {
                     child: Container(
                       child: Padding(
                         padding:
-                            EdgeInsets.fromLTRB(8, 5, 8, 5),
+                            EdgeInsets.fromLTRB(8, 5, 8, 7),
                         child: Text(
-                          'test',
-                          style: textTheme.caption,
+                          text,
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                       decoration: new BoxDecoration(
