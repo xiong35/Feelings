@@ -1,0 +1,10 @@
+{
+    "@import": "../user/profile.dart",
+    "name": "电影中的钢琴曲｜最会讲故事²",
+    "id": 156659312,
+    "coverImgUrl": "String",
+    "picUrl": "String",
+    "copywriter": "String",
+    "creator": "$profile",
+    "description": "String"
+}

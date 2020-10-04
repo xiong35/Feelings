@@ -1,0 +1,5 @@
+{
+    "@import": "../music/song.dart",
+    "code": 200,
+    "songs": "$[]song"
+}

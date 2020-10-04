@@ -1,0 +1,7 @@
+{
+    "@import": "../music/playlistInfo.dart",
+    "version": "0",
+    "more": false,
+    "playlist": "$[]playlistInfo",
+    "code": 200
+}

@@ -1,0 +1,4 @@
+{
+    "@import": "../music/song.dart",
+    "dailySongs": "$[]song"
+}
