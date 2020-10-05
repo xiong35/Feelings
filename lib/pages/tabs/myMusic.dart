@@ -73,15 +73,17 @@ class _MineViewState extends State<MineView> {
 
   @override
   void initState() {
-    Requests.getUserPlaylists("32953014")
-        .then((value) => setState(() => _playlists = value));
-    Requests.getUserProfile("32953014")
-        .then((value) => setState(() => _userProfile = value));
-    Requests.getUserLv(
-            "MUSIC_U=dfb63537bb362fdf9ba6d8198d50f82ea47502cfcd8f45744cc401092d75f8e833a649814e309366; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__remember_me=true; Expires=Mon, 19-Oct-2020 11:14:35 GMT; Path=/;__csrf=253e92d60137c270a17f14b346ad257a; Expires=Mon, 19-Oct-2020 11:14:45 GMT; Path=/")
-        .then((value) => setState(() => _userLv = value));
-
     super.initState();
+    if (Global.loginData?.cookie == null) return;
+
+    Requests.getUserPlaylists(
+            "${Global.loginData.profile.userId}")
+        .then((value) => setState(() => _playlists = value));
+    Requests.getUserProfile(
+            "${Global.loginData.profile.userId}")
+        .then((value) => setState(() => _userProfile = value));
+    Requests.getUserLv(Global.loginData.cookie)
+        .then((value) => setState(() => _userLv = value));
   }
 
   @override

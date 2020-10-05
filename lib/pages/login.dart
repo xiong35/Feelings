@@ -49,6 +49,7 @@ class _LoginViewState extends State<LoginView> {
     if (!haveErr) {
       Provider.of<LoginModel>(context, listen: false)
           .loginData = loginData;
+      gotoMainPage();
     }
   }
 

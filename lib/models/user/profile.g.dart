@@ -16,15 +16,18 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
     ..avatarUrl = json['avatarUrl'] as String
     ..signature = json['signature'] as String
     ..followeds = json['followeds'] as num
+    ..userId = json['userId'] as num
     ..follows = json['follows'] as num;
 }
 
-Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
+Map<String, dynamic> _$ProfileToJson(Profile instance) =>
+    <String, dynamic>{
       'avatarImgIdStr': instance.avatarImgIdStr,
       'avatarImgId': instance.avatarImgId,
       'gender': instance.gender,
       'nickname': instance.nickname,
       'vipType': instance.vipType,
+      'userId': instance.userId,
       'avatarUrl': instance.avatarUrl,
       'signature': instance.signature,
       'followeds': instance.followeds,
