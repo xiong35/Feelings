@@ -108,9 +108,19 @@ class MusicPlayModel extends ChangeNotifier {
   Duration _curDuration = Duration.zero;
   Duration _curPosition = Duration.zero;
 
-  void refreshBySong(Song song, [List<Song> playlist]) {
-    theMusicController.refreshBySong(song, playlist);
+  Future<int> refreshBySong(Song song,
+      [List<Song> playlist]) async {
+    int res =
+        await theMusicController.refreshBySong(song, playlist);
     notifyListeners();
+
+    return res;
+  }
+
+  Future<int> cutSong(SongChangeType type) async {
+    int res = await theMusicController.cutSong(type);
+    notifyListeners();
+    return res;
   }
 
   String get curSongUrl => theMusicController.curUrl == null

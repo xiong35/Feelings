@@ -20,13 +20,18 @@ class MusicPlayView extends StatefulWidget {
 }
 
 class _MusicPlayViewState extends State<MusicPlayView> {
+  bool isLoading = false;
+  void setLoading(bool state) {
+    setState(() => isLoading = state);
+  }
+
   @override
   Widget build(BuildContext context) {
     MusicPlayModel musicPlayModel =
         Provider.of<MusicPlayModel>(context, listen: true);
 
     return Scaffold(
-      bottomNavigationBar: _PlayPanel(),
+      bottomNavigationBar: _PlayPanel(setLoading: setLoading),
       appBar: AppBar(
         backgroundColor:
             Theme.of(context).colorScheme.background,
@@ -79,7 +84,16 @@ class _MusicPlayViewState extends State<MusicPlayView> {
 class _PlayPanel extends StatelessWidget {
   const _PlayPanel({
     Key key,
+    this.setLoading,
   }) : super(key: key);
+
+  final Function setLoading;
+
+  void onPressedWrapper(Function fn) async {
+    setLoading(true);
+    await fn();
+    setLoading(false);
+  }
 
   String togglePlayMode(BuildContext context) {
     var tipList = [
@@ -185,8 +199,10 @@ class _PlayPanel extends StatelessWidget {
                         size: 40,
                       ),
                       onPressed: () {
-                        theMusicController
-                            .cutSong(SongChangeType.backward);
+                        onPressedWrapper(() async {
+                          await musicPlayModel
+                              .cutSong(SongChangeType.backward);
+                        });
                       },
                     ),
                   ),
@@ -217,8 +233,10 @@ class _PlayPanel extends StatelessWidget {
                         size: 40,
                       ),
                       onPressed: () {
-                        theMusicController
-                            .cutSong(SongChangeType.forward);
+                        onPressedWrapper(() async {
+                          await musicPlayModel
+                              .cutSong(SongChangeType.forward);
+                        });
                       },
                     ),
                   ),

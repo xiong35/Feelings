@@ -53,11 +53,11 @@ class TheMusicController {
     }
   }
 
-  playCurSong(String _) async {
+  Future playCurSong() async {
     switch (audioPlayer.state) {
       case AudioPlayerState.PLAYING:
       case AudioPlayerState.PAUSED:
-        audioPlayer.stop();
+        await audioPlayer.stop();
         break;
       default:
         break;
@@ -85,14 +85,13 @@ class TheMusicController {
   int randSeed = Random().nextInt(RAND_RANGE);
   Random r = Random();
 
-  void cutSong(SongChangeType type) {
+  Future<int> cutSong(SongChangeType type) async {
     Function method =
         curPlayMode == 2 ? getRandSong : getOrderedSong;
 
     curSongIndex = method(type);
-    print(_musicList);
-    print(curSongIndex);
-    refreshBySong(curSong);
+
+    return await refreshBySong(curSong);
   }
 
   int getOrderedSong(SongChangeType type) {
@@ -130,24 +129,26 @@ class TheMusicController {
       _musicList == null ? null : _musicList[curSongIndex];
   String curUrl;
 
-  void refreshBySong(Song song, [List<Song> playlist]) {
+  Future<int> refreshBySong(Song song,
+      [List<Song> playlist]) async {
     if (song == null) {
       print("song is null");
-      return;
+      return 1;
     } else {
       print("not null: ${song.name}");
     }
-    Requests.getSongUrl("${song.id}")
-        .then((value) => curUrl = value)
-        .then(playCurSong);
-    Requests.getSongLyric("${song.id}")
-        .then((value) => curLyric = value);
 
     if (playlist != _musicList && playlist != null) {
       _musicList = playlist;
-      curSongIndex = _musicList.indexOf(song) - 1;
-      cutSong(SongChangeType.forward);
     }
+    curSongIndex = _musicList.indexOf(song);
+
+    Requests.getSongLyric("${song.id}")
+        .then((value) => curLyric = value);
+
+    curUrl = await Requests.getSongUrl("${song.id}");
+    await playCurSong();
+    return 0;
   }
 }
 
