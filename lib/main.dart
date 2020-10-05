@@ -20,7 +20,12 @@ var routes = <String, WidgetBuilder>{
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Global.initState();
+  try {
+    await Global.initState();
+  } catch (e) {
+    print("oops");
+    print(e);
+  }
   runApp(
     MultiProvider(
       providers: [
@@ -49,13 +54,16 @@ class _FeelingsState extends State<Feelings> {
 
   @override
   Widget build(BuildContext context) {
+    String initialRoute = "login";
+    if (Global.loginData?.cookie != null)
+      initialRoute = "mainPage";
     return MaterialApp(
       title: 'Feelings',
       theme: FeelingsThemeData.getTheme(
         Provider.of<ThemeModel>(context, listen: true).theme,
       ),
       // initialRoute: "mainPage",
-      initialRoute: "login",
+      initialRoute: initialRoute,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

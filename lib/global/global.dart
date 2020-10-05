@@ -22,6 +22,7 @@ class Global {
     File file = File('$documentsPath/global.json');
     if (!file.existsSync()) {
       file.createSync();
+      return;
     }
 
     String data = await file.readAsString();
@@ -32,9 +33,10 @@ class Global {
     Global.loginData = settings.loginData;
     Global.profile.theme = settings.theme;
     Global.profile.locale = settings.locale;
-    theMusicController.refreshBySong(
+    await theMusicController.refreshBySong(
         settings.curSong, settings.curPlaylist);
     theMusicController.curPlayMode = settings.curPlayMode;
+    await theMusicController.togglePlay();
   }
 
   static GlobalProfile profile = GlobalProfile();
@@ -87,6 +89,11 @@ class LoginModel extends ProfileChangeNotifier {
 
   set loginData(Login loginData) {
     Global.loginData = loginData;
+    notifyListeners();
+  }
+
+  quit() {
+    Global.loginData = null;
     notifyListeners();
   }
 }
@@ -163,6 +170,7 @@ class MusicPlayModel extends ChangeNotifier {
     }
 
     notifyListeners();
+    Global.saveProfile();
     return newMode;
   }
 

@@ -68,6 +68,22 @@ class FeelingsLocalization {
     return isZh ? "浅色" : "Light";
   }
 
+  String get settingsExit {
+    return isZh ? "退出登录" : "Exit";
+  }
+
+  String get settingsComfirmExit {
+    return isZh ? "您确定要退出登录吗?" : "Are you sure to EXIT?";
+  }
+
+  String get settingsComfirmYes {
+    return isZh ? "是" : "Yes";
+  }
+
+  String get settingsComfirmNo {
+    return isZh ? "否" : "No";
+  }
+
   String get userProfileFollowing {
     return isZh ? "关注" : "Following";
   }

@@ -6,9 +6,12 @@ import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({
+  SettingsView({
     Key key,
   }) : super(key: key);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,64 @@ class SettingsView extends StatelessWidget {
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+          ),
+          SizedBox(height: 40),
+          Center(
+            child: TextButton(
+              onPressed: () async {
+                await showDialog(
+                    context: context,
+                    child: AlertDialog(
+                      content: Text(
+                        FeelingsLocalization.of(context)
+                            .settingsComfirmExit,
+                      ),
+                      actions: [
+                        FlatButton(
+                          child: Text(
+                            FeelingsLocalization.of(context)
+                                .settingsComfirmYes,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondary),
+                          ),
+                          onPressed: () {
+                            Provider.of<LoginModel>(context,
+                                    listen: false)
+                                .quit();
+                            Navigator.pushNamed(
+                                context, "mainPage");
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            FeelingsLocalization.of(context)
+                                .settingsComfirmNo,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context,
+                                    rootNavigator: true)
+                                .pop();
+                          },
+                        ),
+                      ],
+                    ));
+              },
+              child: Text(
+                FeelingsLocalization.of(context).settingsExit,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondaryVariant,
+                ),
+              ),
             ),
           ),
         ],

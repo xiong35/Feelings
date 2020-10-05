@@ -139,6 +139,10 @@ class TheMusicController {
     }
     curSongIndex = _musicList.indexOf(song);
 
+    if (curSongIndex == -1) {
+      curSongIndex = 0;
+    }
+
     Requests.getSongLyric("${song.id}")
         .then((value) => curLyric = value);
 

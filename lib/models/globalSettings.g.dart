@@ -22,12 +22,11 @@ GlobalSettings _$GlobalSettingsFromJson(
         ? null
         : Song.fromJson(json['curSong'] as Map<String, dynamic>)
     // ..curPlaylist = json['curPlaylist'] as List<Song>;
-    ..curPlaylist = json['curPlaylist'] == null
-        ? null
-        : json['curPlaylist']
-            .map(
-                (e) => Song.fromJson(e as Map<String, dynamic>))
-            .toList();
+    ..curPlaylist = (json['curPlaylist'] as List)
+        ?.map((e) => e == null
+            ? null
+            : Song.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$GlobalSettingsToJson(
