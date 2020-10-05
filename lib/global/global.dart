@@ -14,7 +14,7 @@ class GlobalProfile {
 }
 
 class Global {
-  static initState() async {
+  static Future initState() async {
     Directory documentsDir =
         await getApplicationDocumentsDirectory();
     String documentsPath = documentsDir.path;

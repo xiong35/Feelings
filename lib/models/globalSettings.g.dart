@@ -12,9 +12,22 @@ GlobalSettings _$GlobalSettingsFromJson(
     ..locale = json['locale'] as String
     ..theme = json['theme'] as String
     ..curPlayMode = json['curPlayMode'] as num
-    ..loginData = json['loginData']
-    ..curSong = json['curSong']
-    ..curPlaylist = json['curPlaylist'] as List;
+    // ..loginData = json['loginData'] as Login
+    ..loginData = json['loginData'] == null
+        ? null
+        : Login.fromJson(
+            json['loginData'] as Map<String, dynamic>)
+    // ..curSong = json['curSong'] as Song
+    ..curSong = json['curSong'] == null
+        ? null
+        : Song.fromJson(json['curSong'] as Map<String, dynamic>)
+    // ..curPlaylist = json['curPlaylist'] as List<Song>;
+    ..curPlaylist = json['curPlaylist'] == null
+        ? null
+        : json['curPlaylist']
+            .map(
+                (e) => Song.fromJson(e as Map<String, dynamic>))
+            .toList();
 }
 
 Map<String, dynamic> _$GlobalSettingsToJson(

@@ -18,7 +18,9 @@ var routes = <String, WidgetBuilder>{
   "login": (context) => LoginView(),
 };
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Global.initState();
   runApp(
     MultiProvider(
       providers: [
