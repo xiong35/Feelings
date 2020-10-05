@@ -133,6 +133,10 @@ class FeelingsLocalization {
   String get loginLoginLater {
     return isZh ? "稍后登录" : "Login Later";
   }
+
+  String get loginNeedLogin {
+    return isZh ? "请先登录" : "Please Login Frist";
+  }
 }
 
 class FeelingsLocalizationsDelegate

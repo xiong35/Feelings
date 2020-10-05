@@ -1,3 +1,4 @@
+import 'package:feelings/global/global.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/pages/tabs/settings.dart';
@@ -27,6 +28,15 @@ class _MainPageState extends State<MainPage>
       length: tabCount,
       vsync: this,
     )..addListener(() {
+        if (_tabController.index == 0) {
+          if (Global.loginData?.cookie == null) {
+            Navigator.pushNamed(
+              context,
+              "login",
+              arguments: {"showHint": true},
+            );
+          }
+        }
         setState(() {});
       });
   }

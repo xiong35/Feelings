@@ -60,6 +60,11 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
+    Map<String, dynamic> args =
+        ModalRoute.of(context).settings.arguments;
+
+    bool showHint = args == null ? false : args["showHint"];
+
     var style = InputDecoration(
       filled: true,
       fillColor: colorScheme.surface,
@@ -79,7 +84,9 @@ class _LoginViewState extends State<LoginView> {
         backgroundColor:
             Theme.of(context).colorScheme.background,
         title: Text(
-          FeelingsLocalization.of(context).loginLogin,
+          showHint
+              ? FeelingsLocalization.of(context).loginNeedLogin
+              : FeelingsLocalization.of(context).loginLogin,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onBackground,
           ),
@@ -137,8 +144,8 @@ class _LoginViewState extends State<LoginView> {
                       suffixIcon: IconButton(
                         icon: Icon(
                           hidePw
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
                         ),
                         onPressed: () =>
                             setState(() => hidePw = !hidePw),
@@ -146,7 +153,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     controller: _pwController,
-                    obscureText: !hidePw,
+                    obscureText: hidePw,
                     validator: (v) => haveErr
                         ? FeelingsLocalization.of(context)
                             .loginErrorHint
