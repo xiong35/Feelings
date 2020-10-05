@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -133,11 +134,10 @@ class UserProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ClipRRect(
-            child: Image.network(
-              userProfile.avatarUrl,
+            child: ImgPlaceHolder(
+              url: userProfile.avatarUrl,
               height: 100,
               width: 100,
-              fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(10),
           ),

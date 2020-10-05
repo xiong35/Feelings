@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/global/global.dart';
 import 'package:feelings/global/theMusicController.dart';
 import 'package:feelings/models/index.dart';
@@ -30,11 +31,10 @@ class MusicItem extends StatelessWidget {
       subtitle: Text(song == null ? "---" : song.ar[0].name),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          song == null ? "" : song.al.picUrl,
-          fit: BoxFit.cover,
-          height: 50.0,
-          width: 50.0,
+        child: ImgPlaceHolder(
+          height: 50,
+          width: 50,
+          url: song?.al?.picUrl,
         ),
       ),
       trailing: IconButton(

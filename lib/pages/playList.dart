@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -123,13 +124,10 @@ class PlaylistProfile extends StatelessWidget {
           Hero(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                data == null
-                    ? "http://static.xiong35.cn/image/icons/open-doodles/3.png"
-                    : data.coverImgUrl,
+              child: ImgPlaceHolder(
+                url: data?.coverImgUrl,
                 height: 110,
                 width: 110,
-                fit: BoxFit.cover,
               ),
             ),
             tag: "albumCover$id",
@@ -160,11 +158,8 @@ class PlaylistProfile extends StatelessWidget {
                       )),
                   SizedBox(width: 14),
                   ClipOval(
-                    child: Image.network(
-                      data == null
-                          ? "http://static.xiong35.cn/image/icons/open-doodles/2.png"
-                          : data.creator.avatarUrl,
-                      fit: BoxFit.cover,
+                    child: ImgPlaceHolder(
+                      url: data.creator.avatarUrl,
                       width: 32,
                       height: 32,
                     ),

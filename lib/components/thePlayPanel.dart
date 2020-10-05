@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/global/global.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +17,8 @@ class ThePlayPanel extends StatelessWidget {
             arguments: {'id': 66}), //TODO: id
         leading: Hero(
           child: ClipOval(
-            child: Image.network(
-              musicPlayModelListen.curSong.al.picUrl,
-              fit: BoxFit.cover,
+            child: ImgPlaceHolder(
+              url: musicPlayModelListen?.curSong?.al?.picUrl,
               height: 50.0,
               width: 50.0,
             ),

@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/global/global.dart';
 import 'package:flutter/material.dart';
 
@@ -109,11 +110,9 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      "http://static.xiong35.cn/image/icons/open-doodles/3.png",
+                    child: ImgPlaceHolder(
                       width: 150,
                       height: 150,
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

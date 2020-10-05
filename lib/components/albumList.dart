@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/pages/playList.dart';
@@ -52,9 +53,8 @@ class AlbumItem extends StatelessWidget {
         child: Hero(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              coverUrl,
-              fit: BoxFit.cover,
+            child: ImgPlaceHolder(
+              url: coverUrl,
             ),
           ),
           tag: "albumCover$id",

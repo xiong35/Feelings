@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,9 +55,9 @@ class _MusicPlayViewState extends State<MusicPlayView> {
                   tag:
                       "musicCover${musicPlayModelListen.curSong.al.id}",
                   child: ClipRRect(
-                    child: Image.network(
-                      musicPlayModelListen.curSong.al.picUrl,
-                      fit: BoxFit.cover,
+                    child: ImgPlaceHolder(
+                      url: musicPlayModelListen
+                          ?.curSong?.al?.picUrl,
                       height: 240.0,
                       width: 240.0,
                     ),
