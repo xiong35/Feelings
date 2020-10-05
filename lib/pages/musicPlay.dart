@@ -46,40 +46,42 @@ class _MusicPlayViewState extends State<MusicPlayView> {
           ),
           elevation: 1,
         ),
-        body: Column(
-          children: [
-            Padding(
-              child: Hero(
-                tag:
-                    "musicCover${musicPlayModelListen.curSong.al.id}",
-                child: ClipRRect(
-                  child: Image.network(
-                    musicPlayModelListen.curSong.al.picUrl,
-                    fit: BoxFit.cover,
-                    height: 240.0,
-                    width: 240.0,
+        body: Center(
+          child: Column(
+            children: [
+              Padding(
+                child: Hero(
+                  tag:
+                      "musicCover${musicPlayModelListen.curSong.al.id}",
+                  child: ClipRRect(
+                    child: Image.network(
+                      musicPlayModelListen.curSong.al.picUrl,
+                      fit: BoxFit.cover,
+                      height: 240.0,
+                      width: 240.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  borderRadius: BorderRadius.circular(8),
                 ),
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
               ),
-              padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
-            ),
-            Text(
-              musicPlayModelListen.curSong.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 6),
-            Text(musicPlayModelListen.curSong.ar[0].name),
-            SizedBox(height: 12),
-            Expanded(
-              child: ListView(
-                children: [
-                  for (int i = 0; i < 100; i++) Text("test"),
-                ],
+              Text(
+                musicPlayModelListen.curSong.name,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 18),
               ),
-            ),
-          ],
+              SizedBox(height: 6),
+              Text(musicPlayModelListen.curSong.ar[0].name),
+              SizedBox(height: 12),
+              // Expanded(
+              //   child: ListView(
+              //     children: [
+              //       for (int i = 0; i < 100; i++) Text("test"),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

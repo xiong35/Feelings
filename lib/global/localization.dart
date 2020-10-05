@@ -41,11 +41,11 @@ class FeelingsLocalization {
   }
 
   String get settingsSetTheme {
-    return isZh ? "选择主题" : "Choose Theme";
+    return isZh ? "选择主题" : "Theme";
   }
 
   String get settingsSetLanguage {
-    return isZh ? "选择语言" : "Choose Language";
+    return isZh ? "选择语言" : "Language";
   }
 
   String get settingsLanguageOpsZH {

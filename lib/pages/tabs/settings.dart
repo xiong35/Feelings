@@ -32,10 +32,10 @@ class SettingsView extends StatelessWidget {
         .settingsLanguageOpsAuto;
 
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(28),
+            padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
             child: Row(
               children: [
                 Text(
@@ -59,7 +59,7 @@ class SettingsView extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(28),
+            padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
             child: Row(
               children: [
                 Text(
@@ -81,9 +81,9 @@ class SettingsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
             ),
           ),
-          SizedBox(height: 40),
+          Spacer(),
           Center(
-            child: TextButton(
+            child: OutlineButton(
               onPressed: () async {
                 await showDialog(
                     context: context,
@@ -139,6 +139,7 @@ class SettingsView extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 60),
         ],
       ),
     );
@@ -185,7 +186,7 @@ class _SelectorState extends State<Selector> {
     for (var i = 0; i < widget.contents.length; i++) {
       children[widget.names[i]] = Padding(
         child: Text(widget.contents[i]),
-        padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
+        padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
       );
     }
     return CupertinoSlidingSegmentedControl<String>(
