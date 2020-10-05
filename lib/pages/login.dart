@@ -1,9 +1,11 @@
+import 'package:feelings/global/global.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/components/loading.dart';
 import 'package:feelings/models/index.dart';
 import 'package:feelings/global/requests.dart';
 import 'package:feelings/global/localization.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({Key key}) : super(key: key);
@@ -17,22 +19,41 @@ class _LoginViewState extends State<LoginView> {
       TextEditingController();
   TextEditingController _pwController = TextEditingController();
 
+  @override
+  void dispose() {
+    _phoneNumController.dispose();
+    _pwController.dispose();
+    super.dispose();
+  }
+
   bool hidePw = true;
   bool haveErr = false;
   bool isLoading = false;
 
-  submit() async {
+  GlobalKey _formKey = new GlobalKey<FormState>();
+
+  submit(BuildContext context) async {
     setState(() {
       haveErr = false;
       isLoading = true;
     });
-    Login loginInfo = await Requests.loginWithPhoneNPw(
+    Login loginData = await Requests.loginWithPhoneNPw(
         _phoneNumController.text, _pwController.text);
 
     setState(() {
-      haveErr = loginInfo == null;
+      haveErr = loginData?.cookie == null;
       isLoading = false;
     });
+    (_formKey.currentState as FormState).validate();
+
+    if (!haveErr) {
+      Provider.of<LoginModel>(context, listen: false)
+          .loginData = loginData;
+    }
+  }
+
+  gotoMainPage() {
+    Navigator.pushNamed(context, "mainPage");
   }
 
   @override
@@ -54,6 +75,21 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor:
+            Theme.of(context).colorScheme.background,
+        title: Text(
+          FeelingsLocalization.of(context).loginLogin,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
+        elevation: 1,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: gotoMainPage,
+        ),
+      ),
       body: Loading(
         isLoading: isLoading,
         child: Center(
@@ -62,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 70, 0, 30),
+                  padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
@@ -91,28 +127,31 @@ class _LoginViewState extends State<LoginView> {
                   controller: _phoneNumController,
                 ),
                 SizedBox(height: 20),
-                TextFormField(
-                  cursorColor: colorScheme.secondary,
-                  decoration: style.copyWith(
-                    hintText: FeelingsLocalization.of(context)
-                        .loginPassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        hidePw
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    cursorColor: colorScheme.secondary,
+                    decoration: style.copyWith(
+                      hintText: FeelingsLocalization.of(context)
+                          .loginPassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          hidePw
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                        ),
+                        onPressed: () =>
+                            setState(() => hidePw = !hidePw),
+                        splashColor: Colors.transparent,
                       ),
-                      onPressed: () =>
-                          setState(() => hidePw = !hidePw),
-                      splashColor: Colors.transparent,
                     ),
+                    controller: _pwController,
+                    obscureText: !hidePw,
+                    validator: (v) => haveErr
+                        ? FeelingsLocalization.of(context)
+                            .loginErrorHint
+                        : null,
                   ),
-                  controller: _pwController,
-                  obscureText: !hidePw,
-                  validator: (v) => haveErr
-                      ? FeelingsLocalization.of(context)
-                          .loginErrorHint
-                      : null,
                 ),
                 SizedBox(height: 30),
                 Text(
@@ -123,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(height: 20),
                 RaisedButton(
-                  onPressed: submit,
+                  onPressed: () => submit(context),
                   child: Text(
                     FeelingsLocalization.of(context).loginLogin,
                     style: TextStyle(
@@ -131,7 +170,18 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   color: colorScheme.secondary,
-                )
+                ),
+                Spacer(),
+                GestureDetector(
+                  child: Text(
+                    FeelingsLocalization.of(context)
+                            .loginLoginLater +
+                        " >",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                  onTap: gotoMainPage,
+                ),
+                SizedBox(height: 50),
               ],
             ),
           ),

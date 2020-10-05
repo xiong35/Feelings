@@ -129,6 +129,10 @@ class FeelingsLocalization {
   String get loginErrorHint {
     return isZh ? "密码错误" : "Wrong password";
   }
+
+  String get loginLoginLater {
+    return isZh ? "稍后登录" : "Login Later";
+  }
 }
 
 class FeelingsLocalizationsDelegate

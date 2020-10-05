@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,8 @@ class GlobalProfile {
 
 class Global {
   static GlobalProfile profile = GlobalProfile();
+
+  static Login loginData;
 
   static saveProfile() => {
         print(
@@ -25,6 +29,17 @@ class ProfileChangeNotifier extends ChangeNotifier {
   void notifyListeners() {
     Global.saveProfile();
     super.notifyListeners();
+  }
+}
+
+class LoginModel extends ProfileChangeNotifier {
+  Profile get user => Global.loginData.profile;
+  String get cookie => Global.loginData.cookie;
+  bool get didLogin => Global.loginData?.cookie != null;
+
+  set loginData(Login loginData) {
+    Global.loginData = loginData;
+    notifyListeners();
   }
 }
 

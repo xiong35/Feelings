@@ -64,6 +64,36 @@ class _FeelingsState extends State<Feelings> {
       ],
       locale: context.watch<LocaleModel>().getLocale(),
       routes: routes,
+      // onGenerateRoute: (RouteSettings settings) {
+      //   String routeName = settings.name;
+      //   print("Open page: $routeName");
+      //   switch (routeName) {
+      //     case "mainPage":
+      //       return MaterialPageRoute(builder: (context) {
+      //         return MainPage();
+      //       });
+      //     case "playlist":
+      //       return MaterialPageRoute(builder: (context) {
+      //         return PlaylistView();
+      //       });
+      //     case "musicPlay":
+      //       return MaterialPageRoute(builder: (context) {
+      //         return MusicPlayView();
+      //       });
+      //     case "login":
+      //       return MaterialPageRoute(builder: (context) {
+      //         return LoginView();
+      //       });
+      //     default:
+      //       return MaterialPageRoute(
+      //           builder: (BuildContext context) {
+      //         return Scaffold(
+      //             body: Center(
+      //           child: Text("Page not found"),
+      //         ));
+      //       });
+      //   }
+      // },
     );
   }
 }

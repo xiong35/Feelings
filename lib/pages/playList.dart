@@ -17,7 +17,7 @@ import 'package:feelings/global/requests.dart';
 class PlaylistView extends StatefulWidget {
   PlaylistView({Key key, int limit}) : super(key: key);
 
-  int limit = 999;
+  final int limit = 999;
 
   @override
   _PlaylistViewState createState() => _PlaylistViewState();

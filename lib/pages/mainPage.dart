@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage>
     return [
       MineView(),
       HomeView(),
-      Text("test"),
+      Center(child: Text("coming soon...")),
       SettingsView(),
     ];
   }
