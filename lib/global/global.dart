@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +17,30 @@ class Global {
 
   static Login loginData;
 
-  static saveProfile() => {
-        print(
-          'locale: ${profile.locale}, theme: ${profile.theme}',
-        )
-      };
+  static saveProfile() async {
+    Directory documentsDir =
+        await getApplicationDocumentsDirectory();
+
+    String documentsPath = documentsDir.path;
+
+    File file = new File('$documentsPath/notes');
+
+    if (!file.existsSync()) {
+      file.createSync();
+    }
+    // File file1 = await file.writeAsString("hello");
+    // if (file1.existsSync()) {
+    //   print('保存成功');
+    // }
+    String notes = await file.readAsString();
+    print(notes);
+    print(documentsPath);
+    // writeToFile(context, file, notes);
+
+    print(
+      'locale: ${profile.locale}, theme: ${profile.theme}',
+    );
+  }
 }
 
 class ProfileChangeNotifier extends ChangeNotifier {
