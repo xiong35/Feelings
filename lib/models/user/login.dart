@@ -4,13 +4,12 @@ part 'login.g.dart';
 
 @JsonSerializable()
 class Login {
-  Login();
+    Login();
 
-  String token;
-  String cookie;
-  Profile profile;
-
-  factory Login.fromJson(Map<String, dynamic> json) =>
-      _$LoginFromJson(json);
-  Map<String, dynamic> toJson() => _$LoginToJson(this);
+    String token;
+    Profile profile;
+    String cookie;
+    
+    factory Login.fromJson(Map<String,dynamic> json) => _$LoginFromJson(json);
+    Map<String, dynamic> toJson() => _$LoginToJson(this);
 }

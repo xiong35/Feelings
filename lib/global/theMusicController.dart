@@ -14,11 +14,6 @@ const RAND_RANGE = 996996;
 const RAND_LIST_LEN = 50;
 const RAND_POINTER = 30;
 
-abstract class CutSongController {
-  int getNext();
-  int getPrevious();
-}
-
 class TheMusicController {
   TheMusicController._constructor();
 
@@ -79,6 +74,7 @@ class TheMusicController {
   List<Song> _musicList;
   List<num> get musicList =>
       _musicList?.map((e) => e.id)?.toList();
+  List<Song> get curPlaylist => _musicList;
 
   int curSongIndex = 0;
   List<num> randList = [];

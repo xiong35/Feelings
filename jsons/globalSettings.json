@@ -1,0 +1,10 @@
+{
+    "@import": "user/login.dart",
+    "@import": "music/song.dart",
+    "locale": "auto",
+    "theme": "dark",
+    "loginData": "$login",
+    "curSong": "$song",
+    "curPlaylist": "$[]song",
+    "curPlayMode": 0
+}

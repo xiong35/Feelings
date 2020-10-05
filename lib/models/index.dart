@@ -1,3 +1,4 @@
+export 'globalSettings.dart';
 export 'home/banner.dart';
 export 'home/banners.dart';
 export 'home/hotPlaylist.dart';

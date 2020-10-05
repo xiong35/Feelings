@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
@@ -9,10 +10,33 @@ import 'package:feelings/global/theMusicController.dart';
 
 class GlobalProfile {
   String locale = 'auto';
-  String theme = "light";
+  String theme = "dark";
 }
 
 class Global {
+  static initState() async {
+    Directory documentsDir =
+        await getApplicationDocumentsDirectory();
+    String documentsPath = documentsDir.path;
+
+    File file = File('$documentsPath/global.json');
+    if (!file.existsSync()) {
+      file.createSync();
+    }
+
+    String data = await file.readAsString();
+
+    GlobalSettings settings =
+        GlobalSettings.fromJson(json.decode(data));
+
+    Global.loginData = settings.loginData;
+    Global.profile.theme = settings.theme;
+    Global.profile.locale = settings.locale;
+    theMusicController.refreshBySong(
+        settings.curSong, settings.curPlaylist);
+    theMusicController.curPlayMode = settings.curPlayMode;
+  }
+
   static GlobalProfile profile = GlobalProfile();
 
   static Login loginData;
@@ -23,23 +47,26 @@ class Global {
 
     String documentsPath = documentsDir.path;
 
-    File file = new File('$documentsPath/notes');
+    File file = File('$documentsPath/global.json');
 
     if (!file.existsSync()) {
       file.createSync();
     }
-    // File file1 = await file.writeAsString("hello");
-    // if (file1.existsSync()) {
-    //   print('保存成功');
-    // }
-    String notes = await file.readAsString();
-    print(notes);
-    print(documentsPath);
-    // writeToFile(context, file, notes);
 
-    print(
-      'locale: ${profile.locale}, theme: ${profile.theme}',
+    GlobalSettings settings = GlobalSettings.fromData(
+      curPlayMode: theMusicController.curPlayMode,
+      curPlaylist: theMusicController.curPlaylist,
+      curSong: theMusicController.curSong,
+      locale: Global.profile.locale,
+      loginData: Global.loginData,
+      theme: Global.profile.theme,
     );
+
+    File file1 =
+        await file.writeAsString(json.encode(settings));
+    if (file1.existsSync()) {
+      print('保存成功');
+    }
   }
 }
 
@@ -149,7 +176,7 @@ class MusicPlayModel extends ChangeNotifier {
     int res =
         await theMusicController.refreshBySong(song, playlist);
     notifyListeners();
-
+    Global.saveProfile();
     return res;
   }
 
