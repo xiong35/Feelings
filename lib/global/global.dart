@@ -55,8 +55,8 @@ class ThemeModel extends ProfileChangeNotifier {
 class MusicPlayModel extends ChangeNotifier {
   bool get isPlaying => theMusicController.isPlaying;
 
-  togglePlay() {
-    theMusicController.togglePlay();
+  togglePlay() async {
+    await theMusicController.togglePlay();
     notifyListeners();
   }
 

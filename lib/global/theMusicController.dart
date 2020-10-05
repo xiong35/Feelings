@@ -37,10 +37,10 @@ class TheMusicController {
   togglePlay() async {
     switch (audioPlayer.state) {
       case AudioPlayerState.PLAYING:
-        audioPlayer.pause();
+        await audioPlayer.pause();
         break;
       case AudioPlayerState.PAUSED:
-        audioPlayer.resume();
+        await audioPlayer.resume();
         break;
       default:
         int result = await audioPlayer.play(curUrl);

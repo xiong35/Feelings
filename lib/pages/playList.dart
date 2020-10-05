@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -61,16 +62,7 @@ class _PlaylistViewState extends State<PlaylistView> {
     Map<String, dynamic> args =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      bottomNavigationBar: ThePlayPanel(
-        authorName: "author",
-        musicName: "Feelings",
-        musicCover: Image.network(
-          "http://static.xiong35.cn/image/icons/open-doodles/15.png",
-          fit: BoxFit.cover,
-          height: 50.0,
-          width: 50.0,
-        ),
-      ),
+      bottomNavigationBar: ThePlayPanel(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
@@ -81,30 +73,34 @@ class _PlaylistViewState extends State<PlaylistView> {
         ),
         elevation: 1,
       ),
-      body: ListView(
-        children: [
-          PlaylistProfile(
-              id: args["id"], data: _playlistContentData),
-          PartDevider(),
-          ListTile(
-            leading: IconButton(
-              icon: Icon(Icons.play_arrow_outlined),
-              onPressed: () {},
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondaryVariant,
-              iconSize: 30,
-            ),
-            title: Text(
-              FeelingsLocalization.of(context).playlistPlayAll,
-              style: TextStyle(
-                fontSize: 18,
+      body: Loading(
+        isLoading: !haveData,
+        child: ListView(
+          children: [
+            PlaylistProfile(
+                id: args["id"], data: _playlistContentData),
+            PartDevider(),
+            ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.play_arrow_outlined),
+                onPressed: () {},
+                color: Theme.of(context)
+                    .colorScheme
+                    .secondaryVariant,
+                iconSize: 30,
               ),
+              title: Text(
+                FeelingsLocalization.of(context)
+                    .playlistPlayAll,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              onTap: () {},
             ),
-            onTap: () {},
-          ),
-          ...songs,
-        ],
+            ...songs,
+          ],
+        ),
       ),
     );
   }

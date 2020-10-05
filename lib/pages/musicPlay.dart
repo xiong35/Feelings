@@ -1,3 +1,4 @@
+import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -27,55 +28,59 @@ class _MusicPlayViewState extends State<MusicPlayView> {
 
   @override
   Widget build(BuildContext context) {
-    MusicPlayModel musicPlayModel =
+    MusicPlayModel musicPlayModelListen =
         Provider.of<MusicPlayModel>(context, listen: true);
 
-    return Scaffold(
-      bottomNavigationBar: _PlayPanel(setLoading: setLoading),
-      appBar: AppBar(
-        backgroundColor:
-            Theme.of(context).colorScheme.background,
-        title: Text(
-          musicPlayModel.curSong.name,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onBackground,
+    return Loading(
+      isLoading: isLoading,
+      child: Scaffold(
+        bottomNavigationBar: _PlayPanel(setLoading: setLoading),
+        appBar: AppBar(
+          backgroundColor:
+              Theme.of(context).colorScheme.background,
+          title: Text(
+            musicPlayModelListen.curSong.name,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
           ),
+          elevation: 1,
         ),
-        elevation: 1,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            child: Hero(
-              tag: "musicCover${musicPlayModel.curSong.al.id}",
-              child: ClipRRect(
-                child: Image.network(
-                  musicPlayModel.curSong.al.picUrl,
-                  fit: BoxFit.cover,
-                  height: 240.0,
-                  width: 240.0,
+        body: Column(
+          children: [
+            Padding(
+              child: Hero(
+                tag:
+                    "musicCover${musicPlayModelListen.curSong.al.id}",
+                child: ClipRRect(
+                  child: Image.network(
+                    musicPlayModelListen.curSong.al.picUrl,
+                    fit: BoxFit.cover,
+                    height: 240.0,
+                    width: 240.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
+            ),
+            Text(
+              musicPlayModelListen.curSong.name,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            SizedBox(height: 6),
+            Text(musicPlayModelListen.curSong.ar[0].name),
+            SizedBox(height: 12),
+            Expanded(
+              child: ListView(
+                children: [
+                  for (int i = 0; i < 100; i++) Text("test"),
+                ],
               ),
             ),
-            padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
-          ),
-          Text(
-            musicPlayModel.curSong.name,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          SizedBox(height: 6),
-          Text(musicPlayModel.curSong.ar[0].name),
-          SizedBox(height: 12),
-          Expanded(
-            child: ListView(
-              children: [
-                for (int i = 0; i < 100; i++) Text("test"),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -111,6 +116,8 @@ class _PlayPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var musicPlayModelListen =
+        Provider.of<MusicPlayModel>(context, listen: true);
     var musicPlayModel =
         Provider.of<MusicPlayModel>(context, listen: false);
 
@@ -123,15 +130,15 @@ class _PlayPanel extends StatelessWidget {
                 children: [
                   SizedBox(width: 10),
                   Text(
-                      musicPlayModel.curPosition
+                      musicPlayModelListen.curPosition
                           .toString()
                           .substring(2, 7),
                       style: TextStyle(fontSize: 14)),
                   Expanded(
                     child: Slider(
-                      value: musicPlayModel.percent,
+                      value: musicPlayModelListen.percent,
                       onChanged: (value) {
-                        musicPlayModel.percent = value;
+                        musicPlayModelListen.percent = value;
                       },
                       activeColor: Theme.of(context)
                           .colorScheme
@@ -139,7 +146,7 @@ class _PlayPanel extends StatelessWidget {
                     ),
                   ),
                   Text(
-                      musicPlayModel.curDuration
+                      musicPlayModelListen.curDuration
                           .toString()
                           .substring(2, 7),
                       style: TextStyle(fontSize: 14)),
@@ -156,7 +163,8 @@ class _PlayPanel extends StatelessWidget {
                     height: 75,
                     child: IconButton(
                       icon: Icon(
-                        iconDataList[musicPlayModel.playMode],
+                        iconDataList[
+                            musicPlayModelListen.playMode],
                         size: 30,
                       ),
                       onPressed: () {
@@ -219,9 +227,9 @@ class _PlayPanel extends StatelessWidget {
                         size: 50,
                       ),
                       onPressed: () =>
-                          Provider.of<MusicPlayModel>(context,
-                                  listen: false)
-                              .togglePlay(),
+                          onPressedWrapper(() async {
+                        await musicPlayModel.togglePlay();
+                      }),
                     ),
                   ),
                   SizedBox(

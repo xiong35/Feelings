@@ -3,30 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ThePlayPanel extends StatelessWidget {
-  const ThePlayPanel({
-    this.musicCover,
-    this.musicName,
-    this.authorName,
-  });
-
-  final Image musicCover;
-  final String musicName;
-  final String authorName;
+  const ThePlayPanel();
 
   @override
   Widget build(BuildContext context) {
+    MusicPlayModel musicPlayModelListen =
+        Provider.of<MusicPlayModel>(context, listen: true);
+
     return BottomAppBar(
       child: ListTile(
         onTap: () => Navigator.pushNamed(context, "musicPlay",
             arguments: {'id': 66}), //TODO: id
         leading: Hero(
           child: ClipOval(
-            child: musicCover,
+            child: Image.network(
+              musicPlayModelListen.curSong.al.picUrl,
+              fit: BoxFit.cover,
+              height: 50.0,
+              width: 50.0,
+            ),
           ),
-          tag: "musicCover",
+          tag:
+              "musicCover${musicPlayModelListen.curSong.al.id}",
         ),
-        title: Text(musicName),
-        subtitle: Text(authorName),
+        title: Text(musicPlayModelListen.curSong.name),
+        subtitle: Text(musicPlayModelListen.curSong.ar[0].name),
         trailing: IconButton(
           icon: Icon(
             Provider.of<MusicPlayModel>(context, listen: true)

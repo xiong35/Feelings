@@ -68,16 +68,7 @@ class _MainPageState extends State<MainPage>
         ),
         top: true,
       ),
-      bottomNavigationBar: ThePlayPanel(
-        authorName: "author",
-        musicName: "Feelings",
-        musicCover: Image.network(
-          "http://static.xiong35.cn/image/icons/open-doodles/15.png",
-          fit: BoxFit.cover,
-          height: 50.0,
-          width: 50.0,
-        ),
-      ),
+      bottomNavigationBar: ThePlayPanel(),
     );
   }
 
