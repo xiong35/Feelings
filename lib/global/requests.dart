@@ -29,9 +29,8 @@ class Requests {
       [String cookie]) async {
     String res;
     if (cookie == null) {
-      res = await GET("/artist/top/song", query: {
-        "id": "6452"
-      }); // TODO change srtist to my favorite
+      res =
+          await GET("/artist/top/song", query: {"id": "96266"});
 
       return HotSongs.fromJson(
         json.decode(res),
