@@ -27,24 +27,14 @@ class _PlaylistViewState extends State<PlaylistView> {
   List<Widget> get songs {
     if (!haveData) {
       return [
-        for (int i = 0; i < 3; i++)
-          MusicItem(
-              name: 'song name',
-              artist: 'artist',
-              id: i,
-              coverUrl:
-                  'http://static.xiong35.cn/image/icons/open-doodles/$i.png'),
+        for (int i = 0; i < 3; i++) MusicItem(),
       ];
     }
     return _playlistContentData.tracks
-        .map(
-          (e) => MusicItem(
-            name: e.name,
-            artist: e.ar[0].name,
-            coverUrl: e.al.picUrl,
-            id: e.id,
-          ),
-        )
+        .map((e) => MusicItem(
+              song: e,
+              curPlaylist: _playlistContentData.tracks,
+            ))
         .toList()
         .sublist(
             0,

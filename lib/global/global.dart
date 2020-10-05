@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
 import 'package:feelings/global/theMusicController.dart';
 
@@ -54,22 +55,19 @@ class ThemeModel extends ProfileChangeNotifier {
 class MusicPlayModel extends ChangeNotifier {
   bool get isPlaying => theMusicController.isPlaying;
 
-  togglePlay({String url = ""}) {
-    theMusicController.togglePlay(url: url);
+  togglePlay() {
+    theMusicController.togglePlay();
     notifyListeners();
   }
 
   MusicPlayModel() {
     theMusicController.audioPlayer.onDurationChanged
         .listen((Duration d) {
-      print('Max duration: ${d.inSeconds}');
       _curDuration = d;
       notifyListeners();
     });
     theMusicController.audioPlayer.onAudioPositionChanged
         .listen((Duration p) {
-      print(
-          'Current position: ${p.toString().substring(2, 7)}');
       _curPosition = p;
       notifyListeners();
     });
@@ -109,4 +107,37 @@ class MusicPlayModel extends ChangeNotifier {
 
   Duration _curDuration = Duration.zero;
   Duration _curPosition = Duration.zero;
+
+  void refreshBySong(Song song, [List<Song> playlist]) {
+    theMusicController.refreshBySong(song, playlist);
+    notifyListeners();
+  }
+
+  String get curSongUrl => theMusicController.curUrl == null
+      ? ""
+      : theMusicController.curUrl;
+  String get curSongLyric => theMusicController.curLyric == null
+      ? ""
+      : theMusicController.curLyric;
+  Song get curSong {
+    Song song = theMusicController.curSong;
+    if (song == null) {
+      song = Song.fromJson({
+        "name": "布拉格广场",
+        "id": 210049,
+        "ar": [
+          {"id": 7219, "name": "蔡依林"}
+        ],
+        "al": {
+          "id": 21349,
+          "name": "看我72变",
+          "picUrl":
+              "https://p2.music.126.net/lsMlFshdJ96aTGFFgayh4Q==/109951163611523278.jpg",
+          "tns": []
+        },
+        "mv": 186025
+      });
+    }
+    return song;
+  }
 }

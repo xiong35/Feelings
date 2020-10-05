@@ -51,23 +51,11 @@ class _HomeViewState extends State<HomeView> {
   List<Widget> get songs {
     if (_songs == null) {
       return [
-        for (var i = 0; i < 3; i++)
-          MusicItem(
-              name: 'song name',
-              artist: 'artist',
-              coverUrl:
-                  'http://static.xiong35.cn/image/icons/open-doodles/$i.png'),
+        for (var i = 0; i < 3; i++) MusicItem(),
       ];
     }
     return _songs
-        .map(
-          (e) => MusicItem(
-            name: e.name,
-            artist: e.ar[0].name,
-            coverUrl: e.al.picUrl,
-            id: e.id,
-          ),
-        )
+        .map((e) => MusicItem(song: e, curPlaylist: _songs))
         .toList()
         .sublist(0, min(_songs.length, 5));
   }

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:feelings/global/http.dart';
 import 'package:feelings/models/index.dart';
+import 'package:feelings/global/requests.dart';
 
 enum SongChangeType {
   forward,
@@ -33,7 +34,7 @@ class TheMusicController {
     return audioPlayer.state == AudioPlayerState.PLAYING;
   }
 
-  togglePlay({String url = ""}) async {
+  togglePlay() async {
     switch (audioPlayer.state) {
       case AudioPlayerState.PLAYING:
         audioPlayer.pause();
@@ -42,10 +43,8 @@ class TheMusicController {
         audioPlayer.resume();
         break;
       default:
-        int result = await audioPlayer.play(
-            "https://luan.xyz/files/audio/nasa_on_a_mission.mp3");
+        int result = await audioPlayer.play(curUrl);
         if (result == 1) {
-          // success
           print('play success');
         } else {
           print('play failed');
@@ -54,14 +53,35 @@ class TheMusicController {
     }
   }
 
+  playCurSong(String _) async {
+    switch (audioPlayer.state) {
+      case AudioPlayerState.PLAYING:
+      case AudioPlayerState.PAUSED:
+        audioPlayer.stop();
+        break;
+      default:
+        break;
+    }
+
+    int result = await audioPlayer.play(curUrl);
+    if (result == 1) {
+      print('play success');
+    } else {
+      print('play failed');
+    }
+  }
+
   int curPlayMode = 0;
   /*  0 repeat,
       1 repeat_one,
       2 shuffle   */
 
-  List<int> musicList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  int curSongId = 0;
-  List randList = [];
+  List<Song> _musicList;
+  List<num> get musicList =>
+      _musicList?.map((e) => e.id)?.toList();
+
+  int curSongIndex = 0;
+  List<num> randList = [];
   int randSeed = Random().nextInt(RAND_RANGE);
   Random r = Random();
 
@@ -69,15 +89,15 @@ class TheMusicController {
     Function method =
         curPlayMode == 2 ? getRandSong : getOrderedSong;
 
-    curSongId = method(type);
-
-    print(curSongId);
+    curSongIndex = method(type);
+    print(_musicList);
+    print(curSongIndex);
+    refreshBySong(curSong);
   }
 
   int getOrderedSong(SongChangeType type) {
     int step = type == SongChangeType.forward ? 1 : -1;
-    int ind = musicList.indexOf(curSongId);
-    return (ind + step) % musicList.length;
+    return (curSongIndex + step) % musicList.length;
   }
 
   int getRandSong(SongChangeType type) {
@@ -105,12 +125,29 @@ class TheMusicController {
     return randList[RAND_POINTER];
   }
 
-  Song curSong;
   String curLyric;
+  Song get curSong =>
+      _musicList == null ? null : _musicList[curSongIndex];
   String curUrl;
 
-  void refreshBySong(Song song, [int playlistId]) {
-    // GET(path);
+  void refreshBySong(Song song, [List<Song> playlist]) {
+    if (song == null) {
+      print("song is null");
+      return;
+    } else {
+      print("not null: ${song.name}");
+    }
+    Requests.getSongUrl("${song.id}")
+        .then((value) => curUrl = value)
+        .then(playCurSong);
+    Requests.getSongLyric("${song.id}")
+        .then((value) => curLyric = value);
+
+    if (playlist != _musicList && playlist != null) {
+      _musicList = playlist;
+      curSongIndex = _musicList.indexOf(song) - 1;
+      cutSong(SongChangeType.forward);
+    }
   }
 }
 

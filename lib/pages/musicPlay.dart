@@ -22,13 +22,16 @@ class MusicPlayView extends StatefulWidget {
 class _MusicPlayViewState extends State<MusicPlayView> {
   @override
   Widget build(BuildContext context) {
+    MusicPlayModel musicPlayModel =
+        Provider.of<MusicPlayModel>(context, listen: true);
+
     return Scaffold(
       bottomNavigationBar: _PlayPanel(),
       appBar: AppBar(
         backgroundColor:
             Theme.of(context).colorScheme.background,
         title: Text(
-          "Song Name",
+          musicPlayModel.curSong.name,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onBackground,
           ),
@@ -39,10 +42,10 @@ class _MusicPlayViewState extends State<MusicPlayView> {
         children: [
           Padding(
             child: Hero(
-              tag: "musicCover",
+              tag: "musicCover${musicPlayModel.curSong.al.id}",
               child: ClipRRect(
                 child: Image.network(
-                  "http://static.xiong35.cn/image/icons/open-doodles/15.png",
+                  musicPlayModel.curSong.al.picUrl,
                   fit: BoxFit.cover,
                   height: 240.0,
                   width: 240.0,
@@ -53,12 +56,12 @@ class _MusicPlayViewState extends State<MusicPlayView> {
             padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
           ),
           Text(
-            "Song name",
+            musicPlayModel.curSong.name,
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 18),
           ),
           SizedBox(height: 6),
-          Text("Artist"),
+          Text(musicPlayModel.curSong.ar[0].name),
           SizedBox(height: 12),
           Expanded(
             child: ListView(

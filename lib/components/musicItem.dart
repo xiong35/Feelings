@@ -1,19 +1,17 @@
+import 'package:feelings/global/global.dart';
+import 'package:feelings/global/theMusicController.dart';
+import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MusicItem extends StatelessWidget {
   @required
-  final String name;
-  @required
-  final String artist;
-  @required
-  final String coverUrl;
-  final int id;
+  final Song song;
+  final List<Song> curPlaylist;
 
   MusicItem({
-    this.name,
-    this.artist,
-    this.coverUrl,
-    this.id,
+    this.song,
+    this.curPlaylist,
   });
 
   @override
@@ -21,15 +19,19 @@ class MusicItem extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
-      onTap: () => Navigator.pushNamed(context, "musicPlay",
-          arguments: {'id': id}),
+      onTap: () {
+        Provider.of<MusicPlayModel>(context, listen: false)
+            .refreshBySong(song, curPlaylist);
+        Navigator.pushNamed(context, "musicPlay",
+            arguments: {'id': song.id});
+      },
       tileColor: colorScheme.background,
-      title: Text(name),
-      subtitle: Text(artist),
+      title: Text(song == null ? "---" : song.name),
+      subtitle: Text(song == null ? "---" : song.ar[0].name),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
-          coverUrl,
+          song == null ? "" : song.al.picUrl,
           fit: BoxFit.cover,
           height: 50.0,
           width: 50.0,
