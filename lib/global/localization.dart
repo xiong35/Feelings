@@ -107,6 +107,28 @@ class FeelingsLocalization {
   String get playModeShuffle {
     return isZh ? "随机播放" : "Shuffle";
   }
+
+  String get loginPhoneNumber {
+    return isZh ? "手机号" : "Phone Number";
+  }
+
+  String get loginPassword {
+    return isZh ? "密码" : "Password";
+  }
+
+  String get loginLogin {
+    return isZh ? "登录" : "Login";
+  }
+
+  String get loginHint {
+    return isZh
+        ? "使用网易云音乐的手机号和密码登录"
+        : "Please login with NeteaseMusic's phone number and password";
+  }
+
+  String get loginErrorHint {
+    return isZh ? "密码错误" : "Wrong password";
+  }
 }
 
 class FeelingsLocalizationsDelegate

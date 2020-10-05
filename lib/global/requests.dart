@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:feelings/global/http.dart';
 import 'package:feelings/models/index.dart';
 
@@ -113,5 +114,21 @@ class Requests {
     return Lyric.fromJson(
       json.decode(res),
     ).lrc.lyric;
+  }
+
+  static Future<Login> loginWithPhoneNPw(
+      String phone, String pw) async {
+    String md5Pw = md5.convert(utf8.encode(pw)).toString();
+    String res = await GET(
+      "/login/cellphone",
+      query: {
+        "md5_password": md5Pw,
+        "phone": phone,
+      },
+    );
+
+    return Login.fromJson(
+      json.decode(res),
+    );
   }
 }

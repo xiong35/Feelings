@@ -7,6 +7,7 @@ import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
 
 import 'package:feelings/pages/mainPage.dart';
+import 'package:feelings/pages/login.dart';
 import 'package:feelings/pages/playList.dart';
 import 'package:feelings/pages/musicPlay.dart';
 
@@ -14,6 +15,7 @@ var routes = <String, WidgetBuilder>{
   "mainPage": (context) => MainPage(),
   "playlist": (context) => PlaylistView(),
   "musicPlay": (context) => MusicPlayView(),
+  "login": (context) => LoginView(),
 };
 
 void main() {
@@ -50,7 +52,7 @@ class _FeelingsState extends State<Feelings> {
         Provider.of<ThemeModel>(context, listen: true).theme,
       ),
       // initialRoute: "mainPage",
-      initialRoute: "mainPage",
+      initialRoute: "login",
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
