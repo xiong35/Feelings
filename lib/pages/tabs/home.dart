@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart' hide Banner;
 
+import 'package:feelings/components/loading.dart';
 import 'package:feelings/components/carousel.dart';
 import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/components/utils.dart';
@@ -104,51 +105,56 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Carousel(
-            children: carouselCards,
-          ),
-          PartDevider(height: 8),
-          ListTile(
-            trailing: IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 28,
-              ),
-              onPressed: () {},
+      body: Loading(
+        isLoading: _banners == null,
+        child: ListView(
+          children: [
+            Carousel(
+              children: carouselCards,
             ),
-            title: Text(
-              FeelingsLocalization.of(context)
-                  .homeRecommendedSongs,
-              style: TextStyle(
-                fontSize: 18,
+            PartDevider(height: 8),
+            ListTile(
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color:
+                      Theme.of(context).colorScheme.secondary,
+                  size: 28,
+                ),
+                onPressed: () {},
               ),
-            ),
-          ),
-          ...songs,
-          PartDevider(height: 8),
-          ListTile(
-            trailing: IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 28,
-              ),
-              onPressed: () {},
-            ),
-            title: Text(
-              FeelingsLocalization.of(context)
-                  .homeRecommendedPlaylists,
-              style: TextStyle(
-                fontSize: 18,
+              title: Text(
+                FeelingsLocalization.of(context)
+                    .homeRecommendedSongs,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ),
-          ),
-          AlbumList(albums: playlists),
-          PartDevider(height: 8),
-        ],
+            ...songs,
+            PartDevider(height: 8),
+            ListTile(
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color:
+                      Theme.of(context).colorScheme.secondary,
+                  size: 28,
+                ),
+                onPressed: () {},
+              ),
+              title: Text(
+                FeelingsLocalization.of(context)
+                    .homeRecommendedPlaylists,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            AlbumList(albums: playlists),
+            PartDevider(height: 8),
+          ],
+        ),
       ),
     );
   }

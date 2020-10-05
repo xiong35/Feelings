@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:feelings/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -86,25 +87,28 @@ class _MineViewState extends State<MineView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          UserProfile(
-            userProfile: userProfile,
-            lv: _userLv == null ? 1 : _userLv.level,
-          ),
-          PartDevider(),
-          ListTile(
-            title: Text(
-              FeelingsLocalization.of(context).userPlaylists,
-              style: TextStyle(
-                fontSize: 18,
-              ),
+      body: Loading(
+        isLoading: _userLv == null,
+        child: ListView(
+          children: [
+            UserProfile(
+              userProfile: userProfile,
+              lv: _userLv == null ? 1 : _userLv.level,
             ),
-            trailing: PlayistPopupBtn(),
-          ),
-          AlbumList(albums: playlists),
-          PartDevider(),
-        ],
+            PartDevider(),
+            ListTile(
+              title: Text(
+                FeelingsLocalization.of(context).userPlaylists,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              trailing: PlayistPopupBtn(),
+            ),
+            AlbumList(albums: playlists),
+            PartDevider(),
+          ],
+        ),
       ),
     );
   }
