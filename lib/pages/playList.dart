@@ -28,6 +28,9 @@ class _PlaylistViewState extends State<PlaylistView> {
   PlaylistContentData _playlistContentData;
   List<Widget> get songs {
     if (!haveData) {
+      if (curId != null)
+        Requests.getPlaylistContentData(curId).then((value) =>
+            setState(() => _playlistContentData = value));
       return [
         for (int i = 0; i < 3; i++) MusicItem(),
       ];
@@ -46,6 +49,8 @@ class _PlaylistViewState extends State<PlaylistView> {
 
   bool get haveData => _playlistContentData != null;
 
+  String curId;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -53,9 +58,7 @@ class _PlaylistViewState extends State<PlaylistView> {
     Map<String, dynamic> args =
         ModalRoute.of(context).settings.arguments;
 
-    Requests.getPlaylistContentData("${args['id']}").then(
-        (value) =>
-            setState(() => _playlistContentData = value));
+    curId = "${args['id']}";
   }
 
   @override

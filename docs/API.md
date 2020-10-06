@@ -29,3 +29,4 @@
 
 - 获取歌词: `/lyric?id=33894312`
 - 歌曲 url: `/song/url?id=33894312`
+- 根据 id 获取歌曲详情: `/song/detail?ids=347230`

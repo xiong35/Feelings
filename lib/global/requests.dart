@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:feelings/global/http.dart';
 import 'package:feelings/models/index.dart';
+import 'package:feelings/models/music/songDetail.dart';
 import 'package:feelings/models/user/likes.dart';
 
 class Requests {
@@ -123,6 +124,15 @@ class Requests {
     return Likes.fromJson(
       json.decode(res),
     ).ids;
+  }
+
+  static Future<Song> getSongDetail(String id) async {
+    String res =
+        await GET("/song/detail", query: {"ids": "$id"});
+
+    return SongDetail.fromJson(
+      json.decode(res),
+    ).songs[0];
   }
 
   static Future<Login> loginWithPhoneNPw(
