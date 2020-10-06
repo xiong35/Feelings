@@ -1,3 +1,4 @@
+import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -172,11 +173,11 @@ class _CarouselState extends State<Carousel>
 class CarouselCard extends StatelessWidget {
   const CarouselCard({
     Key key,
-    this.asset,
+    this.url,
     this.text,
   }) : super(key: key);
 
-  final ImageProvider asset;
+  final String url;
   final String text;
 
   @override
@@ -192,10 +193,9 @@ class CarouselCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image(
-                image: asset,
-                fit: BoxFit.cover,
+              ImgPlaceHolder(
                 height: 150,
+                url: url,
               ),
               Positioned(
                 child: ClipRRect(

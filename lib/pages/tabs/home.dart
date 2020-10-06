@@ -25,15 +25,9 @@ class _HomeViewState extends State<HomeView> {
     if (_banners == null) {
       return [
         CarouselCard(
-          asset: const NetworkImage(
-            'http://p1.music.126.net/mQ4QjYasMgP--oAPm49zXA==/109951165358572951.jpg',
-          ),
           text: "",
         ),
         CarouselCard(
-          asset: const NetworkImage(
-            'http://p1.music.126.net/mQ4QjYasMgP--oAPm49zXA==/109951165358572951.jpg',
-          ),
           text: "",
         )
       ];
@@ -41,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
     return _banners
         .map(
           (e) => CarouselCard(
-            asset: NetworkImage(e.imageUrl),
+            url: e.imageUrl,
             text: e.typeTitle,
           ),
         )
