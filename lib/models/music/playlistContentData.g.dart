@@ -15,6 +15,10 @@ PlaylistContentData _$PlaylistContentDataFromJson(Map<String, dynamic> json) {
         ?.map(
             (e) => e == null ? null : Song.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..trackIds = (json['trackIds'] as List)
+        ?.map((e) =>
+            e == null ? null : SongId.fromJson(e as Map<String, dynamic>))
+        ?.toList()
     ..coverImgUrl = json['coverImgUrl'] as String
     ..description = json['description'] as String
     ..name = json['name'] as String
@@ -26,6 +30,7 @@ Map<String, dynamic> _$PlaylistContentDataToJson(
     <String, dynamic>{
       'creator': instance.creator,
       'tracks': instance.tracks,
+      'trackIds': instance.trackIds,
       'coverImgUrl': instance.coverImgUrl,
       'description': instance.description,
       'name': instance.name,

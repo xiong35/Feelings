@@ -8,8 +8,6 @@ import 'package:feelings/models/music/songDetail.dart';
 import 'package:feelings/models/user/likes.dart';
 
 class Requests {
-  static Future login() {}
-
   static Future<PlaylistContentData> getPlaylistContentData(
       String id) async {
     String res =

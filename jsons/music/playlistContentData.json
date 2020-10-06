@@ -2,6 +2,7 @@
     "@import": "../user/profile.dart",
     "creator": "$profile",
     "tracks": "$[]song",
+    "trackIds": "$[]songId",
     "coverImgUrl": "http://p2.music.126.net/2WGCqg5ADd9UAk5MDA1pLg==/109951163696269276.jpg",
     "description": "描述",
     "name": "binaryify喜欢的音乐",
