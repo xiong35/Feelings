@@ -13,6 +13,9 @@ import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/requests.dart';
 import 'package:feelings/models/index.dart';
 
+const SONG_PER_PAGE = 5;
+const PLAYLIST_PER_PAGE = 6;
+
 class HomeView extends StatefulWidget {
   HomeView({Key key}) : super(key: key);
 
@@ -47,6 +50,15 @@ class _HomeViewState extends State<HomeView>
   }
 
   List<Song> _songs;
+  List<Widget> get _songWidgets => _songs
+      .map(
+        (e) => MusicItem(
+          song: e,
+          curPlaylist: _songs.map((e) => e.id).toList(),
+        ),
+      )
+      .toList();
+  num songPage = 0;
   List<Widget> get songs {
     if (_songs == null) {
       Requests.getRecommendedSongs(Global?.loginData?.cookie)
@@ -55,18 +67,28 @@ class _HomeViewState extends State<HomeView>
         for (var i = 0; i < 3; i++) MusicItem(),
       ];
     }
-    return _songs
-        .map(
-          (e) => MusicItem(
-            song: e,
-            curPlaylist: _songs.map((e) => e.id).toList(),
-          ),
-        )
-        .toList()
-        .sublist(0, min(_songs.length, 5));
+    num begin = SONG_PER_PAGE * songPage;
+    num end = begin + SONG_PER_PAGE;
+    if (end > _songs.length) {
+      setState(() {
+        songPage = 0;
+      });
+      return _songWidgets.sublist(0, SONG_PER_PAGE);
+    }
+    return _songWidgets.sublist(begin, end);
   }
 
+  num playlistPage = 0;
   List<PlaylistInfo> _playlists;
+  List<Widget> get _playlistsWidgets => _playlists
+      .map((e) => AlbumItem(
+            id: e.id,
+            coverUrl: e.coverImgUrl == null
+                ? e.picUrl
+                : e.coverImgUrl,
+            name: e.name,
+          ))
+      .toList();
   List<Widget> get playlists {
     if (_playlists == null) {
       Requests.getRecommendedPlaylists(
@@ -87,15 +109,16 @@ class _HomeViewState extends State<HomeView>
         )
       ];
     }
-    return _playlists
-        .map((e) => AlbumItem(
-              id: e.id,
-              coverUrl: e.coverImgUrl == null
-                  ? e.picUrl
-                  : e.coverImgUrl,
-              name: e.name,
-            ))
-        .toList();
+
+    num begin = PLAYLIST_PER_PAGE * playlistPage;
+    num end = begin + PLAYLIST_PER_PAGE;
+    if (end > _playlists.length) {
+      setState(() {
+        playlistPage = 0;
+      });
+      return _playlistsWidgets.sublist(0, PLAYLIST_PER_PAGE);
+    }
+    return _playlistsWidgets.sublist(begin, end);
   }
 
   @override
@@ -118,7 +141,9 @@ class _HomeViewState extends State<HomeView>
                       Theme.of(context).colorScheme.secondary,
                   size: 28,
                 ),
-                onPressed: () {},
+                onPressed: () => setState(() {
+                  songPage += 1;
+                }),
               ),
               title: Text(
                 FeelingsLocalization.of(context)
@@ -138,7 +163,9 @@ class _HomeViewState extends State<HomeView>
                       Theme.of(context).colorScheme.secondary,
                   size: 28,
                 ),
-                onPressed: () {},
+                onPressed: () => setState(() {
+                  playlistPage += 1;
+                }),
               ),
               title: Text(
                 FeelingsLocalization.of(context)
