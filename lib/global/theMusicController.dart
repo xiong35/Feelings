@@ -38,7 +38,8 @@ class TheMusicController {
         await audioPlayer.resume();
         break;
       default:
-        int result = await audioPlayer.play(curUrl);
+        int result = await audioPlayer
+            .play(curUrl.replaceFirst("http://", "https://"));
         if (result == 1) {
           print('play success');
         } else {

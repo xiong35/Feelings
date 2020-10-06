@@ -18,7 +18,7 @@ class ImgPlaceHolder extends StatelessWidget {
   Widget build(BuildContext context) {
     if (url != null && url != "") {
       return Image.network(
-        url,
+        url.replaceFirst("http://", "https://"),
         fit: BoxFit.cover,
         width: width,
         height: height,
