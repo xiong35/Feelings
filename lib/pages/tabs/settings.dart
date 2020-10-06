@@ -103,7 +103,7 @@ class SettingsView extends StatelessWidget {
                                     .secondary),
                           ),
                           onPressed: () {
-                            Provider.of<LoginModel>(context,
+                            Provider.of<UserModel>(context,
                                     listen: false)
                                 .quit();
                             Navigator.pushNamed(

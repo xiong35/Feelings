@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:feelings/global/http.dart';
 import 'package:feelings/models/index.dart';
+import 'package:feelings/models/user/likes.dart';
 
 class Requests {
   static Future login() {}
@@ -114,6 +115,14 @@ class Requests {
     return Lyric.fromJson(
       json.decode(res),
     ).lrc.lyric;
+  }
+
+  static Future<List<num>> getLikes(String id) async {
+    String res = await GET("/likelist", query: {"uid": "$id"});
+
+    return Likes.fromJson(
+      json.decode(res),
+    ).ids;
   }
 
   static Future<Login> loginWithPhoneNPw(

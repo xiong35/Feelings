@@ -48,8 +48,8 @@ class _LoginViewState extends State<LoginView> {
     (_formKey.currentState as FormState).validate();
 
     if (!haveErr) {
-      Provider.of<LoginModel>(context, listen: false)
-          .loginData = loginData;
+      Provider.of<UserModel>(context, listen: false).loginData =
+          loginData;
       gotoMainPage();
     }
   }

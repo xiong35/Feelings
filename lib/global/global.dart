@@ -14,6 +14,8 @@ class GlobalProfile {
 }
 
 class Global {
+  static List<num> likes;
+
   static Future initState() async {
     Directory documentsDir =
         await getApplicationDocumentsDirectory();
@@ -82,13 +84,19 @@ class ProfileChangeNotifier extends ChangeNotifier {
   }
 }
 
-class LoginModel extends ProfileChangeNotifier {
+class UserModel extends ProfileChangeNotifier {
   Profile get user => Global.loginData.profile;
   String get cookie => Global.loginData.cookie;
   bool get didLogin => Global.loginData?.cookie != null;
+  List<num> get likes => Global.likes;
 
   set loginData(Login loginData) {
     Global.loginData = loginData;
+    notifyListeners();
+  }
+
+  set likes(List<num> likes) {
+    Global.likes = likes;
     notifyListeners();
   }
 

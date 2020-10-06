@@ -117,7 +117,7 @@ class FeelingsLocalization {
   }
 
   String get playModeLoopSingle {
-    return isZh ? "单曲循环" : "Play Single";
+    return isZh ? "单曲循环" : "Loop Single";
   }
 
   String get playModeShuffle {
