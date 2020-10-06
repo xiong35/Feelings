@@ -133,8 +133,8 @@ class TheMusicController {
       musicIdList == null ? null : musicIdList[curSongIndex];
 
   String curUrl;
-  get curUrlSecure =>
-      curUrl.replaceFirst("http://", "https://");
+  String get curUrlSecure =>
+      curUrl?.replaceFirst("http://", "https://") ?? "";
 
   Future<num> refreshById(num id, [List<num> playlist]) async {
     id = id ?? -1;
@@ -156,12 +156,11 @@ class TheMusicController {
         .then((value) => curLyric = value);
 
     var retList = await Future.wait([
-      Requests.getSongDetail("$curSongId"),
+      Requests.getSongDetail(["$curSongId"]),
       Requests.getSongUrl("$id"),
     ]);
-    print(retList);
 
-    curSong = retList[0] as Song;
+    curSong = (retList[0] as List<Song>)[0];
     curUrl = retList[1] as String;
 
     await playCurSong();

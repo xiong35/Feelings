@@ -178,6 +178,7 @@ class MusicPlayModel extends ChangeNotifier {
           .seek(_curDuration * percent);
     } catch (e) {
       print("oops");
+      print(e);
     }
     notifyListeners();
   }

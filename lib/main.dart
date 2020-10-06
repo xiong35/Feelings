@@ -77,7 +77,6 @@ class _FeelingsState extends State<Feelings> {
       routes: routes,
       // onGenerateRoute: (RouteSettings settings) {
       //   String routeName = settings.name;
-      //   print("Open page: $routeName");
       //   switch (routeName) {
       //     case "mainPage":
       //       return MaterialPageRoute(builder: (context) {

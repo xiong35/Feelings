@@ -18,12 +18,10 @@ GlobalSettings _$GlobalSettingsFromJson(
         : Login.fromJson(
             json['loginData'] as Map<String, dynamic>)
     // ..curSong = json['curSong'] as Song
-    ..curSongId = json['curSongId'] == null
-        ? null
-        : num.parse(json['curSongId'])
+    ..curSongId = json['curSongId'] as num
     // ..curPlaylist = json['curPlaylist'] as List<Song>;
     ..curPlaylist = (json['curPlaylist'] as List)
-        ?.map((e) => e == null ? null : num.parse(e))
+        ?.map((e) => e as num)
         ?.toList();
 }
 

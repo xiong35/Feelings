@@ -124,18 +124,19 @@ class Requests {
     ).ids;
   }
 
-  static Future<Song> getSongDetail(String id) async {
-    String res =
-        await GET("/song/detail", query: {"ids": "$id"});
+  static Future<List<Song>> getSongDetail(
+      List<String> ids) async {
+    String res = await GET("/song/detail",
+        query: {"ids": "${ids.join(',')}"});
 
     var resDecode = SongDetail.fromJson(
       json.decode(res),
     );
     if (resDecode?.songs == null ||
         resDecode.songs.length == 0) {
-      return null;
+      return [];
     }
-    return resDecode.songs[0];
+    return resDecode.songs;
   }
 
   static Future<Login> loginWithPhoneNPw(

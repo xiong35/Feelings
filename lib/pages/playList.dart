@@ -15,6 +15,8 @@ import 'package:feelings/components/musicItem.dart';
 import 'package:feelings/models/index.dart';
 import 'package:feelings/global/requests.dart';
 
+const PER_PAGE = 10;
+
 class PlaylistView extends StatefulWidget {
   PlaylistView({Key key, num limit}) : super(key: key);
 
@@ -25,7 +27,25 @@ class PlaylistView extends StatefulWidget {
 }
 
 class _PlaylistViewState extends State<PlaylistView> {
+  ScrollController _scrollController = new ScrollController();
+
   PlaylistContentData _playlistContentData;
+
+  List<num> get songIds =>
+      _playlistContentData?.trackIds
+          ?.map((e) => e.id)
+          ?.toList() ??
+      [];
+
+  List<String> get newIds {
+    num begin = min(curPage * PER_PAGE, songIds.length);
+    num end = min(songIds.length, begin + PER_PAGE);
+    return songIds
+        .sublist(begin, end)
+        .map((e) => "$e")
+        .toList();
+  }
+
   List<Widget> get songs {
     if (!haveData) {
       if (curId != null)
@@ -38,9 +58,7 @@ class _PlaylistViewState extends State<PlaylistView> {
     return _playlistContentData.tracks
         .map((e) => MusicItem(
               song: e,
-              curPlaylist: _playlistContentData.trackIds
-                  .map((e) => e.id)
-                  .toList(),
+              curPlaylist: songIds,
             ))
         .toList()
         .sublist(
@@ -52,6 +70,32 @@ class _PlaylistViewState extends State<PlaylistView> {
   bool get haveData => _playlistContentData != null;
 
   String curId;
+  num curPage = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 30) {
+        getMore();
+      }
+    });
+  }
+
+  getMore() async {
+    List<Song> newSongs = await Requests.getSongDetail(newIds);
+    setState(() {
+      _playlistContentData.tracks.addAll(newSongs);
+      curPage += 1;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -82,6 +126,7 @@ class _PlaylistViewState extends State<PlaylistView> {
       body: Loading(
         isLoading: !haveData,
         child: ListView(
+          controller: _scrollController,
           children: [
             PlaylistProfile(
                 id: args["id"], data: _playlistContentData),
@@ -104,7 +149,11 @@ class _PlaylistViewState extends State<PlaylistView> {
               ),
               onTap: () {},
             ),
-            ...songs,
+            ListView(
+              shrinkWrap: true,
+              children: songs,
+              physics: NeverScrollableScrollPhysics(),
+            ),
           ],
         ),
       ),

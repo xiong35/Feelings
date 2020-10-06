@@ -7,6 +7,6 @@ main(List<String> args) {
   Set<num> s2 = Set.from(l2);
   Set<num> s3 = Set.from(l3);
 
-  print(s1.difference(s2).length);
-  print(s1.difference(s3).length);
+  print(l2.sublist(0, 0));
+  print(1 > null);
 }
