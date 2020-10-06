@@ -138,7 +138,10 @@ class MusicPlayModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  MusicPlayModel() {
+  static MusicPlayModel _singleton =
+      MusicPlayModel._constructor();
+
+  MusicPlayModel._constructor() {
     theMusicController.audioPlayer.onDurationChanged
         .listen((Duration d) {
       _curDuration = d;
@@ -149,13 +152,21 @@ class MusicPlayModel extends ChangeNotifier {
       _curPosition = p;
       notifyListeners();
     });
+
+    theMusicController.audioPlayer.onPlayerCompletion
+        .listen((event) {
+      if (theMusicController.curPlayMode == 1) return;
+      theMusicController.cutSong(SongChangeType.forward);
+    });
   }
 
+  factory MusicPlayModel() => _singleton;
+
   get curPosition => _curPosition;
-  get curDuration => _curDuration;
+  get curDuration => _curDuration + Duration(milliseconds: 200);
   get percent =>
       _curPosition.inMilliseconds /
-      (_curDuration.inMilliseconds + 0.0001);
+      (_curDuration.inMilliseconds + 500);
 
   set percent(double percent) {
     theMusicController.audioPlayer.seek(_curDuration * percent);
@@ -212,19 +223,20 @@ class MusicPlayModel extends ChangeNotifier {
     Song song = theMusicController.curSong;
     if (song == null) {
       song = Song.fromJson({
-        "name": "布拉格广场",
-        "id": 210049,
+        "name": ":Lost Stars",
+        "id": 28737747,
         "ar": [
-          {"id": 7219, "name": "蔡依林"}
+          {"id": 196215, "name": "Adam Levine"}
         ],
         "al": {
-          "id": 21349,
-          "name": "看我72变",
+          "id": 2883909,
+          "name":
+              "Begin Again (Music From and Inspired By the Original Motion Picture)",
           "picUrl":
               "https://p2.music.126.net/lsMlFshdJ96aTGFFgayh4Q==/109951163611523278.jpg",
           "tns": []
         },
-        "mv": 186025
+        "mv": 285033
       });
     }
     return song;

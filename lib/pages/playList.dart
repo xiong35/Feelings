@@ -159,7 +159,7 @@ class PlaylistProfile extends StatelessWidget {
                   SizedBox(width: 14),
                   ClipOval(
                     child: ImgPlaceHolder(
-                      url: data.creator.avatarUrl,
+                      url: data?.creator?.avatarUrl,
                       width: 32,
                       height: 32,
                     ),
@@ -168,9 +168,7 @@ class PlaylistProfile extends StatelessWidget {
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: 150),
                     child: Text(
-                      data == null
-                          ? "---"
-                          : data.creator.nickname,
+                      data?.creator?.nickname ?? "---",
                       style: TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                     ),
