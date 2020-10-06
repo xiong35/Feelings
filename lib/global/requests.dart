@@ -114,7 +114,7 @@ class Requests {
 
     return Lyric.fromJson(
       json.decode(res),
-    ).lrc.lyric;
+    )?.lrc?.lyric;
   }
 
   static Future<List<num>> getLikes(String id) async {

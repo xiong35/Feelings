@@ -97,7 +97,7 @@ class _PlayPanel extends StatelessWidget {
 
   final Function setLoading;
 
-  void onPressedWrapper(Function fn) async {
+  Future onPressedWrapper(Function fn) async {
     setLoading(true);
     await fn();
     setLoading(false);
@@ -209,8 +209,8 @@ class _PlayPanel extends StatelessWidget {
                         Icons.skip_previous_outlined,
                         size: 40,
                       ),
-                      onPressed: () {
-                        onPressedWrapper(() async {
+                      onPressed: () async {
+                        await onPressedWrapper(() async {
                           await musicPlayModel
                               .cutSong(SongChangeType.backward);
                         });
@@ -229,8 +229,8 @@ class _PlayPanel extends StatelessWidget {
                             : Icons.play_circle_outline,
                         size: 50,
                       ),
-                      onPressed: () =>
-                          onPressedWrapper(() async {
+                      onPressed: () async =>
+                          await onPressedWrapper(() async {
                         await musicPlayModel.togglePlay();
                       }),
                     ),
@@ -243,8 +243,8 @@ class _PlayPanel extends StatelessWidget {
                         Icons.skip_next_outlined,
                         size: 40,
                       ),
-                      onPressed: () {
-                        onPressedWrapper(() async {
+                      onPressed: () async {
+                        await onPressedWrapper(() async {
                           await musicPlayModel
                               .cutSong(SongChangeType.forward);
                         });

@@ -2,9 +2,9 @@ import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-const _horizontalPadding = 32.0;
-const _carouselItemMargin = 8.0;
-const _carouselHeightMin = 150.0 + 2 * _carouselItemMargin;
+const horizontalPadding = 16.0;
+const carouselItemMargin = 8.0;
+const carouselHeightMin = 115.0 + 2 * carouselItemMargin;
 const _duration = Duration(milliseconds: 800);
 
 /// Animates the carousel to come in from the right.
@@ -36,7 +36,7 @@ class _AnimatedCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
-        height: _carouselHeightMin,
+        height: carouselHeightMin,
         width: constraints.maxWidth,
         child: child,
       );
@@ -93,7 +93,7 @@ class _CarouselState extends State<Carousel>
       // padding.
       final width = MediaQuery.of(context).size.width;
       final padding =
-          (_horizontalPadding * 2) - (_carouselItemMargin * 2);
+          (horizontalPadding * 2) - (carouselItemMargin * 2);
       _controller = PageController(
         initialPage: _currentPage,
         viewportFraction: (width - padding) / width,
@@ -122,7 +122,10 @@ class _CarouselState extends State<Carousel>
           child: Transform(
             transform: Matrix4.diagonal3Values(1.0, value, 1.0),
             alignment: Alignment.center,
-            child: child,
+            child: AspectRatio(
+              aspectRatio: 1080 / 400,
+              child: child,
+            ),
           ),
         );
       },
@@ -183,7 +186,7 @@ class CarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(_carouselItemMargin),
+      margin: const EdgeInsets.all(carouselItemMargin),
       child: Material(
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -194,7 +197,7 @@ class CarouselCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               ImgPlaceHolder(
-                height: 150,
+                height: MediaQuery.of(context).size.width / 3,
                 url: url,
               ),
               Positioned(

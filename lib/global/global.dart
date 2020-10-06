@@ -169,7 +169,16 @@ class MusicPlayModel extends ChangeNotifier {
       (_curDuration.inMilliseconds + 500);
 
   set percent(double percent) {
-    theMusicController.audioPlayer.seek(_curDuration * percent);
+    if (theMusicController.audioPlayer.state ==
+            AudioPlayerState.STOPPED ||
+        theMusicController.audioPlayer.state ==
+            AudioPlayerState.COMPLETED) return;
+    try {
+      theMusicController.audioPlayer
+          .seek(_curDuration * percent);
+    } catch (e) {
+      print("oops");
+    }
     notifyListeners();
   }
 
@@ -223,7 +232,7 @@ class MusicPlayModel extends ChangeNotifier {
     Song song = theMusicController.curSong;
     if (song == null) {
       song = Song.fromJson({
-        "name": ":Lost Stars",
+        "name": "Lost Stars",
         "id": 28737747,
         "ar": [
           {"id": 196215, "name": "Adam Levine"}
@@ -233,7 +242,7 @@ class MusicPlayModel extends ChangeNotifier {
           "name":
               "Begin Again (Music From and Inspired By the Original Motion Picture)",
           "picUrl":
-              "https://p2.music.126.net/lsMlFshdJ96aTGFFgayh4Q==/109951163611523278.jpg",
+              "https://p2.music.126.net/HfONoiydSxBFn2SMmyN3qg==/3235862724973369.jpg",
           "tns": []
         },
         "mv": 285033

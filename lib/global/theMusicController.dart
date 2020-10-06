@@ -49,6 +49,17 @@ class TheMusicController {
   }
 
   Future playCurSong() async {
+    await stopCurSong();
+
+    int result = await audioPlayer.play(curUrlSecure);
+    if (result == 1) {
+      print('play success');
+    } else {
+      print('play failed');
+    }
+  }
+
+  Future stopCurSong() async {
     switch (audioPlayer.state) {
       case AudioPlayerState.PLAYING:
       case AudioPlayerState.PAUSED:
@@ -56,13 +67,6 @@ class TheMusicController {
         break;
       default:
         break;
-    }
-
-    int result = await audioPlayer.play(curUrlSecure);
-    if (result == 1) {
-      print('play success');
-    } else {
-      print('play failed');
     }
   }
 
@@ -82,12 +86,15 @@ class TheMusicController {
   Random r = Random();
 
   Future<int> cutSong(SongChangeType type) async {
+    await stopCurSong();
     Function method =
         curPlayMode == 2 ? getRandSong : getOrderedSong;
 
     curSongIndex = method(type);
 
-    return await refreshBySong(curSong);
+    int res = await refreshBySong(curSong);
+
+    return res;
   }
 
   int getOrderedSong(SongChangeType type) {
@@ -97,7 +104,9 @@ class TheMusicController {
 
   int getRandSong(SongChangeType type) {
     if (randList.length < RAND_LIST_LEN) {
-      for (int i = 0; i < RAND_LIST_LEN; i++) {
+      for (int i = randList?.length ?? 0;
+          i < RAND_LIST_LEN;
+          i++) {
         addWithoutDuplicates(
           randList,
           musicList.length,
@@ -105,6 +114,7 @@ class TheMusicController {
         );
       }
     }
+    print(randList);
 
     addWithoutDuplicates(
       randList,
@@ -129,18 +139,10 @@ class TheMusicController {
 
   Future<int> refreshBySong(Song song,
       [List<Song> playlist]) async {
-    if (song == null) {
-      print("song is null");
-      return 1;
-    } else {
-      print("not null: ${song.name}");
-    }
-
     if (playlist != _musicList && playlist != null) {
       _musicList = playlist;
     }
     curSongIndex = _musicList.indexOf(song);
-
     if (curSongIndex == -1) {
       curSongIndex = 0;
     }
@@ -150,6 +152,7 @@ class TheMusicController {
 
     curUrl = await Requests.getSongUrl("${song.id}");
     await playCurSong();
+
     return 0;
   }
 }
