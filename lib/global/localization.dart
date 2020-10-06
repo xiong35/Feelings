@@ -153,6 +153,14 @@ class FeelingsLocalization {
   String get loginNeedLogin {
     return isZh ? "请先登录" : "Please Login Frist";
   }
+
+  String get addLike {
+    return isZh ? "成功添加至喜欢" : "Added to Likes";
+  }
+
+  String get removeLike {
+    return isZh ? "成功取消喜欢" : "Removed from Likes";
+  }
 }
 
 class FeelingsLocalizationsDelegate

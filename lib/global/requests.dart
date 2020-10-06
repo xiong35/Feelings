@@ -116,12 +116,18 @@ class Requests {
     )?.lrc?.lyric;
   }
 
-  static Future<List<num>> getLikes(String id) async {
-    String res = await GET("/likelist", query: {"uid": "$id"});
+  static Future<List<num>> getLikes(String cookie) async {
+    String res =
+        await GET("/likelist", query: {"cookie": cookie});
 
     return Likes.fromJson(
       json.decode(res),
     ).ids;
+  }
+
+  static Future setLike(
+      String id, bool doLike, String cookie) async {
+    await GET("/like", query: {"id": id, "cookie": cookie});
   }
 
   static Future<List<Song>> getSongDetail(

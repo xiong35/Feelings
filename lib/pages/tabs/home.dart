@@ -12,6 +12,7 @@ import 'package:feelings/components/albumList.dart';
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/requests.dart';
 import 'package:feelings/models/index.dart';
+import 'package:provider/provider.dart';
 
 const SONG_PER_PAGE = 5;
 const PLAYLIST_PER_PAGE = 6;
@@ -119,6 +120,19 @@ class _HomeViewState extends State<HomeView>
       return _playlistsWidgets.sublist(0, PLAYLIST_PER_PAGE);
     }
     return _playlistsWidgets.sublist(begin, end);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (Global.loginData?.cookie != null &&
+        Global.likes == null) {
+      Global.likes = [];
+      Requests.getLikes(Global.loginData.cookie).then((value) {
+        Provider.of<UserModel>(context, listen: false).likes =
+            value;
+      });
+    }
   }
 
   @override

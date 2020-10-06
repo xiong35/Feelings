@@ -74,9 +74,9 @@ class TheMusicController {
       1 repeat_one,
       2 shuffle   */
 
-  List<num> musicIdList;
+  List<num> musicIdList = [];
 
-  num curSongIndex = 0;
+  num curSongIndex;
   List<num> randList = [];
   Random r = Random();
 
@@ -93,6 +93,7 @@ class TheMusicController {
   }
 
   num _getOrderedSongInd(SongChangeType type) {
+    if (musicIdList.length == 0) return 0;
     num step = type == SongChangeType.forward ? 1 : -1;
     return (curSongIndex + step) % musicIdList.length;
   }
@@ -128,8 +129,9 @@ class TheMusicController {
 
   Song curSong;
 
-  num get curSongId =>
-      musicIdList == null ? null : musicIdList[curSongIndex];
+  num get curSongId => musicIdList.length == 0
+      ? null
+      : musicIdList[curSongIndex];
 
   String curUrl;
   String get curUrlSecure =>
@@ -137,8 +139,7 @@ class TheMusicController {
 
   Future<num> refreshById(num id, [List<num> playlist]) async {
     id = id ?? -1;
-    if (playlist != null &&
-        !intListIsEqual(playlist, musicIdList)) {
+    if (!intListIsEqual(playlist, musicIdList)) {
       musicIdList = playlist;
     }
 
@@ -150,6 +151,8 @@ class TheMusicController {
         curSongIndex = 0;
       }
     }
+
+    if (curSongId == null) return -1;
 
     Requests.getSongLyric("$curSongId")
         .then((value) => curLyric = value);

@@ -9,7 +9,8 @@ part of 'likes.dart';
 Likes _$LikesFromJson(Map<String, dynamic> json) {
   return Likes()
     ..ids = (json['ids'] as List)
-        .map((e) => (e == null) ? null : num.parse(e))
+        .map((e) => (e == null) ? null : e as num)
+        .toList()
     ..checkPoint = json['checkPoint'] as num
     ..code = json['code'] as num;
 }

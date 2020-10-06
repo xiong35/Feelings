@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:feelings/global/requests.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -84,7 +85,7 @@ class ProfileChangeNotifier extends ChangeNotifier {
   }
 }
 
-class UserModel extends ProfileChangeNotifier {
+class UserModel extends ChangeNotifier {
   Profile get user => Global.loginData.profile;
   String get cookie => Global.loginData.cookie;
   bool get didLogin => Global.loginData?.cookie != null;
@@ -92,6 +93,7 @@ class UserModel extends ProfileChangeNotifier {
 
   set loginData(Login loginData) {
     Global.loginData = loginData;
+    Global.saveProfile();
     notifyListeners();
   }
 
@@ -100,8 +102,28 @@ class UserModel extends ProfileChangeNotifier {
     notifyListeners();
   }
 
+  num toggleLikes(num id) {
+    if (Global?.loginData?.cookie == null) return 0;
+
+    int res;
+    if (likes.contains(id)) {
+      likes.remove(id);
+      Requests.setLike("$id", false, Global.loginData.cookie);
+      res = -1;
+    } else {
+      likes.add(id);
+      Requests.setLike("$id", true, Global.loginData.cookie);
+      res = 1;
+    }
+    notifyListeners();
+
+    return res;
+  }
+
   quit() {
     Global.loginData = null;
+    Global.likes = null;
+    Global.saveProfile();
     notifyListeners();
   }
 }
