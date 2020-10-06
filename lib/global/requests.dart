@@ -127,7 +127,8 @@ class Requests {
 
   static Future setLike(
       String id, bool doLike, String cookie) async {
-    await GET("/like", query: {"id": id, "cookie": cookie});
+    await GET("/like",
+        query: {"id": id, "like": "$doLike", "cookie": cookie});
   }
 
   static Future<List<Song>> getSongDetail(

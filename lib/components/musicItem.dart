@@ -31,9 +31,11 @@ class MusicItem extends StatelessWidget {
           : Icons.favorite_outline;
 
     return ListTile(
-      onTap: () {
-        Provider.of<MusicPlayModel>(context, listen: false)
+      onTap: () async {
+        var res = await Provider.of<MusicPlayModel>(context,
+                listen: false)
             .refreshById(song.id, curPlaylist);
+        print("res $res");
         Navigator.pushNamed(context, "musicPlay",
             arguments: {'id': song.id});
       },

@@ -138,12 +138,13 @@ class TheMusicController {
       curUrl?.replaceFirst("http://", "https://") ?? "http://";
 
   Future<num> refreshById(num id, [List<num> playlist]) async {
-    id = id ?? -1;
-    if (!intListIsEqual(playlist, musicIdList)) {
+    if (!isEmpty(playlist)) {
       musicIdList = playlist;
+    } else {
+      if (isEmpty(musicIdList)) return -1;
     }
 
-    curSongIndex = musicIdList?.indexOf(id) ?? -1;
+    curSongIndex = musicIdList.indexOf(id);
     if (curSongIndex == -1) {
       if (curPlayMode == 2) {
         curSongIndex = r.nextInt(musicIdList.length);
@@ -203,9 +204,16 @@ void addWithoutDuplicates(
 }
 
 bool intListIsEqual(List<num> l1, List<num> l2) {
+  if (l1 == null || l2 == null) return false;
+
   Set<num> s1 = Set.from(l1 ?? []);
   Set<num> s2 = Set.from(l2 ?? []);
+
   if (s1.length != s2.length) return false;
 
   return s1.difference(s2).length == 0;
+}
+
+bool isEmpty(List l) {
+  return l == null ? true : l.length == 0;
 }
