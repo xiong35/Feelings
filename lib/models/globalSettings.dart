@@ -10,7 +10,7 @@ class GlobalSettings {
   GlobalSettings.fromData({
     this.curPlayMode,
     this.curPlaylist,
-    this.curSong,
+    this.curSongId,
     this.locale,
     this.loginData,
     this.theme,
@@ -21,8 +21,8 @@ class GlobalSettings {
   String locale;
   String theme;
   Login loginData;
-  Song curSong;
-  List<Song> curPlaylist;
+  num curSongId;
+  List<num> curPlaylist;
   num curPlayMode;
 
   factory GlobalSettings.fromJson(Map<String, dynamic> json) =>

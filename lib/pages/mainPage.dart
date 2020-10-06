@@ -7,7 +7,7 @@ import 'package:feelings/pages/tabs/myMusic.dart';
 import 'package:feelings/components/thePlayPanel.dart';
 import 'package:feelings/global/localization.dart';
 
-const int tabCount = 4;
+const num tabCount = 4;
 
 class MainPage extends StatefulWidget {
   const MainPage();
@@ -155,7 +155,7 @@ class _PageTab extends StatefulWidget {
     ThemeData theme,
     IconData iconData,
     String title,
-    int tabIndex,
+    num tabIndex,
     TabController tabController,
   })  : titleText = Text(
           title,

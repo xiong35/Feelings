@@ -25,7 +25,7 @@ class ImgPlaceHolder extends StatelessWidget {
       );
     }
 
-    int randID = Random().nextInt(3);
+    num randID = Random().nextInt(3);
     return Image.asset(
       "images/ph$randID.png",
       fit: BoxFit.cover,

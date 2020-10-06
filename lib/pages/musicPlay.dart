@@ -77,7 +77,7 @@ class _MusicPlayViewState extends State<MusicPlayView> {
               // Expanded(
               //   child: ListView(
               //     children: [
-              //       for (int i = 0; i < 100; i++) Text("test"),
+              //       for (num i = 0; i < 100; i++) Text("test"),
               //     ],
               //   ),
               // ),
@@ -110,7 +110,7 @@ class _PlayPanel extends StatelessWidget {
       FeelingsLocalization.of(context).playModeShuffle,
     ];
 
-    int newMode =
+    num newMode =
         Provider.of<MusicPlayModel>(context, listen: false)
             .togglePlayMode();
 
@@ -171,7 +171,7 @@ class _PlayPanel extends StatelessWidget {
                         size: 30,
                       ),
                       onPressed: () {
-                        int newMode =
+                        num newMode =
                             musicPlayModel.togglePlayMode();
                         var tipList = [
                           FeelingsLocalization.of(context)

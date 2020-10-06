@@ -35,8 +35,8 @@ class Global {
     Global.loginData = settings.loginData;
     Global.profile.theme = settings.theme;
     Global.profile.locale = settings.locale;
-    await theMusicController.refreshBySong(
-        settings.curSong, settings.curPlaylist);
+    await theMusicController.refreshById(
+        settings.curSongId, settings.curPlaylist);
     theMusicController.curPlayMode = settings.curPlayMode;
     await theMusicController.togglePlay();
   }
@@ -45,7 +45,7 @@ class Global {
 
   static Login loginData;
 
-  static saveProfile() async {
+  static Future saveProfile() async {
     Directory documentsDir =
         await getApplicationDocumentsDirectory();
 
@@ -59,8 +59,8 @@ class Global {
 
     GlobalSettings settings = GlobalSettings.fromData(
       curPlayMode: theMusicController.curPlayMode,
-      curPlaylist: theMusicController.curPlaylist,
-      curSong: theMusicController.curSong,
+      curPlaylist: theMusicController.musicIdList,
+      curSongId: theMusicController.curSongId,
       locale: Global.profile.locale,
       loginData: Global.loginData,
       theme: Global.profile.theme,
@@ -182,8 +182,8 @@ class MusicPlayModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int togglePlayMode() {
-    int newMode = (theMusicController.curPlayMode + 1) % 3;
+  num togglePlayMode() {
+    num newMode = (theMusicController.curPlayMode + 1) % 3;
     theMusicController.curPlayMode = newMode;
 
     if (newMode == 1) {
@@ -207,17 +207,17 @@ class MusicPlayModel extends ChangeNotifier {
   Duration _curDuration = Duration.zero;
   Duration _curPosition = Duration.zero;
 
-  Future<int> refreshBySong(Song song,
-      [List<Song> playlist]) async {
-    int res =
-        await theMusicController.refreshBySong(song, playlist);
+  Future<num> refreshById(num id, [List<num> playlist]) async {
+    num res =
+        await theMusicController.refreshById(id, playlist);
     notifyListeners();
-    Global.saveProfile();
+    await Global.saveProfile();
     return res;
   }
 
-  Future<int> cutSong(SongChangeType type) async {
-    int res = await theMusicController.cutSong(type);
+  Future<num> cutSong(SongChangeType type) async {
+    num res = await theMusicController.cutSong(type);
+    await Global.saveProfile();
     notifyListeners();
     return res;
   }
@@ -228,6 +228,7 @@ class MusicPlayModel extends ChangeNotifier {
   String get curSongLyric => theMusicController.curLyric == null
       ? ""
       : theMusicController.curLyric;
+
   Song get curSong {
     Song song = theMusicController.curSong;
     if (song == null) {
@@ -243,7 +244,6 @@ class MusicPlayModel extends ChangeNotifier {
               "Begin Again (Music From and Inspired By the Original Motion Picture)",
           "picUrl":
               "https://p2.music.126.net/HfONoiydSxBFn2SMmyN3qg==/3235862724973369.jpg",
-          "tns": []
         },
         "mv": 285033
       });

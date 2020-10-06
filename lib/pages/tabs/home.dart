@@ -56,7 +56,12 @@ class _HomeViewState extends State<HomeView>
       ];
     }
     return _songs
-        .map((e) => MusicItem(song: e, curPlaylist: _songs))
+        .map(
+          (e) => MusicItem(
+            song: e,
+            curPlaylist: _songs.map((e) => e.id).toList(),
+          ),
+        )
         .toList()
         .sublist(0, min(_songs.length, 5));
   }
@@ -77,7 +82,7 @@ class _HomeViewState extends State<HomeView>
           name: "an album",
         ),
         AlbumItem(
-          id: 31,
+          id: 32,
           name: "an album",
         )
       ];

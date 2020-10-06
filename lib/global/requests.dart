@@ -128,9 +128,14 @@ class Requests {
     String res =
         await GET("/song/detail", query: {"ids": "$id"});
 
-    return SongDetail.fromJson(
+    var resDecode = SongDetail.fromJson(
       json.decode(res),
-    ).songs[0];
+    );
+    if (resDecode?.songs == null ||
+        resDecode.songs.length == 0) {
+      return null;
+    }
+    return resDecode.songs[0];
   }
 
   static Future<Login> loginWithPhoneNPw(

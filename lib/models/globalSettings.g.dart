@@ -18,14 +18,12 @@ GlobalSettings _$GlobalSettingsFromJson(
         : Login.fromJson(
             json['loginData'] as Map<String, dynamic>)
     // ..curSong = json['curSong'] as Song
-    ..curSong = json['curSong'] == null
+    ..curSongId = json['curSongId'] == null
         ? null
-        : Song.fromJson(json['curSong'] as Map<String, dynamic>)
+        : num.parse(json['curSongId'])
     // ..curPlaylist = json['curPlaylist'] as List<Song>;
     ..curPlaylist = (json['curPlaylist'] as List)
-        ?.map((e) => e == null
-            ? null
-            : Song.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null ? null : num.parse(e))
         ?.toList();
 }
 
@@ -36,6 +34,6 @@ Map<String, dynamic> _$GlobalSettingsToJson(
       'theme': instance.theme,
       'curPlayMode': instance.curPlayMode,
       'loginData': instance.loginData,
-      'curSong': instance.curSong,
+      'curSongId': instance.curSongId,
       'curPlaylist': instance.curPlaylist
     };

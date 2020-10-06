@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class MusicItem extends StatelessWidget {
   @required
   final Song song;
-  final List<Song> curPlaylist;
+  final List<num> curPlaylist;
 
   MusicItem({
     this.song,
@@ -22,7 +22,7 @@ class MusicItem extends StatelessWidget {
     return ListTile(
       onTap: () {
         Provider.of<MusicPlayModel>(context, listen: false)
-            .refreshBySong(song, curPlaylist);
+            .refreshById(song.id, curPlaylist);
         Navigator.pushNamed(context, "musicPlay",
             arguments: {'id': song.id});
       },

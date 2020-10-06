@@ -26,7 +26,7 @@ class AlbumList extends StatelessWidget {
 class AlbumItem extends StatelessWidget {
   final String coverUrl;
   final String name;
-  final int id;
+  final num id;
 
   AlbumItem({this.coverUrl, this.name, this.id});
 

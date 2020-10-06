@@ -61,7 +61,7 @@ class _CarouselState extends State<Carousel>
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin {
   PageController _controller;
-  int _currentPage = 0;
+  num _currentPage = 0;
   Timer bannerTimer;
 
   AnimationController _animationController;
@@ -101,7 +101,7 @@ class _CarouselState extends State<Carousel>
     }
   }
 
-  Widget builder(int index) {
+  Widget builder(num index) {
     final carouselCard = AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {

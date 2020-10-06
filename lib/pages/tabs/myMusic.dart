@@ -114,7 +114,7 @@ class UserProfile extends StatelessWidget {
       : super(key: key);
 
   final Profile userProfile;
-  final int lv;
+  final num lv;
 
   @override
   Widget build(BuildContext context) {

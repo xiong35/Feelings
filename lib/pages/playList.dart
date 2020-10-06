@@ -16,9 +16,9 @@ import 'package:feelings/models/index.dart';
 import 'package:feelings/global/requests.dart';
 
 class PlaylistView extends StatefulWidget {
-  PlaylistView({Key key, int limit}) : super(key: key);
+  PlaylistView({Key key, num limit}) : super(key: key);
 
-  final int limit = 999;
+  final num limit = 999;
 
   @override
   _PlaylistViewState createState() => _PlaylistViewState();
@@ -32,13 +32,15 @@ class _PlaylistViewState extends State<PlaylistView> {
         Requests.getPlaylistContentData(curId).then((value) =>
             setState(() => _playlistContentData = value));
       return [
-        for (int i = 0; i < 3; i++) MusicItem(),
+        for (num i = 0; i < 3; i++) MusicItem(),
       ];
     }
     return _playlistContentData.tracks
         .map((e) => MusicItem(
               song: e,
-              curPlaylist: _playlistContentData.tracks,
+              curPlaylist: _playlistContentData.trackIds
+                  .map((e) => e.id)
+                  .toList(),
             ))
         .toList()
         .sublist(
@@ -114,7 +116,7 @@ class PlaylistProfile extends StatelessWidget {
   const PlaylistProfile({Key key, this.id, this.data})
       : super(key: key);
 
-  final int id;
+  final num id;
   final PlaylistContentData data;
 
   @override

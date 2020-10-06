@@ -38,7 +38,7 @@ class TheMusicController {
         await audioPlayer.resume();
         break;
       default:
-        int result = await audioPlayer.play(curUrlSecure);
+        num result = await audioPlayer.play(curUrlSecure);
         if (result == 1) {
           print('play success');
         } else {
@@ -51,7 +51,7 @@ class TheMusicController {
   Future playCurSong() async {
     await stopCurSong();
 
-    int result = await audioPlayer.play(curUrlSecure);
+    num result = await audioPlayer.play(curUrlSecure);
     if (result == 1) {
       print('play success');
     } else {
@@ -70,55 +70,50 @@ class TheMusicController {
     }
   }
 
-  int curPlayMode = 0;
+  num curPlayMode = 0;
   /*  0 repeat,
       1 repeat_one,
       2 shuffle   */
 
-  List<Song> _musicList;
-  List<num> get musicList =>
-      _musicList?.map((e) => e.id)?.toList();
-  List<Song> get curPlaylist => _musicList;
+  List<num> musicIdList;
 
-  int curSongIndex = 0;
+  num curSongIndex = 0;
   List<num> randList = [];
-  int randSeed = Random().nextInt(RAND_RANGE);
   Random r = Random();
 
-  Future<int> cutSong(SongChangeType type) async {
+  Future<num> cutSong(SongChangeType type) async {
     await stopCurSong();
     Function method =
-        curPlayMode == 2 ? getRandSong : getOrderedSong;
+        curPlayMode == 2 ? _getRandSongInd : _getOrderedSongInd;
 
     curSongIndex = method(type);
 
-    int res = await refreshBySong(curSong);
+    num res = await refreshById(curSongId);
 
     return res;
   }
 
-  int getOrderedSong(SongChangeType type) {
-    int step = type == SongChangeType.forward ? 1 : -1;
-    return (curSongIndex + step) % musicList.length;
+  num _getOrderedSongInd(SongChangeType type) {
+    num step = type == SongChangeType.forward ? 1 : -1;
+    return (curSongIndex + step) % musicIdList.length;
   }
 
-  int getRandSong(SongChangeType type) {
+  num _getRandSongInd(SongChangeType type) {
     if (randList.length < RAND_LIST_LEN) {
-      for (int i = randList?.length ?? 0;
+      for (num i = randList?.length ?? 0;
           i < RAND_LIST_LEN;
           i++) {
         addWithoutDuplicates(
           randList,
-          musicList.length,
+          musicIdList.length,
           SongChangeType.forward,
         );
       }
     }
-    print(randList);
 
     addWithoutDuplicates(
       randList,
-      musicList.length,
+      musicIdList.length,
       type,
     );
     if (type == SongChangeType.forward) {
@@ -131,26 +126,44 @@ class TheMusicController {
   }
 
   String curLyric;
-  Song get curSong =>
-      _musicList == null ? null : _musicList[curSongIndex];
+
+  Song curSong;
+
+  num get curSongId =>
+      musicIdList == null ? null : musicIdList[curSongIndex];
+
   String curUrl;
   get curUrlSecure =>
       curUrl.replaceFirst("http://", "https://");
 
-  Future<int> refreshBySong(Song song,
-      [List<Song> playlist]) async {
-    if (playlist != _musicList && playlist != null) {
-      _musicList = playlist;
-    }
-    curSongIndex = _musicList.indexOf(song);
-    if (curSongIndex == -1) {
-      curSongIndex = 0;
+  Future<num> refreshById(num id, [List<num> playlist]) async {
+    id = id ?? -1;
+    if (playlist != null &&
+        !intListIsEqual(playlist, musicIdList)) {
+      musicIdList = playlist;
     }
 
-    Requests.getSongLyric("${song.id}")
+    curSongIndex = musicIdList?.indexOf(id) ?? -1;
+    if (curSongIndex == -1) {
+      if (curPlayMode == 2) {
+        curSongIndex = r.nextInt(musicIdList.length);
+      } else {
+        curSongIndex = 0;
+      }
+    }
+
+    Requests.getSongLyric("$id")
         .then((value) => curLyric = value);
 
-    curUrl = await Requests.getSongUrl("${song.id}");
+    var retList = await Future.wait([
+      Requests.getSongDetail("$curSongId"),
+      Requests.getSongUrl("$id"),
+    ]);
+    print(retList);
+
+    curSong = retList[0] as Song;
+    curUrl = retList[1] as String;
+
     await playCurSong();
 
     return 0;
@@ -160,9 +173,9 @@ class TheMusicController {
 var theMusicController = TheMusicController();
 
 void addWithoutDuplicates(
-    List list, int totalLen, SongChangeType type) {
-  int listLength = list.length;
-  int range = totalLen ~/ 2;
+    List list, num totalLen, SongChangeType type) {
+  num listLength = list.length;
+  num range = totalLen ~/ 2;
   List consideredList;
 
   if (listLength <= range) {
@@ -175,7 +188,7 @@ void addWithoutDuplicates(
     }
   }
 
-  int next;
+  num next;
 
   do {
     next = Random().nextInt(RAND_RANGE) % totalLen;
@@ -186,4 +199,12 @@ void addWithoutDuplicates(
   } else {
     list.insert(0, next);
   }
+}
+
+bool intListIsEqual(List<num> l1, List<num> l2) {
+  Set<num> s1 = Set.from(l1 ?? []);
+  Set<num> s2 = Set.from(l2 ?? []);
+  if (s1.length != s2.length) return false;
+
+  return s1.difference(s2).length == 0;
 }
