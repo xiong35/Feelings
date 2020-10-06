@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:feelings/components/loading.dart';
+import 'package:feelings/pages/musicPlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -60,11 +61,7 @@ class _PlaylistViewState extends State<PlaylistView> {
               song: e,
               curPlaylist: songIds,
             ))
-        .toList()
-        .sublist(
-            0,
-            min(_playlistContentData.tracks.length,
-                widget.limit));
+        .toList();
   }
 
   bool get haveData => _playlistContentData != null;
@@ -89,6 +86,11 @@ class _PlaylistViewState extends State<PlaylistView> {
       _playlistContentData.tracks.addAll(newSongs);
       curPage += 1;
     });
+  }
+
+  playAll(BuildContext context) {
+    Provider.of<MusicPlayModel>(context, listen: false)
+        .refreshById(-1, songIds);
   }
 
   @override
@@ -134,7 +136,7 @@ class _PlaylistViewState extends State<PlaylistView> {
             ListTile(
               leading: IconButton(
                 icon: Icon(Icons.play_arrow_outlined),
-                onPressed: () {},
+                onPressed: () => playAll(context),
                 color: Theme.of(context)
                     .colorScheme
                     .secondaryVariant,
@@ -147,7 +149,7 @@ class _PlaylistViewState extends State<PlaylistView> {
                   fontSize: 18,
                 ),
               ),
-              onTap: () {},
+              onTap: () => playAll(context),
             ),
             ListView(
               shrinkWrap: true,

@@ -20,6 +20,7 @@ class MusicItem extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
+      // key: Key(song.id.toString()),
       onTap: () {
         Provider.of<MusicPlayModel>(context, listen: false)
             .refreshById(song.id, curPlaylist);

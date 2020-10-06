@@ -2,9 +2,8 @@ import 'package:feelings/components/ImgPlaceHolder.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-const horizontalPadding = 16.0;
+const horizontalPadding = 32.0;
 const carouselItemMargin = 8.0;
-const carouselHeightMin = 115.0 + 2 * carouselItemMargin;
 const _duration = Duration(milliseconds: 800);
 
 /// Animates the carousel to come in from the right.
@@ -34,9 +33,10 @@ class _AnimatedCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
-        height: carouselHeightMin,
+        height: width / 2.5,
         width: constraints.maxWidth,
         child: child,
       );
@@ -114,8 +114,7 @@ class _CarouselState extends State<Carousel>
         }
         // We want the peeking cards to be 160 in height and 0.38 helps
         // achieve that.
-        value =
-            (1 - (value.abs() * .38)).clamp(0, 1).toDouble();
+        value = (1 - (value.abs() * .4)).clamp(0, 1).toDouble();
         value = Curves.easeOut.transform(value);
 
         return Center(

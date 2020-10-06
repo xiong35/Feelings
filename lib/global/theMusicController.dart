@@ -1,7 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:math';
 
-import 'package:feelings/global/http.dart';
 import 'package:feelings/models/index.dart';
 import 'package:feelings/global/requests.dart';
 
@@ -134,7 +133,7 @@ class TheMusicController {
 
   String curUrl;
   String get curUrlSecure =>
-      curUrl?.replaceFirst("http://", "https://") ?? "";
+      curUrl?.replaceFirst("http://", "https://") ?? "http://";
 
   Future<num> refreshById(num id, [List<num> playlist]) async {
     id = id ?? -1;
@@ -152,12 +151,12 @@ class TheMusicController {
       }
     }
 
-    Requests.getSongLyric("$id")
+    Requests.getSongLyric("$curSongId")
         .then((value) => curLyric = value);
 
     var retList = await Future.wait([
       Requests.getSongDetail(["$curSongId"]),
-      Requests.getSongUrl("$id"),
+      Requests.getSongUrl("$curSongId"),
     ]);
 
     curSong = (retList[0] as List<Song>)[0];
