@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:feelings/global/global.dart';
 import 'package:flutter/material.dart' hide Banner;
 
 import 'package:feelings/components/loading.dart';
@@ -19,9 +20,12 @@ class HomeView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   List<Banner> _banners;
   List<Widget> get carouselCards {
+    Requests.getBanners()
+        .then((value) => setState(() => _banners = value));
     if (_banners == null) {
       return [
         CarouselCard(
@@ -45,6 +49,8 @@ class _HomeViewState extends State<HomeView> {
   List<Song> _songs;
   List<Widget> get songs {
     if (_songs == null) {
+      Requests.getRecommendedSongs(Global?.loginData?.cookie)
+          .then((value) => setState(() => _songs = value));
       return [
         for (var i = 0; i < 3; i++) MusicItem(),
       ];
@@ -58,9 +64,16 @@ class _HomeViewState extends State<HomeView> {
   List<PlaylistInfo> _playlists;
   List<Widget> get playlists {
     if (_playlists == null) {
+      Requests.getRecommendedPlaylists(
+              Global?.loginData?.cookie)
+          .then((value) => setState(() => _playlists = value));
       return [
         AlbumItem(
           id: 30,
+          name: "an album",
+        ),
+        AlbumItem(
+          id: 31,
           name: "an album",
         ),
         AlbumItem(
@@ -81,19 +94,8 @@ class _HomeViewState extends State<HomeView> {
   }
 
   @override
-  void initState() {
-    Requests.getBanners()
-        .then((value) => setState(() => _banners = value));
-    Requests.getRecommendedSongs()
-        .then((value) => setState(() => _songs = value));
-    Requests.getRecommendedPlaylists()
-        .then((value) => setState(() => _playlists = value));
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Loading(
         isLoading: _banners == null,
@@ -148,4 +150,7 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
