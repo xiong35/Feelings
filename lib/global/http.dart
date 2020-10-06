@@ -7,8 +7,8 @@ Future<String> GET(String path,
     {Map<String, dynamic> query}) async {
   HttpClientRequest request = await httpClient.getUrl(
     Uri(
-      scheme: "http",
-      host: "api.xiong35.cn",
+      scheme: "https",
+      host: "www.xiong35.cn",
       path: "/netease$path",
       queryParameters: query,
     ),

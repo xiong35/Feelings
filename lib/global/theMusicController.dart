@@ -38,8 +38,7 @@ class TheMusicController {
         await audioPlayer.resume();
         break;
       default:
-        int result = await audioPlayer
-            .play(curUrl.replaceFirst("http://", "https://"));
+        int result = await audioPlayer.play(curUrlSecure);
         if (result == 1) {
           print('play success');
         } else {
@@ -59,7 +58,7 @@ class TheMusicController {
         break;
     }
 
-    int result = await audioPlayer.play(curUrl);
+    int result = await audioPlayer.play(curUrlSecure);
     if (result == 1) {
       print('play success');
     } else {
@@ -125,6 +124,8 @@ class TheMusicController {
   Song get curSong =>
       _musicList == null ? null : _musicList[curSongIndex];
   String curUrl;
+  get curUrlSecure =>
+      curUrl.replaceFirst("http://", "https://");
 
   Future<int> refreshBySong(Song song,
       [List<Song> playlist]) async {

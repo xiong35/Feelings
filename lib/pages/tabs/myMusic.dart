@@ -28,20 +28,14 @@ class _MineViewState extends State<MineView> {
       return [
         AlbumItem(
           id: 66,
-          coverUrl:
-              'http://static.xiong35.cn/image/icons/open-doodles/29.png',
           name: "please wait ...",
         ),
         AlbumItem(
           id: 67,
-          coverUrl:
-              'http://static.xiong35.cn/image/icons/open-doodles/25.png',
           name: "please wait ...",
         ),
         AlbumItem(
           id: 68,
-          coverUrl:
-              'http://static.xiong35.cn/image/icons/open-doodles/23.png',
           name: "please wait ...",
         )
       ];
@@ -63,9 +57,7 @@ class _MineViewState extends State<MineView> {
       return Profile()
         ..nickname = "---"
         ..follows = 0
-        ..followeds = 0
-        ..avatarUrl =
-            "http://static.xiong35.cn/image/icons/open-doodles/2.png";
+        ..followeds = 0;
     }
     return _userProfile;
   }

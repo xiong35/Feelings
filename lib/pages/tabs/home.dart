@@ -67,14 +67,10 @@ class _HomeViewState extends State<HomeView> {
       return [
         AlbumItem(
           id: 30,
-          coverUrl:
-              'http://static.xiong35.cn/image/icons/open-doodles/29.png',
           name: "an album",
         ),
         AlbumItem(
           id: 31,
-          coverUrl:
-              'http://static.xiong35.cn/image/icons/open-doodles/29.png',
           name: "an album",
         )
       ];
