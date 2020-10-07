@@ -165,6 +165,10 @@ class FeelingsLocalization {
   String get search {
     return isZh ? "搜索" : "search";
   }
+
+  String get searchResHint {
+    return isZh ? "的搜索结果为:" : "'s search result is:";
+  }
 }
 
 class FeelingsLocalizationsDelegate

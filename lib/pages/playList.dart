@@ -74,7 +74,7 @@ class _PlaylistViewState extends State<PlaylistView> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 30) {
+          _scrollController.position.maxScrollExtent - 70) {
         getMore();
       }
     });

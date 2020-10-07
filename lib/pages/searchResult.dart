@@ -1,7 +1,10 @@
 import 'package:feelings/components/musicItem.dart';
+import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/requests.dart';
 import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
+
+const LIMIT = 10;
 
 class SearchResult extends StatefulWidget {
   SearchResult({Key key}) : super(key: key);
@@ -12,6 +15,9 @@ class SearchResult extends StatefulWidget {
 
 class _SearchResultState extends State<SearchResult> {
   SearchRes res;
+  ScrollController _scrollController = new ScrollController();
+  String kw;
+  num curPage = 0;
 
   List<Widget> get songs => res == null
       ? []
@@ -20,16 +26,43 @@ class _SearchResultState extends State<SearchResult> {
           .toList();
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 70) {
+        getMore();
+      }
+    });
+  }
+
+  getMore() async {
+    SearchRes newRes =
+        await Requests.getSearchRes(kw, LIMIT, curPage * LIMIT);
+    setState(() {
+      if (res == null)
+        res = newRes;
+      else
+        res.result.songs.addAll(newRes.result.songs);
+      curPage += 1;
+    });
+  }
+
+  @override
   void didChangeDependencies() {
-    if (res == null) {
+    if (kw == null) {
       Map<String, dynamic> args =
           ModalRoute.of(context).settings.arguments ??
               {"kw": ""};
 
-      String kw = args["kw"];
-
-      Requests.getSearchRes(kw)
-          .then((value) => setState(() => res = value));
+      kw = args["kw"];
+      getMore();
     }
     super.didChangeDependencies();
   }
@@ -41,7 +74,8 @@ class _SearchResultState extends State<SearchResult> {
         backgroundColor:
             Theme.of(context).colorScheme.background,
         title: Text(
-          "??",
+          '"$kw" ' +
+              FeelingsLocalization.of(context).searchResHint,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onBackground,
           ),
@@ -49,6 +83,7 @@ class _SearchResultState extends State<SearchResult> {
         elevation: 1,
       ),
       body: ListView(
+        controller: _scrollController,
         children: songs,
       ),
     );

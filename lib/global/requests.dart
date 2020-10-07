@@ -170,13 +170,15 @@ class Requests {
     );
   }
 
-  static Future<SearchRes> getSearchRes(String kw) async {
+  static Future<SearchRes> getSearchRes(
+      String kw, num limit, num offset) async {
     print(kw);
     String res = await GET(
       "/search",
       query: {
         "keywords": kw,
-        "limit": "10",
+        "limit": "$limit",
+        "offset": "$offset",
       },
     );
     print(res.length);
