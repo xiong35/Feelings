@@ -14,3 +14,13 @@ class PartDevider extends StatelessWidget {
     );
   }
 }
+
+String formatTime(num timeStamp) {
+  var d = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+  var year = d.year;
+  var month = d.month;
+  var day = d.day;
+  var hour = d.hour;
+  var min = d.minute;
+  return "$year/$month/$day $hour:$min";
+}

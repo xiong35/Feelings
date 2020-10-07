@@ -169,6 +169,10 @@ class FeelingsLocalization {
   String get searchResHint {
     return isZh ? "的搜索结果为:" : "'s search result is:";
   }
+
+  String get comment {
+    return isZh ? "的热门评论:" : "'s hot comments";
+  }
 }
 
 class FeelingsLocalizationsDelegate

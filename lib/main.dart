@@ -1,3 +1,4 @@
+import 'package:feelings/pages/musicComment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,6 +19,7 @@ var routes = <String, WidgetBuilder>{
   "musicPlay": (context) => MusicPlayView(),
   "login": (context) => LoginView(),
   "searchRes": (context) => SearchResult(),
+  "comments": (context) => MusicComment(),
 };
 
 void main() async {

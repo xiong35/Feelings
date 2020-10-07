@@ -170,6 +170,21 @@ class Requests {
     );
   }
 
+  static Future<List<Comment>> getCommentById(String id) async {
+    String res = await GET(
+      "/comment/music",
+      query: {
+        "id": id,
+        "limit": "15",
+      },
+    );
+
+    return CommentRes.fromJson(
+          json.decode(res),
+        )?.hotComments ??
+        [];
+  }
+
   static Future<SearchRes> getSearchRes(
       String kw, num limit, num offset) async {
     print(kw);

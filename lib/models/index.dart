@@ -1,3 +1,5 @@
+export 'comment/comment.dart';
+export 'comment/commentRes.dart';
 export 'globalSettings.dart';
 export 'home/banner.dart';
 export 'home/banners.dart';

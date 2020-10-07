@@ -259,7 +259,14 @@ class _PlayPanel extends StatelessWidget {
                         Icons.mode_comment_outlined,
                         size: 30,
                       ),
-                      onPressed: null,
+                      onPressed: () => Navigator.pushNamed(
+                          context, "comments",
+                          arguments: {
+                            "id":
+                                musicPlayModelListen.curSong.id,
+                            "name": musicPlayModelListen
+                                .curSong.name
+                          }),
                     ),
                   ),
                 ],
