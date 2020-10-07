@@ -64,7 +64,7 @@ class _MusicPlayViewState extends State<MusicPlayView> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                padding: EdgeInsets.fromLTRB(0, 50, 0, 15),
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 15),
               ),
               Text(
                 musicPlayModelListen.curSong.name,
@@ -73,27 +73,32 @@ class _MusicPlayViewState extends State<MusicPlayView> {
               ),
               SizedBox(height: 6),
               Text(musicPlayModelListen.curSong.ar[0].name),
-              SizedBox(height: 12),
+              SizedBox(height: 20),
               Expanded(
                 child: SingleChildScrollView(
                   child: Center(
-                    child: Column(
-                      children: Provider.of<MusicPlayModel>(
-                              context,
-                              listen: true)
-                          .lyric
-                          .replaceAll(RegExp(r"\[.*?\]"), "")
-                          .split("\n")
-                          .map((e) => Text(
-                                e,
-                                style: TextStyle(
-                                  height: 1.5,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                ),
-                              ))
-                          .toList(),
+                    child: ConstrainedBox(
+                      child: Column(
+                        children: Provider.of<MusicPlayModel>(
+                                context,
+                                listen: true)
+                            .lyric
+                            .replaceAll(RegExp(r"\[.*?\]"), "")
+                            .split("\n")
+                            .map((e) => Text(
+                                  e,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    height: 1.8,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                      constraints:
+                          BoxConstraints(maxWidth: 350),
                     ),
                   ),
                 ),

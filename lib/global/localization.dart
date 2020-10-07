@@ -108,6 +108,14 @@ class FeelingsLocalization {
     return isZh ? "歌单" : "Playlist";
   }
 
+  String get playlistAdd {
+    return isZh ? "收藏歌单" : "FAV";
+  }
+
+  String get playlistAddHint {
+    return isZh ? "成功收藏歌单" : "Added to favorite";
+  }
+
   String get playlistPlayAll {
     return isZh ? "播放全部" : "Play All";
   }

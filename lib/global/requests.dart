@@ -131,6 +131,17 @@ class Requests {
         query: {"id": id, "like": "$doLike", "cookie": cookie});
   }
 
+  static Future<num> setPlaylistLike(
+      String id, bool doLike, String cookie) async {
+    if (cookie == null) return -1;
+    await GET("/playlist/subscribe", query: {
+      "id": id,
+      "t": "${doLike ? 1 : 2}",
+      "cookie": cookie
+    });
+    return 0;
+  }
+
   static Future<List<String>> getHotTags() async {
     String res = await GET("/search/hot");
 
@@ -187,7 +198,6 @@ class Requests {
 
   static Future<SearchRes> getSearchRes(
       String kw, num limit, num offset) async {
-    print(kw);
     String res = await GET(
       "/search",
       query: {
@@ -196,7 +206,6 @@ class Requests {
         "offset": "$offset",
       },
     );
-    print(res.length);
 
     SearchRes searchRes = SearchRes.fromJson(
       json.decode(res),
@@ -204,8 +213,6 @@ class Requests {
 
     List<String> ids =
         searchRes.result.songs.map((e) => "${e.id}").toList();
-
-    print(ids);
 
     searchRes.result.songs = await Requests.getSongDetail(ids);
 

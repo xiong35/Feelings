@@ -177,16 +177,78 @@ class PlaylistProfile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Hero(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: ImgPlaceHolder(
-                url: data?.coverImgUrl,
-                height: 110,
-                width: 110,
+          Column(
+            children: [
+              Hero(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: ImgPlaceHolder(
+                    url: data?.coverImgUrl,
+                    height: 110,
+                    width: 110,
+                  ),
+                ),
+                tag: "albumCover$id",
               ),
-            ),
-            tag: "albumCover$id",
+              SizedBox(height: 20),
+              OutlinedButton.icon(
+                onPressed: () async {
+                  num res = await Requests.setPlaylistLike(
+                      id.toString(),
+                      true,
+                      Global.loginData?.cookie);
+                  if (res == 0)
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        FeelingsLocalization.of(context)
+                            .playlistAddHint,
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 150,
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .secondary,
+                      elevation: 3,
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 1),
+                    ));
+                  else
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          FeelingsLocalization.of(context)
+                              .loginNeedLogin,
+                        ),
+                        width: 200,
+                        backgroundColor: Theme.of(context)
+                            .colorScheme
+                            .secondary,
+                        elevation: 3,
+                        behavior: SnackBarBehavior.floating,
+                        duration: Duration(seconds: 3),
+                        action: SnackBarAction(
+                          textColor: Theme.of(context)
+                              .colorScheme
+                              .onPrimary,
+                          label: "> " +
+                              FeelingsLocalization.of(context)
+                                  .loginLogin +
+                              " <",
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            "login",
+                            arguments: {"showHint": true},
+                          ),
+                        ),
+                      ),
+                    );
+                },
+                icon: Icon(Icons.add),
+                label: Text(
+                  FeelingsLocalization.of(context).playlistAdd,
+                ),
+              )
+            ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +302,7 @@ class PlaylistProfile extends StatelessWidget {
                       : (data.description == null
                           ? ""
                           : data.description),
-                  maxLines: 2,
+                  maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                 ),

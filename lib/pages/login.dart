@@ -110,7 +110,8 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: ImgPlaceHolder(
+                    child: Image.asset(
+                      "images/ic_launcher.png",
                       width: 150,
                       height: 150,
                     ),

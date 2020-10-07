@@ -69,7 +69,6 @@ class _SearchViewState extends State<SearchView>
   PositionInNum genPosition(BuildContext context) {
     PositionInPercent ret = PositionInPercent();
     do {
-      print("compute...");
       ret.horizontal = r.nextDouble() * 0.92 + 0.04;
       ret.vertical = r.nextDouble() * 0.92 + 0.04;
     } while (positionIsUsed(ret));

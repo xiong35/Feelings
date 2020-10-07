@@ -35,7 +35,6 @@ class MusicItem extends StatelessWidget {
         var res = await Provider.of<MusicPlayModel>(context,
                 listen: false)
             .refreshById(song.id, curPlaylist);
-        print("res $res");
         Navigator.pushNamed(context, "musicPlay",
             arguments: {'id': song.id});
       },
