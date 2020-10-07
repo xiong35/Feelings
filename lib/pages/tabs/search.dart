@@ -148,8 +148,8 @@ class _SearchViewState extends State<SearchView>
             child: TextField(
               cursorColor: colorScheme.secondary,
               decoration: style.copyWith(
-                hintText: FeelingsLocalization.of(context)
-                    .loginPassword,
+                hintText:
+                    FeelingsLocalization.of(context).search,
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search_outlined),
                   onPressed: () {

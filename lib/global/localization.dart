@@ -161,6 +161,10 @@ class FeelingsLocalization {
   String get removeLike {
     return isZh ? "成功取消喜欢" : "Removed from Likes";
   }
+
+  String get search {
+    return isZh ? "搜索" : "search";
+  }
 }
 
 class FeelingsLocalizationsDelegate
