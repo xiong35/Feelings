@@ -21,6 +21,8 @@ export 'music/songUrls.dart';
 export 'search/hotItem.dart';
 export 'search/hotRes.dart';
 export 'search/hotResult.dart';
+export 'search/searchRes.dart';
+export 'search/searchResult.dart';
 export 'user/likes.dart';
 export 'user/login.dart';
 export 'user/profile.dart';

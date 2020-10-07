@@ -1,3 +1,6 @@
+import 'package:feelings/components/musicItem.dart';
+import 'package:feelings/global/requests.dart';
+import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
 
 class SearchResult extends StatefulWidget {
@@ -8,12 +11,31 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
+  SearchRes res;
+
+  List<Widget> get songs => res == null
+      ? []
+      : res.result.songs
+          .map((e) => MusicItem(song: e, curPlaylist: [e.id]))
+          .toList();
+
+  @override
+  void didChangeDependencies() {
+    if (res == null) {
+      Map<String, dynamic> args =
+          ModalRoute.of(context).settings.arguments ??
+              {"kw": ""};
+
+      String kw = args["kw"];
+
+      Requests.getSearchRes(kw)
+          .then((value) => setState(() => res = value));
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> args =
-        ModalRoute.of(context).settings.arguments ?? {"kw": ""};
-
-    String kw = args["kw"];
     return Scaffold(
       appBar: AppBar(
         backgroundColor:
@@ -26,8 +48,8 @@ class _SearchResultState extends State<SearchResult> {
         ),
         elevation: 1,
       ),
-      body: Center(
-        child: Text(args["kw"]),
+      body: ListView(
+        children: songs,
       ),
     );
   }

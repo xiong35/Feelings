@@ -169,4 +169,29 @@ class Requests {
       json.decode(res),
     );
   }
+
+  static Future<SearchRes> getSearchRes(String kw) async {
+    print(kw);
+    String res = await GET(
+      "/search",
+      query: {
+        "keywords": kw,
+        "limit": "10",
+      },
+    );
+    print(res.length);
+
+    SearchRes searchRes = SearchRes.fromJson(
+      json.decode(res),
+    );
+
+    List<String> ids =
+        searchRes.result.songs.map((e) => "${e.id}").toList();
+
+    print(ids);
+
+    searchRes.result.songs = await Requests.getSongDetail(ids);
+
+    return searchRes;
+  }
 }

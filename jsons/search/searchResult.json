@@ -1,0 +1,9 @@
+{
+    "@import": "../music/song.dart",
+    "queryCorrected": [
+        "maroon 5"
+    ],
+    "songs": "$[]Song",
+    "hasMore": true,
+    "songCount": 600
+}
