@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:feelings/components/RandomBtn.dart';
 import 'package:feelings/global/localization.dart';
+import 'package:feelings/global/requests.dart';
 import 'package:flutter/material.dart';
 
 const BTN_WIDTH = 140;
@@ -94,15 +95,36 @@ class _SearchViewState extends State<SearchView>
     });
   }
 
+  List<String> tags = [];
+
+  TextEditingController _searchController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    if (tags.length == 0)
+      Requests.getHotTags().then((value) => setState(() {
+            tags = value;
+          }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    List<Color> colors = [
+      colorScheme.primary,
+      colorScheme.secondaryVariant,
+      colorScheme.primaryVariant,
+      colorScheme.secondary,
+    ];
 
     for (int i = positions.length; i < HOT_TAG_NUM; i++) {
       positions.add(genPosition(context));
     }
 
-    var colorScheme = Theme.of(context).colorScheme;
     var style = InputDecoration(
       filled: true,
       fillColor: colorScheme.surface,
@@ -130,16 +152,21 @@ class _SearchViewState extends State<SearchView>
                     .loginPassword,
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search_outlined),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(_searchController.text);
+                  },
                 ),
               ),
-              // controller: _pwController,
+              controller: _searchController,
             ),
           ),
         ),
-        for (int i = 0; i < HOT_TAG_NUM; i++)
+        for (int i = 0; i < tags.length; i++)
           RandBtn(
             p: positions[i],
+            text: tags[i],
+            onPressed: () => _searchController.text = tags[i],
+            color: colors[i % 4],
           ),
       ],
     );

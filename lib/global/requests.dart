@@ -131,6 +131,14 @@ class Requests {
         query: {"id": id, "like": "$doLike", "cookie": cookie});
   }
 
+  static Future<List<String>> getHotTags() async {
+    String res = await GET("/search/hot");
+
+    return HotRes.fromJson(
+      json.decode(res),
+    )?.result?.hots?.map((e) => e.first)?.toList();
+  }
+
   static Future<List<Song>> getSongDetail(
       List<String> ids) async {
     String res = await GET("/song/detail",

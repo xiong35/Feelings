@@ -2,17 +2,27 @@ import 'package:feelings/pages/tabs/search.dart';
 import 'package:flutter/material.dart';
 
 class RandBtn extends StatelessWidget {
-  const RandBtn({Key key, this.p, this.onPressed})
-      : super(key: key);
+  const RandBtn({
+    Key key,
+    this.p,
+    this.onPressed,
+    this.text,
+    this.color,
+  }) : super(key: key);
 
   final PositionInNum p;
   final Function onPressed;
+  final String text;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
       child: TextButton(
-        child: Text("中国新说唱 冷血"),
+        child: Text(
+          text,
+          style: TextStyle(color: color),
+        ),
         onPressed: onPressed,
       ),
       right: p.right,
