@@ -245,6 +245,8 @@ class MusicPlayModel extends ChangeNotifier {
     return res;
   }
 
+  String get lyric => theMusicController.curLyric;
+
   String get curSongUrl => theMusicController.curUrl == null
       ? ""
       : theMusicController.curUrl;

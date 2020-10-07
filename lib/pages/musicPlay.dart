@@ -74,13 +74,30 @@ class _MusicPlayViewState extends State<MusicPlayView> {
               SizedBox(height: 6),
               Text(musicPlayModelListen.curSong.ar[0].name),
               SizedBox(height: 12),
-              // Expanded(
-              //   child: ListView(
-              //     children: [
-              //       for (num i = 0; i < 100; i++) Text("test"),
-              //     ],
-              //   ),
-              // ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: Provider.of<MusicPlayModel>(
+                              context,
+                              listen: true)
+                          .lyric
+                          .replaceAll(RegExp(r"\[.*?\]"), "")
+                          .split("\n")
+                          .map((e) => Text(
+                                e,
+                                style: TextStyle(
+                                  height: 1.5,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

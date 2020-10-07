@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:feelings/components/RandomBtn.dart';
+import 'package:feelings/components/randomBtn.dart';
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/requests.dart';
 import 'package:flutter/material.dart';
