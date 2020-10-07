@@ -1,4 +1,5 @@
 import 'package:feelings/global/global.dart';
+import 'package:feelings/pages/tabs/search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:feelings/pages/tabs/settings.dart';
@@ -123,7 +124,7 @@ class _MainPageState extends State<MainPage>
     return [
       MineView(),
       HomeView(),
-      Center(child: Text("coming soon...")),
+      SearchView(),
       SettingsView(),
     ];
   }
