@@ -10,12 +10,14 @@ import 'package:feelings/pages/mainPage.dart';
 import 'package:feelings/pages/login.dart';
 import 'package:feelings/pages/playList.dart';
 import 'package:feelings/pages/musicPlay.dart';
+import 'package:feelings/pages/searchResult.dart';
 
 var routes = <String, WidgetBuilder>{
   "mainPage": (context) => MainPage(),
   "playlist": (context) => PlaylistView(),
   "musicPlay": (context) => MusicPlayView(),
   "login": (context) => LoginView(),
+  "searchRes": (context) => SearchResult(),
 };
 
 void main() async {

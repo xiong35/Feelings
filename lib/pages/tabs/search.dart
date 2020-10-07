@@ -153,7 +153,15 @@ class _SearchViewState extends State<SearchView>
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search_outlined),
                   onPressed: () {
-                    print(_searchController.text);
+                    if ((_searchController?.text?.length ?? 0) >
+                        0)
+                      Navigator.pushNamed(
+                        context,
+                        "searchRes",
+                        arguments: {
+                          "kw": _searchController.text
+                        },
+                      );
                   },
                 ),
               ),
