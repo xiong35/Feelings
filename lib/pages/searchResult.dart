@@ -4,7 +4,7 @@ import 'package:feelings/global/requests.dart';
 import 'package:feelings/models/index.dart';
 import 'package:flutter/material.dart';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 class SearchResult extends StatefulWidget {
   SearchResult({Key key}) : super(key: key);
