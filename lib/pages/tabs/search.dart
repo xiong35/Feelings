@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 const BTN_WIDTH = 140;
 const BTN_HEIGHT = 30;
 
-const H_DIFF = 0.33;
-const V_DIFF = 0.12;
+const H_DIFF = 0.30;
+const V_DIFF = 0.10;
 
 final Random r = Random();
 
@@ -58,10 +58,10 @@ class _SearchViewState extends State<SearchView>
   }
 
   List<PositionInPercent> usedPosition = [
-    PositionInPercent(horizontal: 0.2, vertical: 0.45),
-    PositionInPercent(horizontal: 0.8, vertical: 0.55),
-    PositionInPercent(horizontal: 0.2, vertical: 0.55),
-    PositionInPercent(horizontal: 0.8, vertical: 0.45),
+    PositionInPercent(horizontal: 0.2, vertical: 0.48),
+    PositionInPercent(horizontal: 0.8, vertical: 0.52),
+    PositionInPercent(horizontal: 0.2, vertical: 0.52),
+    PositionInPercent(horizontal: 0.8, vertical: 0.48),
   ];
 
   List<PositionInNum> positions = [];
@@ -70,8 +70,8 @@ class _SearchViewState extends State<SearchView>
     PositionInPercent ret = PositionInPercent();
     do {
       print("compute...");
-      ret.horizontal = r.nextDouble();
-      ret.vertical = r.nextDouble();
+      ret.horizontal = r.nextDouble() * 0.92 + 0.04;
+      ret.vertical = r.nextDouble() * 0.92 + 0.04;
     } while (positionIsUsed(ret));
     usedPosition.add(ret);
 

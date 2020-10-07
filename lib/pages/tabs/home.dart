@@ -117,7 +117,8 @@ class _HomeViewState extends State<HomeView>
       setState(() {
         playlistPage = 0;
       });
-      return _playlistsWidgets.sublist(0, PLAYLIST_PER_PAGE);
+      return _playlistsWidgets.sublist(
+          0, min(PLAYLIST_PER_PAGE, _playlists.length));
     }
     return _playlistsWidgets.sublist(begin, end);
   }

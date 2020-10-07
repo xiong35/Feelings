@@ -201,6 +201,7 @@ class PlayistPopupBtn extends StatelessWidget {
             title: Text(FeelingsLocalization.of(context)
                 .userPopupMenuNew),
           ),
+          enabled: false,
         ),
         PopupMenuItem(
           value: "manage",
@@ -209,6 +210,7 @@ class PlayistPopupBtn extends StatelessWidget {
             title: Text(FeelingsLocalization.of(context)
                 .userPopupMenuManage),
           ),
+          enabled: false,
         ),
       ],
       onSelected: (value) => print(value),

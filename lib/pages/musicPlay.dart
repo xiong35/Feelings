@@ -259,7 +259,7 @@ class _PlayPanel extends StatelessWidget {
                         Icons.mode_comment_outlined,
                         size: 30,
                       ),
-                      onPressed: () {},
+                      onPressed: null,
                     ),
                   ),
                 ],

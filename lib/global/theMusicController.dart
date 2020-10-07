@@ -141,7 +141,7 @@ class TheMusicController {
     if (!isEmpty(playlist)) {
       musicIdList = playlist;
     } else {
-      if (isEmpty(musicIdList)) return -1;
+      if (isEmpty(musicIdList)) musicIdList = [id];
     }
 
     curSongIndex = musicIdList.indexOf(id);
