@@ -2,6 +2,8 @@
 
 一款基于 flutter 和[网易云接口](https://github.com/Binaryify/NeteaseCloudMusicApi)的音乐 app🎧
 
+👉[下载地址(apk)](https://github.com/xiong35/Feelings/releases/download/1.0.0/feelings.apk)👈
+
 ## 环境要求
 
 - flutter  1.22.0-10.0.pre.138+

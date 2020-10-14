@@ -1,4 +1,3 @@
-import 'package:feelings/pages/musicComment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:feelings/global/colors.dart';
 import 'package:feelings/global/localization.dart';
 import 'package:feelings/global/global.dart';
 
+import 'package:feelings/pages/musicComment.dart';
 import 'package:feelings/pages/mainPage.dart';
 import 'package:feelings/pages/login.dart';
 import 'package:feelings/pages/playList.dart';
